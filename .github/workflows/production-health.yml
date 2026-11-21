@@ -1,0 +1,47 @@
+name: Production health
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-health
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Probe health and activation endpoints
+        shell: bash
+        run: |
+          set -euo pipefail
+          base_url="https://ics-commitment-audit-api.franka328162810.workers.dev"
+          user_agent="ics-commitment-audit-monitor/0.2.0"
+          health_file="$RUNNER_TEMP/health.json"
+
+          health_status="$(curl --silent --show-error --retry 3 --retry-delay 2 \
+            --max-time 20 --user-agent "$user_agent" \
+            --output "$health_file" --write-out '%{http_code}' \
+            "$base_url/v1/health")"
+          printf 'Health HTTP %s\n' "$health_status"
+          cat "$health_file"
+
+          test "$health_status" = "200"
+          jq --exit-status \
+            '.status == "ok" and .service == "ics-commitment-audit"' \
+            "$health_file"
+
+          activation_status="$(curl --silent --show-error --retry 3 --retry-delay 2 \
+            --max-time 20 --user-agent "$user_agent" \
+            --output /dev/null --write-out '%{http_code}' \
+            "$base_url/activate")"
+          printf 'Activation HTTP %s\n' "$activation_status"
+          test "$activation_status" = "200"

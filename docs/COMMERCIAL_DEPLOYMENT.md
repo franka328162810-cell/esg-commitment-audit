@@ -195,8 +195,11 @@ Workers Logs and Container logs are enabled at 100% sampling.
 npx wrangler tail --status error
 ```
 
-No external alert destination has been verified. Before or immediately after
-the first paid customer, configure:
+`.github/workflows/production-health.yml` probes `/v1/health` and `/activate`
+every 15 minutes and fails the GitHub job when either endpoint is unavailable.
+A failed scheduled job is visible in the repository's Actions page and can
+trigger the repository owner's GitHub notification settings. Before or
+immediately after the first paid customer, also configure:
 
 - HTTPS uptime checks for `/v1/health`;
 - Worker 5xx and Queue/DLQ alerts;
