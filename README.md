@@ -1,23 +1,66 @@
-# ICS Commitment Audit Workbench
+# ICS Commitment Audit
 
-**Evidence-first ESG / climate commitment structure auditor — v0.2.0**
+**Find ESG and climate commitments in long reports, trace each one to its source
+evidence, and test whether the wording is observable, enforceable, and
+revisable.**
 
-This project extracts written commitments and tests whether their structure is
-observable, enforceable, and revisable under the ICS CRV framework. It does not
-decide whether a company is truthful, greenwashing, compliant, assured, or
-performing well.
+[Subscribe — US$29/month](https://icsstudies.gumroad.com/l/ics-commitment-audit)
+· [Customer guide](docs/PRODUCT_GUIDE.md)
+· [Methodology](docs/METHODOLOGY.md)
+· [Limitations](docs/LIMITATIONS.md)
 
-Version 0.2.0 includes:
+![ICS Commitment Audit cover](assets/ics-commitment-audit-cover.png)
 
-- a free local CLI and local web workbench;
-- a deployed HTTPS pilot API on Cloudflare Workers, D1, R2, Queues, and
-  Containers;
-- API-key authentication, monthly document quotas, persistent audit jobs, and
-  tenant-scoped report retrieval;
-- Gumroad license verification and one-time API-key activation for the
-  `Founding Small Team` plan (`$29/month`, up to 100 documents per month);
-- provider-neutral billing webhooks and a Stripe Checkout Session endpoint;
-- a Codex plugin manifest, skill, and local/cloud MCP tools.
+Built for sustainability analysts, boutique ESG consultancies, researchers, and
+procurement teams that need a repeatable evidence trail before human review.
+The hosted API processes up to 100 documents per month on the Founding Small
+Team plan, with a maximum of 100 pages and 50 MB per document.
+
+> This service analyzes written commitment structure. It is not audit assurance,
+> legal advice, compliance certification, investment advice, or a finding of
+> greenwashing.
+
+## Why teams use it
+
+| Review question | What ICS Commitment Audit provides |
+|---|---|
+| What exactly did the organization promise? | Extracted commitment text and target values |
+| Where is the supporting evidence? | Page- or paragraph-level source locations |
+| Can progress be measured? | Baseline, target year, scope, method, and reporting checks |
+| Who owns delivery? | Named owner, oversight body, and assurance evidence when present |
+| Can the commitment be revised? | Review cadence, revision triggers, remedies, and exit terms |
+| What is missing? | Explicit missing checks rather than filled-in assumptions |
+
+## Start in three steps
+
+1. **Subscribe** to the Founding Small Team plan on
+   [Gumroad](https://icsstudies.gumroad.com/l/ics-commitment-audit).
+2. **Activate** the Gumroad license key at the
+   [activation page](https://ics-commitment-audit-api.franka328162810.workers.dev/activate).
+3. **Run an audit** with the generated API key. The
+   [customer guide](docs/PRODUCT_GUIDE.md) includes ready-to-run `curl` commands
+   and troubleshooting steps.
+
+## What is included
+
+- A free local CLI and local web workbench.
+- A hosted HTTPS audit API running on Cloudflare.
+- Text-layer PDF, DOCX, TXT, and Markdown input.
+- Structured JSON reports with commitment-level evidence.
+- A monthly quota of 100 documents on the founding plan.
+- Seven-day report retention and tenant-scoped API access.
+- A Codex plugin manifest, skill, and local/cloud MCP tools.
+
+## Claims boundary
+
+The audit evaluates written commitment structure. It does not verify emissions
+data, decide whether a company is truthful, determine greenwashing, or replace
+legal, assurance, or investment due diligence. Missing evidence means the
+examined text did not support a check; it does not prove that an underlying
+action is absent.
+
+The current rules are strongest for English and Chinese reports. Scanned PDFs
+require OCR, which is not included in v0.2.0.
 
 ## What the audit does
 
