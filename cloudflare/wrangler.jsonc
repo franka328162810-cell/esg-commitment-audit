@@ -8,7 +8,7 @@
   "containers": [
     {
       "class_name": "AuditContainer",
-      "image": "registry.cloudflare.com/aa7d0faa102dcea2d358907bbf96b7ec/ics-commitment-audit-api-auditcontainer:0.2.0-r2",
+      "image": "registry.cloudflare.com/aa7d0faa102dcea2d358907bbf96b7ec/ics-commitment-audit-api-auditcontainer:0.2.0-r3",
       "instance_type": "standard-1",
       "max_instances": 4,
       "constraints": {
@@ -64,7 +64,10 @@
   "vars": {
     "SERVICE_NAME": "ics-commitment-audit",
     "PUBLIC_BASE_URL": "https://ics-commitment-audit-api.franka328162810.workers.dev",
+    "GUMROAD_PRODUCT_ID": "F6dg2UMZ2P3xRziFH4uhfw==",
+    "GUMROAD_API_URL": "https://api.gumroad.com",
     "MAX_UPLOAD_BYTES": "52428800",
+    "MAX_DOCUMENT_PAGES": "100",
     "REPORT_RETENTION_DAYS": "7",
     "JOB_METADATA_RETENTION_DAYS": "180"
   },
@@ -73,6 +76,6 @@
     "head_sampling_rate": 1
   },
   "triggers": {
-    "crons": ["17 3 * * *"]
+    "crons": ["*/15 * * * *", "17 3 * * *"]
   }
 }

@@ -122,7 +122,70 @@ export const termsPage = page(
   </article>`,
 );
 
-export function htmlResponse(body: string, status = 200): Response {
+export const activationPage = page(
+  "Activate API access | ICS Commitment Audit",
+  `<article>
+    <p class="eyebrow">ICS Commitment Audit</p>
+    <h1>Activate your API access</h1>
+    <p>Enter the Gumroad license key from your purchase receipt and the organization name you want to use.</p>
+    <p class="notice"><strong>Important:</strong> your ICS API key is displayed only once. Store it in a password manager and never publish it.</p>
+    <form id="activation-form">
+      <p>
+        <label for="license-key">Gumroad license key</label><br>
+        <input id="license-key" name="license_key" autocomplete="off" required maxlength="200" style="width:100%;box-sizing:border-box;padding:12px;margin-top:6px">
+      </p>
+      <p>
+        <label for="organization-name">Organization name</label><br>
+        <input id="organization-name" name="organization_name" required maxlength="160" style="width:100%;box-sizing:border-box;padding:12px;margin-top:6px">
+      </p>
+      <button id="activate-button" type="submit" style="padding:12px 20px;border:0;border-radius:8px;background:#0f766e;color:#fff;font-weight:700;cursor:pointer">Activate API key</button>
+    </form>
+    <div id="result" aria-live="polite" style="margin-top:24px"></div>
+    <noscript><p class="notice">JavaScript is required for secure activation.</p></noscript>
+    <nav><a href="/">Return to ICS Commitment Audit</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a></nav>
+  </article>
+  <script>
+    const form = document.getElementById("activation-form");
+    const result = document.getElementById("result");
+    const button = document.getElementById("activate-button");
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[character]);
+    }
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      result.innerHTML = "";
+      button.disabled = true;
+      button.textContent = "Verifying...";
+      try {
+        const response = await fetch("/v1/billing/gumroad/redeem", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            license_key: document.getElementById("license-key").value.trim(),
+            organization_name: document.getElementById("organization-name").value.trim()
+          })
+        });
+        const payload = await response.json();
+        if (!response.ok) throw new Error(payload.error || "Activation failed");
+        result.innerHTML = '<div class="notice"><strong>Activation complete.</strong><p>Copy this API key now. It will not be shown again.</p><pre style="white-space:pre-wrap;word-break:break-all;background:#102a43;color:#fff;padding:16px;border-radius:8px">' + escapeHtml(payload.api_key) + '</pre><p>Plan: ' + escapeHtml(payload.plan) + '<br>Monthly limit: ' + escapeHtml(payload.monthly_document_limit) + ' documents</p></div>';
+      } catch (error) {
+        result.innerHTML = '<div class="notice"><strong>Could not activate.</strong><p>' + escapeHtml(error.message) + '</p></div>';
+      } finally {
+        button.disabled = false;
+        button.textContent = "Activate API key";
+      }
+    });
+  </script>`,
+);
+
+export function htmlResponse(
+  body: string,
+  status = 200,
+  options: { allowInlineScript?: boolean } = {},
+): Response {
+  const scriptPolicy = options.allowInlineScript ? "'unsafe-inline'" : "'none'";
   return new Response(body, {
     status,
     headers: {
@@ -131,7 +194,7 @@ export function htmlResponse(body: string, status = 200): Response {
       "x-content-type-options": "nosniff",
       "referrer-policy": "no-referrer",
       "content-security-policy":
-        "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'",
+        `default-src 'none'; style-src 'unsafe-inline'; script-src ${scriptPolicy}; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'`,
     },
   });
 }

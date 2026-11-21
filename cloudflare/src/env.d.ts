@@ -6,4 +6,5 @@ interface Env {
   STRIPE_SECRET_KEY?: string;
   STRIPE_PRICE_STARTER?: string;
   STRIPE_PRICE_PRO?: string;
+  ICS_GUMROAD_ENCRYPTION_KEY?: string;
 }

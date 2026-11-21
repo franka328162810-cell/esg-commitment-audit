@@ -1,5 +1,6 @@
 import { DurableObject } from "cloudflare:workers";
 import {
+  activationPage,
   htmlResponse,
   landingPage,
   privacyPage,
@@ -9,10 +10,13 @@ import {
 const CONTAINER_PORT = 8080;
 const INACTIVITY_TIMEOUT_MS = 60 * 1000;
 const MAX_JSON_BODY_BYTES = 64 * 1024;
+const BILLING_SYNC_CRON = "*/15 * * * *";
+const RETENTION_CRON = "17 3 * * *";
 const NON_RETRYABLE_CONTAINER_STATUSES = new Set([400, 413, 415, 422]);
 const PLAN_LIMITS = {
   trial: 5,
   starter: 25,
+  "founding-team": 100,
   pro: 150,
   enterprise: 10_000,
 } as const;
@@ -26,6 +30,14 @@ interface Organization {
   documents_used: number;
   usage_period: string;
   active: number;
+  billing_provider?: string | null;
+  billing_external_id?: string | null;
+  billing_product_id?: string | null;
+  billing_status?: string | null;
+  billing_last_checked_at?: string | null;
+  gumroad_license_hash?: string | null;
+  gumroad_license_ciphertext?: string | null;
+  gumroad_license_iv?: string | null;
 }
 
 interface AuditJob {
@@ -141,6 +153,199 @@ async function timingSafeEqual(left: string, right: string): Promise<boolean> {
     difference |= leftHash[index] ^ rightHash[index];
   }
   return difference === 0;
+}
+
+function bytesToBase64(bytes: Uint8Array): string {
+  let binary = "";
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary);
+}
+
+function base64ToBytes(value: string): Uint8Array {
+  const binary = atob(value.replace(/\s/g, ""));
+  return Uint8Array.from(binary, (character) => character.charCodeAt(0));
+}
+
+async function importGumroadEncryptionKey(secret: string): Promise<CryptoKey> {
+  const raw = base64ToBytes(secret);
+  if (raw.byteLength !== 32) {
+    throw new Error("ICS_GUMROAD_ENCRYPTION_KEY must decode to 32 bytes");
+  }
+  return crypto.subtle.importKey("raw", raw, "AES-GCM", false, [
+    "encrypt",
+    "decrypt",
+  ]);
+}
+
+async function encryptGumroadLicense(
+  licenseKey: string,
+  secret: string,
+): Promise<{ ciphertext: string; iv: string }> {
+  const key = await importGumroadEncryptionKey(secret);
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const encrypted = await crypto.subtle.encrypt(
+    { name: "AES-GCM", iv },
+    key,
+    new TextEncoder().encode(licenseKey),
+  );
+  return {
+    ciphertext: bytesToBase64(new Uint8Array(encrypted)),
+    iv: bytesToBase64(iv),
+  };
+}
+
+async function decryptGumroadLicense(
+  ciphertext: string,
+  iv: string,
+  secret: string,
+): Promise<string> {
+  const key = await importGumroadEncryptionKey(secret);
+  const decrypted = await crypto.subtle.decrypt(
+    { name: "AES-GCM", iv: base64ToBytes(iv) },
+    key,
+    base64ToBytes(ciphertext),
+  );
+  return new TextDecoder().decode(decrypted);
+}
+
+interface GumroadLicenseResult {
+  state: "active" | "inactive" | "unknown";
+  status: string;
+  saleId?: string;
+}
+
+function gumroadTimestampEnded(value: unknown): boolean {
+  if (typeof value !== "string" || !value) return false;
+  const timestamp = Date.parse(value);
+  return Number.isFinite(timestamp) && timestamp <= Date.now();
+}
+
+async function verifyGumroadLicense(
+  env: Env,
+  licenseKey: string,
+): Promise<GumroadLicenseResult> {
+  if (!env.GUMROAD_PRODUCT_ID) {
+    return { state: "unknown", status: "not_configured" };
+  }
+  const form = new URLSearchParams({
+    product_id: env.GUMROAD_PRODUCT_ID,
+    license_key: licenseKey,
+    increment_uses_count: "false",
+  });
+  let response: Response;
+  try {
+    response = await fetch(
+      `${env.GUMROAD_API_URL.replace(/\/+$/, "")}/v2/licenses/verify`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/x-www-form-urlencoded",
+          "user-agent": "ics-commitment-audit/0.2.0",
+        },
+        body: form,
+        signal: AbortSignal.timeout(20_000),
+      },
+    );
+  } catch {
+    return { state: "unknown", status: "verification_unavailable" };
+  }
+
+  let result: Record<string, unknown> = {};
+  try {
+    result = (await response.json()) as Record<string, unknown>;
+  } catch {
+    if (response.status === 404 || response.status === 422) {
+      return { state: "inactive", status: "invalid_license" };
+    }
+    return { state: "unknown", status: "invalid_response" };
+  }
+  if (response.status === 404 || response.status === 422 || result.success !== true) {
+    return { state: "inactive", status: "invalid_license" };
+  }
+  if (!response.ok) {
+    return { state: "unknown", status: "verification_unavailable" };
+  }
+  const purchase =
+    typeof result.purchase === "object" && result.purchase
+      ? (result.purchase as Record<string, unknown>)
+      : null;
+  if (!purchase) return { state: "inactive", status: "purchase_missing" };
+  if (purchase.refunded === true) {
+    return { state: "inactive", status: "refunded" };
+  }
+  if (purchase.disputed === true || purchase.chargebacked === true) {
+    return { state: "inactive", status: "disputed" };
+  }
+  if (gumroadTimestampEnded(purchase.subscription_failed_at)) {
+    return { state: "inactive", status: "payment_failed" };
+  }
+  if (gumroadTimestampEnded(purchase.subscription_ended_at)) {
+    return { state: "inactive", status: "ended" };
+  }
+  if (gumroadTimestampEnded(purchase.subscription_cancelled_at)) {
+    return { state: "inactive", status: "cancelled" };
+  }
+  return {
+    state: "active",
+    status: "active",
+    saleId: typeof purchase.sale_id === "string" ? purchase.sale_id : undefined,
+  };
+}
+
+async function syncGumroadBilling(env: Env): Promise<void> {
+  const secret = env.ICS_GUMROAD_ENCRYPTION_KEY;
+  if (!secret) return;
+  const rows = await env.DB.prepare(
+    `SELECT id, active, gumroad_license_ciphertext, gumroad_license_iv
+       FROM organizations
+      WHERE billing_provider = 'gumroad'
+        AND gumroad_license_ciphertext IS NOT NULL
+        AND gumroad_license_iv IS NOT NULL
+      ORDER BY COALESCE(billing_last_checked_at, '') ASC
+      LIMIT 20`,
+  ).all<{
+    id: string;
+    active: number;
+    gumroad_license_ciphertext: string;
+    gumroad_license_iv: string;
+  }>();
+
+  for (const row of rows.results) {
+    try {
+      const licenseKey = await decryptGumroadLicense(
+        row.gumroad_license_ciphertext,
+        row.gumroad_license_iv,
+        secret,
+      );
+      const verification = await verifyGumroadLicense(env, licenseKey);
+      const checkedAt = nowIso();
+      if (verification.state === "unknown") {
+        await env.DB.prepare(
+          "UPDATE organizations SET billing_last_checked_at = ? WHERE id = ?",
+        )
+          .bind(checkedAt, row.id)
+          .run();
+        continue;
+      }
+      await env.DB.prepare(
+        `UPDATE organizations
+            SET billing_status = ?, billing_last_checked_at = ?, active = ?
+          WHERE id = ?`,
+      )
+        .bind(
+          verification.status,
+          checkedAt,
+          verification.state === "active" ? 1 : 0,
+          row.id,
+        )
+        .run();
+    } catch (error) {
+      console.error("gumroad_billing_sync_failed", {
+        organization_id: row.id,
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  }
 }
 
 async function authenticate(request: Request, env: Env): Promise<Organization | null> {
@@ -264,6 +469,7 @@ async function callContainer(
       headers: {
         "content-type": job.content_type,
         "x-ics-filename": encodeURIComponent(job.filename),
+        "x-ics-max-pages": env.MAX_DOCUMENT_PAGES,
         "x-ics-weights": job.weights,
         "x-ics-internal-token": env.ICS_INTERNAL_TOKEN,
       },
@@ -488,6 +694,9 @@ export default {
     if (request.method === "GET" && path === "/terms") {
       return htmlResponse(termsPage);
     }
+    if (request.method === "GET" && path === "/activate") {
+      return htmlResponse(activationPage, 200, { allowInlineScript: true });
+    }
     if (path === "/v1/health" && request.method === "GET") {
       await env.DB.prepare("SELECT 1").first();
       return json({ status: "ok", service: env.SERVICE_NAME, region: request.cf?.colo });
@@ -555,10 +764,131 @@ export default {
       if (!(await requireAdmin(request, env))) {
         return json({ error: "Admin authorization required" }, 401);
       }
-      const stopped = await env.AUDIT_CONTAINER.getByName(
+      const container = env.AUDIT_CONTAINER.getByName(
         adminStopMatch[1],
-      ).stopContainer();
+      ) as DurableObjectStub<AuditContainer>;
+      const stopped = await container.stopContainer();
       return json({ stopped });
+    }
+
+    if (path === "/v1/billing/gumroad/redeem" && request.method === "POST") {
+      const contentLength = Number(request.headers.get("content-length") ?? "0");
+      if (contentLength > MAX_JSON_BODY_BYTES) {
+        return json({ error: "Activation payload is too large" }, 413);
+      }
+      let payload: Record<string, unknown>;
+      try {
+        payload = (await request.json()) as Record<string, unknown>;
+      } catch {
+        return json({ error: "Invalid JSON" }, 400);
+      }
+      const licenseKey =
+        typeof payload.license_key === "string" ? payload.license_key.trim() : "";
+      const organizationName =
+        typeof payload.organization_name === "string"
+          ? payload.organization_name
+              .replace(/[\u0000-\u001f\u007f]/g, " ")
+              .trim()
+          : "";
+      if (licenseKey.length < 8 || licenseKey.length > 200) {
+        return json({ error: "A valid Gumroad license key is required" }, 400);
+      }
+      if (!organizationName || organizationName.length > 160) {
+        return json({ error: "Organization name is required" }, 400);
+      }
+      const encryptionSecret = env.ICS_GUMROAD_ENCRYPTION_KEY;
+      if (!encryptionSecret) {
+        return json({ error: "Gumroad activation is not configured" }, 503);
+      }
+      const verification = await verifyGumroadLicense(env, licenseKey);
+      if (verification.state === "unknown") {
+        return json({ error: "Could not verify Gumroad license; retry later" }, 503);
+      }
+      if (verification.state !== "active") {
+        return json({ error: "Gumroad license is not active", status: verification.status }, 403);
+      }
+
+      const licenseHash = await sha256Hex(licenseKey);
+      const existing = await env.DB.prepare(
+        "SELECT id FROM organizations WHERE gumroad_license_hash = ?",
+      )
+        .bind(licenseHash)
+        .first<{ id: string }>();
+      if (existing) {
+        return json(
+          {
+            error:
+              "This Gumroad license has already been activated. Contact support if the API key was lost.",
+          },
+          409,
+        );
+      }
+
+      let encryptedLicense: { ciphertext: string; iv: string };
+      try {
+        encryptedLicense = await encryptGumroadLicense(licenseKey, encryptionSecret);
+      } catch (error) {
+        console.error("gumroad_license_encryption_failed", {
+          error: error instanceof Error ? error.message : String(error),
+        });
+        return json({ error: "Could not secure Gumroad license" }, 500);
+      }
+
+      const organizationId = `org_${crypto.randomUUID().replaceAll("-", "")}`;
+      const keyId = `key_${crypto.randomUUID().replaceAll("-", "")}`;
+      const tokenBytes = crypto.getRandomValues(new Uint8Array(32));
+      const apiKey = `ics_live_${bytesToBase64Url(tokenBytes)}`;
+      const keyHash = await sha256Hex(apiKey);
+      const createdAt = nowIso();
+      try {
+        await env.DB.batch([
+          env.DB.prepare(
+            `INSERT INTO organizations
+              (id, name, plan, monthly_document_limit, documents_used,
+               usage_period, active, created_at, billing_provider,
+               billing_external_id, billing_product_id, billing_status,
+               billing_last_checked_at, gumroad_license_hash,
+               gumroad_license_ciphertext, gumroad_license_iv)
+             VALUES (?, ?, 'founding-team', ?, 0, ?, 1, ?, 'gumroad',
+                     ?, ?, 'active', ?, ?, ?, ?)`,
+          ).bind(
+            organizationId,
+            organizationName,
+            PLAN_LIMITS["founding-team"],
+            currentPeriod(),
+            createdAt,
+            verification.saleId ?? licenseHash,
+            env.GUMROAD_PRODUCT_ID,
+            createdAt,
+            licenseHash,
+            encryptedLicense.ciphertext,
+            encryptedLicense.iv,
+          ),
+          env.DB.prepare(
+            `INSERT INTO api_keys
+              (id, organization_id, name, key_hash, prefix, created_at)
+             VALUES (?, ?, 'gumroad-founding', ?, ?, ?)`,
+          ).bind(keyId, organizationId, keyHash, apiKey.slice(0, 16), createdAt),
+        ]);
+      } catch (error) {
+        console.error("gumroad_activation_failed", {
+          error: error instanceof Error ? error.message : String(error),
+        });
+        return json(
+          { error: "Could not activate this Gumroad license. It may already be in use." },
+          409,
+        );
+      }
+      return json(
+        {
+          organization_id: organizationId,
+          plan: "founding-team",
+          monthly_document_limit: PLAN_LIMITS["founding-team"],
+          api_key_id: keyId,
+          api_key: apiKey,
+        },
+        201,
+      );
     }
 
     if (path === "/v1/billing/stripe-webhook" && request.method === "POST") {
@@ -665,6 +995,8 @@ export default {
         name: organization.name,
         plan: organization.plan,
         active: Boolean(organization.active),
+        billing_provider: organization.billing_provider ?? null,
+        billing_status: organization.billing_status ?? null,
         monthly_document_limit: organization.monthly_document_limit,
         documents_used: organization.documents_used,
         remaining_documents: Math.max(
@@ -849,7 +1181,10 @@ export default {
         );
         if (keys.length) await env.REPORTS.delete(keys);
         try {
-          await env.AUDIT_CONTAINER.getByName(jobId).stopContainer();
+          const container = env.AUDIT_CONTAINER.getByName(
+            jobId,
+          ) as DurableObjectStub<AuditContainer>;
+          await container.stopContainer();
         } catch (error) {
           console.error("audit_container_stop_failed", {
             job_id: jobId,
@@ -881,56 +1216,70 @@ export default {
   },
 
   async scheduled(
-    _controller: ScheduledController,
+    controller: ScheduledController,
     env: Env,
   ): Promise<void> {
-    const retentionDays = Number(env.REPORT_RETENTION_DAYS);
-    const cutoff = new Date(
-      Date.now() - retentionDays * 24 * 60 * 60 * 1000,
-    ).toISOString();
-    const expired = await env.DB.prepare(
-      `SELECT id, report_key FROM audit_jobs
-        WHERE status = 'completed' AND completed_at < ?
-          AND report_key IS NOT NULL
-        LIMIT 200`,
-    )
-      .bind(cutoff)
-      .all<{ id: string; report_key: string }>();
-    const keys = expired.results.map((row) => row.report_key);
-    if (keys.length) {
-      await env.REPORTS.delete(keys);
-      await env.DB.batch(
-        expired.results.map((row) =>
-          env.DB.prepare("UPDATE audit_jobs SET report_key = NULL WHERE id = ?").bind(
-            row.id,
-          ),
-        ),
-      );
+    const knownCron =
+      controller.cron === BILLING_SYNC_CRON ||
+      controller.cron === RETENTION_CRON;
+    if (knownCron === false || controller.cron === BILLING_SYNC_CRON) {
+      try {
+        await syncGumroadBilling(env);
+      } catch (error) {
+        console.error("gumroad_billing_job_failed", {
+          error: error instanceof Error ? error.message : String(error),
+        });
+      }
     }
-    const abandoned = await env.DB.prepare(
-      `SELECT id, upload_key FROM audit_jobs
-        WHERE status IN ('failed', 'cancelled') AND completed_at < ?
-        LIMIT 200`,
-    )
-      .bind(cutoff)
-      .all<{ id: string; upload_key: string }>();
-    const abandonedKeys = abandoned.results.map((row) => row.upload_key);
-    if (abandonedKeys.length) await env.REPORTS.delete(abandonedKeys);
+    if (knownCron === false || controller.cron === RETENTION_CRON) {
+      const retentionDays = Number(env.REPORT_RETENTION_DAYS);
+      const cutoff = new Date(
+        Date.now() - retentionDays * 24 * 60 * 60 * 1000,
+      ).toISOString();
+      const expired = await env.DB.prepare(
+        `SELECT id, report_key FROM audit_jobs
+          WHERE status = 'completed' AND completed_at < ?
+            AND report_key IS NOT NULL
+          LIMIT 200`,
+      )
+        .bind(cutoff)
+        .all<{ id: string; report_key: string }>();
+      const keys = expired.results.map((row) => row.report_key);
+      if (keys.length) {
+        await env.REPORTS.delete(keys);
+        await env.DB.batch(
+          expired.results.map((row) =>
+            env.DB.prepare(
+              "UPDATE audit_jobs SET report_key = NULL WHERE id = ?",
+            ).bind(row.id),
+          ),
+        );
+      }
+      const abandoned = await env.DB.prepare(
+        `SELECT id, upload_key FROM audit_jobs
+          WHERE status IN ('failed', 'cancelled') AND completed_at < ?
+          LIMIT 200`,
+      )
+        .bind(cutoff)
+        .all<{ id: string; upload_key: string }>();
+      const abandonedKeys = abandoned.results.map((row) => row.upload_key);
+      if (abandonedKeys.length) await env.REPORTS.delete(abandonedKeys);
 
-    const metadataRetentionDays = Number(env.JOB_METADATA_RETENTION_DAYS);
-    const metadataCutoff = new Date(
-      Date.now() - metadataRetentionDays * 24 * 60 * 60 * 1000,
-    ).toISOString();
-    await env.DB.prepare(
-      `DELETE FROM audit_jobs
-        WHERE id IN (
-          SELECT id FROM audit_jobs
-           WHERE status IN ('completed', 'failed', 'cancelled')
-             AND created_at < ?
-           LIMIT 200
-        )`,
-    )
-      .bind(metadataCutoff)
-      .run();
+      const metadataRetentionDays = Number(env.JOB_METADATA_RETENTION_DAYS);
+      const metadataCutoff = new Date(
+        Date.now() - metadataRetentionDays * 24 * 60 * 60 * 1000,
+      ).toISOString();
+      await env.DB.prepare(
+        `DELETE FROM audit_jobs
+          WHERE id IN (
+            SELECT id FROM audit_jobs
+             WHERE status IN ('completed', 'failed', 'cancelled')
+               AND created_at < ?
+             LIMIT 200
+          )`,
+      )
+        .bind(metadataCutoff)
+        .run();
+    }
   },
 } satisfies ExportedHandler<Env, QueueJob>;

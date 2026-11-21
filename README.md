@@ -14,6 +14,8 @@ Version 0.2.0 includes:
   Containers;
 - API-key authentication, monthly document quotas, persistent audit jobs, and
   tenant-scoped report retrieval;
+- Gumroad license verification and one-time API-key activation for the
+  `Founding Small Team` plan (`$29/month`, up to 100 documents per month);
 - provider-neutral billing webhooks and a Stripe Checkout Session endpoint;
 - a Codex plugin manifest, skill, and local/cloud MCP tools.
 
@@ -59,9 +61,11 @@ review into independent validation.
 - Terms draft: https://ics-commitment-audit-api.franka328162810.workers.dev/terms
 
 The hosted API is operational for controlled pilots. Stripe checkout code is
-deployed but returns `503` until a Stripe merchant account, secret key, webhook
-secret, and Starter/Pro Price IDs are configured. The legal pages remain drafts
-and require review before charging customers.
+deployed but is not the current production checkout route. The current paid
+pilot uses Gumroad: a verified and unused Gumroad license key can be exchanged
+once at `/activate` for a founding-team organization and API key. Gumroad
+membership status is rechecked every 15 minutes. The legal pages state the
+service boundary but have not received professional legal review.
 
 Reproduce the calculation:
 
@@ -106,6 +110,8 @@ GET    /v1/audits/{job_id}
 GET    /v1/audits/{job_id}/report
 DELETE /v1/audits/{job_id}
 GET    /v1/account
+GET    /activate
+POST   /v1/billing/gumroad/redeem
 POST   /v1/billing/checkout
 POST   /v1/billing/stripe-webhook
 POST   /v1/billing/webhook
@@ -114,6 +120,11 @@ POST   /v1/billing/webhook
 Raw uploads are deleted after success or final failure. Reports expire after
 seven days, job metadata after 180 days, and an R2 lifecycle rule deletes any
 remaining `orgs/` objects after 30 days.
+
+The founding plan permits one organization, one shared API key, 100 audited
+documents per month, and at most 100 pages and 50 MB per document. The Gumroad
+listing is capped at 20 active founding supporters. Scanned PDFs without a text
+layer are rejected because OCR is not included.
 
 Deployment, backup, monitoring, cost, and recovery notes are in
 [`docs/COMMERCIAL_DEPLOYMENT.md`](docs/COMMERCIAL_DEPLOYMENT.md).

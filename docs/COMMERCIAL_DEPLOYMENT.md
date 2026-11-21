@@ -1,6 +1,6 @@
 # Commercial deployment
 
-Status updated: 2026-11-21
+Status updated: 2026-11-22
 
 ## Current state
 
@@ -13,20 +13,22 @@ The v0.2.0 pilot is deployed on Cloudflare:
 - Dead-letter queue: `ics-commitment-audit-jobs-dlq`
 - Private R2 bucket: `ics-commitment-audit-reports`
 - Container application: `ics-commitment-audit-api-auditcontainer`
-- Runtime image: `0.2.0-r2`
+- Runtime image: `0.2.0-r3`
 
 The API passes the current smoke, tenant-isolation, failure-refund, concurrency,
-backup, and HTTPS checks. It is suitable for controlled pilots.
+backup, HTTPS, 100-page boundary, and quota-refund checks. It is suitable for a
+controlled paid pilot.
 
-It is not yet a fully public paid launch because Stripe is not configured, the
-legal pages have not received counsel review, alert delivery has not been
-verified, and large-document concurrency has not been tested at production
-scale.
+The Gumroad product and license activation path are configured. The public
+listing remains unpublished until the repository owner gives final approval for
+the external sale page. The legal pages have not received independent counsel
+review, and external alert delivery still requires an end-to-end owner check.
 
 ## Public endpoints
 
 ```text
 GET    /
+GET    /activate
 GET    /privacy
 GET    /terms
 GET    /v1/health
@@ -35,6 +37,7 @@ GET    /v1/audits/{job_id}
 GET    /v1/audits/{job_id}/report
 DELETE /v1/audits/{job_id}
 GET    /v1/account
+POST   /v1/billing/gumroad/redeem
 POST   /v1/billing/checkout
 POST   /v1/billing/stripe-webhook
 POST   /v1/billing/webhook
@@ -53,6 +56,8 @@ require `X-ICS-Admin-Token`.
   report JSON afterward.
 - Original uploads are deleted after success or final failure.
 - Reports expire after seven days.
+- Gumroad license keys are verified with Gumroad, encrypted with AES-GCM before
+  being stored in D1, and never returned by an API endpoint.
 - Terminal job metadata is deleted after 180 days.
 - An R2 lifecycle rule expires any remaining `orgs/` object after 30 days and
   aborts incomplete multipart uploads after one day.
@@ -68,12 +73,13 @@ production-age deletion event has yet been observed.
 |---|---:|
 | `trial` | 5 |
 | `starter` | 25 |
+| `founding-team` | 100 |
 | `pro` | 150 |
 | `enterprise` | 10,000 |
 
-The values are enforced maxima, not product prices. Do not publish a retail
-price until measured infrastructure cost, Stripe fees, tax treatment, customer
-support, and the value of the report have been reviewed together.
+Pricing, tax presentation, refunds, and customer support are handled by
+Gumroad for the current paid pilot. The product is `$29/month`, capped at 20
+active founding supporters. A document may contain at most 100 pages and 50 MB.
 
 ## Required secrets
 
@@ -81,6 +87,7 @@ support, and the value of the report have been reviewed together.
 |---|---|---|
 | `ICS_ADMIN_TOKEN` | configured | Provision organizations and stop audit containers |
 | `ICS_INTERNAL_TOKEN` | configured | Worker-to-container authentication |
+| `ICS_GUMROAD_ENCRYPTION_KEY` | configured | AES-GCM protection for stored Gumroad license keys |
 | `ICS_STRIPE_WEBHOOK_SECRET` | blocked | Verify native Stripe webhooks |
 | `STRIPE_SECRET_KEY` | blocked | Create Stripe Checkout Sessions |
 | `STRIPE_PRICE_STARTER` | blocked | Starter subscription Price ID |
@@ -92,17 +99,41 @@ or exported customer reports.
 Set secrets with:
 
 ```powershell
+wrangler secret put ICS_GUMROAD_ENCRYPTION_KEY
 wrangler secret put ICS_STRIPE_WEBHOOK_SECRET
 wrangler secret put STRIPE_SECRET_KEY
 wrangler secret put STRIPE_PRICE_STARTER
 wrangler secret put STRIPE_PRICE_PRO
 ```
 
-## Stripe activation
+## Gumroad activation
 
-The code at `POST /v1/billing/checkout` creates a subscription Checkout Session
-for an authenticated organization. Until Stripe is configured, it correctly
-returns `503` instead of issuing a fake payment link.
+The production checkout route is Gumroad, not Stripe. A successful purchase
+issues a Gumroad license key. The customer enters that key at `/activate`; the
+Worker calls Gumroad's license verification API with
+`increment_uses_count=false`, rejects refunds, disputes, chargebacks, ended
+memberships, cancellations, and failed renewals, and then creates:
+
+- one `founding-team` organization;
+- one 100-document monthly quota;
+- one shared API key displayed only once.
+
+A license hash and encrypted license value are stored in D1 to prevent reuse
+and support ongoing status checks. The billing cron runs every 15 minutes and
+rechecks at most 20 organizations, matching the founding cap. Daily maintenance
+retains reports for seven days and removes terminal job metadata after 180 days.
+
+Before publishing the Gumroad listing, use Gumroad's logged-in test-purchase
+flow. Do not pay with a real card or attempt an actual self-purchase. Complete
+the test purchase, copy its license key, activate it through `/activate`, and
+verify the returned plan, 100-document limit, and one-time API key.
+
+## Legacy Stripe path
+
+The code at `POST /v1/billing/checkout` can create a subscription Checkout
+Session for an authenticated organization. It is retained as an optional future
+route and returns `503` until fully configured. It is not used by the current
+Gumroad pilot.
 
 Activation still requires the account owner to complete:
 
@@ -144,12 +175,14 @@ run an export before schema changes and at least weekly:
 npx wrangler d1 export ics-commitment-audit-db --remote --output backup.sql
 ```
 
-Recovery drill performed on 2026-11-21:
+Recovery drill performed on 2026-11-22:
 
 - D1 export downloaded successfully.
 - SQL imported into a new local SQLite database.
 - The restored database contained all expected tables and rows.
-- Export size: 4,845 bytes at test time.
+- Export size: 13,437 bytes at test time.
+- Integrity check: `ok`.
+- Restored rows: 4 organizations, 3 API keys, 13 audit jobs, 0 billing events.
 
 Store production exports in encrypted private storage, restrict access, and
 test a restore into a separate D1 database before relying on the backup.
@@ -162,7 +195,8 @@ Workers Logs and Container logs are enabled at 100% sampling.
 npx wrangler tail --status error
 ```
 
-No external alert destination has been verified. Before paid launch, configure:
+No external alert destination has been verified. Before or immediately after
+the first paid customer, configure:
 
 - HTTPS uptime checks for `/v1/health`;
 - Worker 5xx and Queue/DLQ alerts;
@@ -194,6 +228,10 @@ passed 3/3.
 
 Additional checks:
 
+- 101-page synthetic PDF was rejected with the explicit 100-page limit and
+  refunded its quota unit.
+- A synthetic text-layer PDF completed, returned a report, and consumed exactly
+  one quota unit.
 - malformed PDF returned a clean container `400` on the first attempt;
 - the failed job refunded its quota unit;
 - cross-tenant report access and deletion returned `404`;
@@ -224,10 +262,12 @@ The memory allowance alone covers roughly 250 conservative 90-second runs per
 month. Recalculate after observing larger real reports; page count, OCR, and
 document complexity can move CPU and duration materially.
 
-## Launch blockers
+## Remaining launch risks
 
-- Complete Stripe onboarding and create Starter/Pro Price IDs.
-- Review privacy, terms, refund, tax, and data-processing language.
+- Obtain owner approval for the Gumroad public listing and complete its official
+  logged-in test purchase.
+- Have privacy, terms, refund, tax, and data-processing language reviewed for
+  the seller's jurisdiction and customer markets.
 - Configure and test external alerts.
 - Authenticate the separate `cf` billing CLI with Billing Edit permission and
   verify the Workers spend policy. A Workers limit does not cap Containers,

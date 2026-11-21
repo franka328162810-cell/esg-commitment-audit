@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import os
+from io import BytesIO
 
 from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse
+from pypdf import PdfReader
 
 from ics_commitment_audit.api import audit_bytes
 from ics_commitment_audit.report import report_to_dict
@@ -28,6 +30,7 @@ def health() -> dict[str, str]:
 async def audit(
     request: Request,
     x_ics_filename: str = Header("upload.pdf"),
+    x_ics_max_pages: str = Header("100"),
     x_ics_weights: str = Header("default"),
     x_ics_internal_token: str = Header(""),
 ) -> JSONResponse:
@@ -42,6 +45,25 @@ async def audit(
         raise HTTPException(status_code=400, detail="Upload is empty")
     if len(data) > MAX_UPLOAD_BYTES:
         raise HTTPException(status_code=413, detail="Upload is too large")
+    try:
+        max_pages = int(x_ics_max_pages)
+    except ValueError as exc:
+        raise HTTPException(status_code=500, detail="Invalid page limit") from exc
+    if max_pages < 1:
+        raise HTTPException(status_code=500, detail="Invalid page limit")
+    if x_ics_filename.lower().endswith(".pdf"):
+        try:
+            page_count = len(PdfReader(BytesIO(data)).pages)
+        except Exception as exc:
+            raise HTTPException(
+                status_code=400,
+                detail="The PDF file could not be parsed.",
+            ) from exc
+        if page_count > max_pages:
+            raise HTTPException(
+                status_code=413,
+                detail=f"PDF exceeds the {max_pages}-page limit",
+            )
     try:
         report = audit_bytes(
             data,
