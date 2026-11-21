@@ -55,17 +55,19 @@ review into independent validation.
 
 ## Live pilot
 
+- Founding plan: https://icsstudies.gumroad.com/l/ics-commitment-audit
+- API-key activation: https://ics-commitment-audit-api.franka328162810.workers.dev/activate
 - Public landing page: https://ics-commitment-audit-api.franka328162810.workers.dev/
 - Health check: https://ics-commitment-audit-api.franka328162810.workers.dev/v1/health
 - Privacy draft: https://ics-commitment-audit-api.franka328162810.workers.dev/privacy
 - Terms draft: https://ics-commitment-audit-api.franka328162810.workers.dev/terms
 
-The hosted API is operational for controlled pilots. Stripe checkout code is
-deployed but is not the current production checkout route. The current paid
-pilot uses Gumroad: a verified and unused Gumroad license key can be exchanged
-once at `/activate` for a founding-team organization and API key. Gumroad
-membership status is rechecked every 15 minutes. The legal pages state the
-service boundary but have not received professional legal review.
+The hosted API and Gumroad founding offer are live. Stripe checkout code is
+deployed but is not the current production checkout route. A verified and
+unused Gumroad license key can be exchanged once at `/activate` for a
+founding-team organization and API key. Gumroad membership status is rechecked
+every 15 minutes. The legal pages state the service boundary but have not
+received professional legal review.
 
 Reproduce the calculation:
 
@@ -125,6 +127,11 @@ The founding plan permits one organization, one shared API key, 100 audited
 documents per month, and at most 100 pages and 50 MB per document. The Gumroad
 listing is capped at 20 active founding supporters. Scanned PDFs without a text
 layer are rejected because OCR is not included.
+
+An owner-only Gumroad test purchase passed on 2026-11-22 without a charge. Its
+license authenticated, activated a `founding-team` organization, and produced a
+100-document quota. The test organization is recorded with `active` Gumroad
+billing status.
 
 Deployment, backup, monitoring, cost, and recovery notes are in
 [`docs/COMMERCIAL_DEPLOYMENT.md`](docs/COMMERCIAL_DEPLOYMENT.md).

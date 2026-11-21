@@ -16,13 +16,22 @@ The v0.2.0 pilot is deployed on Cloudflare:
 - Runtime image: `0.2.0-r3`
 
 The API passes the current smoke, tenant-isolation, failure-refund, concurrency,
-backup, HTTPS, 100-page boundary, and quota-refund checks. It is suitable for a
-controlled paid pilot.
+backup, HTTPS, 100-page boundary, and quota-refund checks.
 
-The Gumroad product and license activation path are configured. The public
-listing remains unpublished until the repository owner gives final approval for
-the external sale page. The legal pages have not received independent counsel
-review, and external alert delivery still requires an end-to-end owner check.
+The Gumroad product is published at:
+
+```text
+https://icsstudies.gumroad.com/l/ics-commitment-audit
+```
+
+Gumroad first published the product on 2026-11-22. The owner-only test purchase
+completed without a charge, its license key activated successfully, and D1
+contains a test `founding-team` organization with 100 monthly documents,
+`active=1`, `billing_provider=gumroad`, and `billing_status=active`.
+
+The legal pages have not received independent counsel review. GitHub Actions
+now probes public availability every 15 minutes, but a separate external alert
+destination has not been verified end to end.
 
 ## Public endpoints
 
@@ -267,17 +276,14 @@ document complexity can move CPU and duration materially.
 
 ## Remaining launch risks
 
-- Obtain owner approval for the Gumroad public listing and complete its official
-  logged-in test purchase.
 - Have privacy, terms, refund, tax, and data-processing language reviewed for
   the seller's jurisdiction and customer markets.
 - Configure and test external alerts.
 - Authenticate the separate `cf` billing CLI with Billing Edit permission and
   verify the Workers spend policy. A Workers limit does not cap Containers,
   Durable Objects, D1, R2, Queues, or other separately billed products.
-- Test representative 50-150 page Chinese and English PDFs at expected peak
+- Test representative 50-100 page Chinese and English PDFs at expected peak
   concurrency.
-- Set retail prices from measured unit economics.
 - Obtain an independent evaluation if customers require assurance-grade
   validation rather than single-reviewer internal validation.
 
