@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "ics-commitment-audit": {
+      "command": "python",
+      "args": [
+        "-m",
+        "ics_commitment_audit.mcp_server"
+      ],
+      "cwd": ".",
+      "env": {
+        "PYTHONPATH": "./src"
+      },
+      "env_vars": [
+        "ICS_AUDIT_API_URL",
+        "ICS_AUDIT_API_KEY"
+      ],
+      "startup_timeout_sec": 20,
+      "tool_timeout_sec": 900,
+      "tools": {
+        "submit_cloud_audit": {
+          "approval_mode": "prompt"
+        }
+      }
+    }
+  }
+}

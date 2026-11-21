@@ -1,0 +1,39 @@
+# Private source and audit material
+_audit_inputs/
+_audit_inputs_utf8/
+_audit_reports/
+tools/
+*.docx
+*.pdf
+!examples/*.pdf
+
+# Local environments and tooling
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+.hypothesis/
+.coverage
+htmlcov/
+coverage.xml
+
+# Packaging and generated output
+build/
+dist/
+dist*/
+*.egg-info/
+.eggs/
+audit-output/
+.ics-crv-output/
+.ics-crv-service/
+
+# Secrets and editor state
+.env
+.env.*
+!.env.example
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

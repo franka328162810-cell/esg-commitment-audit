@@ -1,0 +1,42 @@
+{
+  "name": "ics-commitment-audit",
+  "version": "0.2.0",
+  "description": "Evidence-first ESG and climate commitment structure auditing with local and hosted modes.",
+  "author": {
+    "name": "Xue Zhi Xin (ICS-TEC)",
+    "url": "https://github.com/franka328162810-cell"
+  },
+  "homepage": "https://github.com/franka328162810-cell/ics-commitment-audit",
+  "repository": "https://github.com/franka328162810-cell/ics-commitment-audit",
+  "license": "Apache-2.0",
+  "keywords": [
+    "esg",
+    "climate",
+    "commitments",
+    "sustainability",
+    "audit",
+    "assurance",
+    "crv"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "ICS Commitment Audit",
+    "shortDescription": "Audit ESG and climate commitments with traceable evidence",
+    "longDescription": "Extract written ESG and climate commitments, apply the ICS CRV observability-enforceability-reversibility framework, and surface missing boundaries, baselines, owners, review mechanisms, remedies, and page-level evidence. Local audits run on-device; hosted audits require an authorized API key.",
+    "developerName": "Xue Zhi Xin (ICS-TEC)",
+    "category": "Productivity",
+    "websiteURL": "https://github.com/franka328162810-cell/ics-commitment-audit",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Audit this ESG or climate report and show structural evidence gaps with page-level citations."
+    ],
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg",
+    "screenshots": [],
+    "brandColor": "#0F766E"
+  }
+}

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ICS Commitment Audit Report</title>
+  <style>
+    :root { --ink:#15211f; --muted:#60706b; --line:#dce1dc; --paper:#f4f2ec; --accent:#0f766e; --good:#d9f0ea; --warn:#fff0d7; --bad:#fde7e7; --bad-ink:#9f2d2d; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:"Segoe UI","Microsoft YaHei",sans-serif; line-height:1.55; }
+    main { max-width:1100px; margin:0 auto; padding:42px 24px 60px; }
+    header, section.card { background:#fff; border:1px solid var(--line); border-radius:16px; padding:24px; margin-bottom:16px; }
+    h1 { margin:4px 0 8px; font-family:Georgia,"Songti SC",serif; font-size:2.5rem; }
+    h2 { margin:4px 0 16px; }
+    h3 { margin:20px 0 8px; }
+    h4 { margin:0; }
+    .eyebrow { color:var(--accent); font-size:.72rem; font-weight:800; letter-spacing:.14em; }
+    .muted { color:var(--muted); }
+    .meta { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 20px; font-size:.88rem; }
+    .summary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:16px; }
+    .summary div { background:#f8f9f6; border:1px solid var(--line); border-radius:10px; padding:14px; }
+    .summary strong { display:block; font-family:Georgia,serif; font-size:1.7rem; }
+    .summary span { color:var(--muted); font-size:.78rem; }
+    .notice { border-left:4px solid #9a5b13; padding:11px 13px; border-radius:6px; background:var(--warn); }
+    .commitment-head { display:flex; justify-content:space-between; gap:20px; }
+    .score { text-align:right; flex:0 0 auto; }
+    .score strong { display:block; font-family:Georgia,serif; font-size:2rem; }
+    .score span { color:var(--muted); font-size:.8rem; }
+    blockquote { margin:12px 0; padding:12px 14px; background:#fbfaf5; border-left:4px solid var(--accent); color:var(--muted); }
+    table { width:100%; border-collapse:collapse; font-size:.82rem; margin:8px 0 18px; }
+    th, td { border:1px solid var(--line); text-align:left; padding:8px; vertical-align:top; }
+    th { background:#f5f7f3; }
+    .pill { display:inline-block; border-radius:999px; padding:1px 7px; font-size:.68rem; font-weight:800; }
+    .present { color:var(--accent); background:var(--good); }
+    .missing { color:var(--bad-ink); background:var(--bad); }
+    .partial { color:#9a5b13; background:var(--warn); }
+    ul { padding-left:20px; }
+    footer { color:var(--muted); font-size:.78rem; margin-top:22px; }
+    @media(max-width:760px) { .summary { grid-template-columns:1fr 1fr; } .commitment-head { flex-direction:column; } .score { text-align:left; } .meta { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">ICS-TEC · COMMITMENT AUDIT REPORT · v{{ report.report_version }}</p>
+    <h1>ESG / 气候承诺结构审计</h1>
+    <div class="meta">
+      <div><strong>来源：</strong> {{ report.document.filename }}</div>
+      <div><strong>生成时间：</strong> {{ report.generated_at.isoformat() }}</div>
+      <div><strong>SHA-256:</strong> <code>{{ report.document.sha256 }}</code></div>
+      <div><strong>权重：</strong> {{ report.weights.name }} ({{ "%.2f"|format(report.weights.V_obs) }} / {{ "%.2f"|format(report.weights.V_enf) }} / {{ "%.2f"|format(report.weights.V_rev) }})</div>
+    </div>
+    <div class="summary">
+      <div><strong>{{ report.summary.commitment_count }}</strong><span>识别到的承诺</span></div>
+      <div><strong>{{ "%.3f"|format(report.summary.average_crv) if report.summary.average_crv is not none else "N/A" }}</strong><span>平均 CRV 结构分</span></div>
+      <div><strong>{{ report.summary.high_structure_count }}</strong><span>高结构完整性</span></div>
+      <div><strong>{{ report.summary.limited_structure_count }}</strong><span>有限结构完整性</span></div>
+    </div>
+  </header>
+
+  {% if report.summary.document_warnings %}
+  <section class="card">
+    <h2>文档级提示</h2>
+    {% for warning in report.summary.document_warnings %}<p class="notice">{{ warning }}</p>{% endfor %}
+  </section>
+  {% endif %}
+
+  {% for item in report.commitments %}
+  <section class="card">
+    <div class="commitment-head">
+      <div>
+        <p class="eyebrow">{{ item.category }} · {{ item.subcategory }}</p>
+        <h2>{{ item.commitment_id }}</h2>
+        <p class="muted">承诺强度：{{ item.strength }} · 抽取置信度 {{ "%.2f"|format(item.extraction_confidence) }}</p>
+      </div>
+      <div class="score">
+        <strong>{{ "%.3f"|format(item.crv_score) }}</strong>
+        <span>{{ item.grade }}</span>
+      </div>
+    </div>
+    <blockquote>{{ item.evidence.excerpt }}</blockquote>
+    <p class="muted">
+      {% if item.evidence.page_number %}Page {{ item.evidence.page_number }} ·{% endif %}
+      第 {{ item.evidence.paragraph_index }} 段
+      {% if item.evidence.section %} · {{ item.evidence.section }}{% endif %}
+    </p>
+
+    {% for dimension in item.dimensions %}
+    <h3>{{ dimension.label }} ({{ dimension.key }}) — {{ "%.3f"|format(dimension.score) }}</h3>
+    <table>
+      <thead><tr><th>检查项</th><th>状态</th><th>得分</th><th>证据 / 说明</th></tr></thead>
+      <tbody>
+      {% for check in dimension.checks %}
+        <tr>
+          <td>{{ check.label }}</td>
+          <td><span class="pill {{ check.status.value }}">{{ check.status.value }}</span></td>
+          <td>{{ "%.2f"|format(check.points) }} / {{ "%.2f"|format(check.weight) }}</td>
+          <td>{{ check.evidence[0].excerpt if check.evidence else check.note }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% endfor %}
+
+    <h3>风险提示</h3>
+    <ul>{% for warning in item.warnings %}<li>{{ warning }}</li>{% else %}<li>当前规则未发现需要提示的项目。</li>{% endfor %}</ul>
+    <h3>建议补充内容</h3>
+    <ul>{% for recommendation in item.recommendations %}<li>{{ recommendation }}</li>{% else %}<li>当前规则未发现需要提示的项目。</li>{% endfor %}</ul>
+  </section>
+  {% else %}
+  <section class="card"><p class="notice">No commitment was detected. This does not prove that the document contains no promise.</p></section>
+  {% endfor %}
+
+  <section class="card">
+    <h2>免责声明 / Disclaimer</h2>
+    <p>{{ report.disclaimer }}</p>
+  </section>
+  <footer>Copyright 2026 Xue Zhi Xin (ICS-TEC) · Apache License 2.0 · v{{ report.report_version }}</footer>
+</main>
+</body>
+</html>

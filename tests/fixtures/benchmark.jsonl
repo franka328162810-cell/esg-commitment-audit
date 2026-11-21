@@ -1,0 +1,30 @@
+{"text":"公司承诺到2030年将范围一和范围二碳排放较2020年减少40%。","expected":true,"category":"E"}
+{"text":"我们计划到2040年将取水强度降低25%。","expected":true,"category":"E"}
+{"text":"我们希望未来适当减少废弃物并提高回收率。","expected":true,"category":"E"}
+{"text":"集团目标是在2030年前要求主要供应商完成人权尽职调查。","expected":true,"category":"S"}
+{"text":"公司承诺每年将员工职业安全培训覆盖率提高至100%。","expected":true,"category":"S"}
+{"text":"董事会计划到2028年将独立董事比例提高到二分之一。","expected":true,"category":"G"}
+{"text":"公司致力于到2035年实现100%可再生能源供电。","expected":true,"category":"E"}
+{"text":"我们承诺以2022年为基准，到2030年恢复重点栖息地100公顷。","expected":true,"category":"E"}
+{"text":"公司将确保所有高风险业务单位在2027年前完成反腐败培训。","expected":true,"category":"G"}
+{"text":"我们计划在2029年前把客户数据保护投诉率降低30%。","expected":true,"category":"S"}
+{"text":"The company commits to reducing Scope 1 and 2 emissions by 50% by 2030 from a 2020 baseline.","expected":true,"category":"E"}
+{"text":"We pledge to achieve net-zero greenhouse gas emissions by 2040.","expected":true,"category":"E"}
+{"text":"The group aims to source 100% renewable electricity by 2030.","expected":true,"category":"E"}
+{"text":"We plan to require all strategic suppliers to complete human rights due diligence by 2028.","expected":true,"category":"S"}
+{"text":"The company commits to increasing women in senior leadership to 40% by 2032.","expected":true,"category":"S"}
+{"text":"The board intends to achieve 50% independent director representation by 2029.","expected":true,"category":"G"}
+{"text":"We target a 25% reduction in water withdrawal by 2030 against a 2022 baseline.","expected":true,"category":"E"}
+{"text":"The company aims to achieve a 90% waste recycling rate by 2031.","expected":true,"category":"E"}
+{"text":"We commit to publishing a country-by-country tax transparency report annually from 2027.","expected":true,"category":"G"}
+{"text":"We plan to reduce customer privacy incidents by 30% by 2029.","expected":true,"category":"S"}
+{"text":"The report describes historical carbon emissions in 2024.","expected":false,"category":null}
+{"text":"Carbon price is discussed in this section.","expected":false,"category":null}
+{"text":"We reduced operating costs last year.","expected":false,"category":null}
+{"text":"The board reviewed the sustainability strategy.","expected":false,"category":null}
+{"text":"Biodiversity is important to our stakeholders.","expected":false,"category":null}
+{"text":"The company may face water risk.","expected":false,"category":null}
+{"text":"Environmental data are provided for information only.","expected":false,"category":null}
+{"text":"This policy was approved in 2023.","expected":false,"category":null}
+{"text":"Renewable energy purchases increased by 10% in 2024.","expected":false,"category":null}
+{"text":"The company does not commit to a carbon target.","expected":false,"category":null}

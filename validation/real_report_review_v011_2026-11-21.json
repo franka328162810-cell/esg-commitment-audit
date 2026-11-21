@@ -1,0 +1,105 @@
+{
+  "review_date": "2026-11-21",
+  "product_version": "0.1.1-dev",
+  "reviewer": "Codex assistant manual adjudication; not an independent human expert review",
+  "iteration_status": "failed_commercial_gate",
+  "inclusion_rule": "A unique manual commitment must contain a future-directed target, quantified goal, or concrete recurring obligation. Historical results, methods, governance structures, project descriptions, vague aspirations, and duplicate statements are excluded.",
+  "reports": [
+    {
+      "report_id": "microsoft_dev",
+      "split": "development",
+      "title": "2026 Environmental Sustainability Report",
+      "company": "Microsoft",
+      "language": "en",
+      "pdf_url": "https://aka.ms/SustainabilityReport2026",
+      "pdf_sha256": "20918e9fc4a02241f55d12f1f5b6228a832b706499f9963a1a3f91e3d3e693ba",
+      "sampled_pdf_pages": [8, 62],
+      "manual_commitment_count": 5,
+      "manual_commitments_recalled": 4,
+      "candidate_labels": {
+        "true_positive": ["c002", "c003", "c004", "c018"],
+        "false_positive": []
+      },
+      "top_level_category_correct": ["c002", "c003", "c004", "c018"],
+      "subcategory_correct": ["c002", "c003", "c004", "c018"]
+    },
+    {
+      "report_id": "catl_dev",
+      "split": "development",
+      "title": "宁德时代 2024 年 ESG 报告",
+      "company": "宁德时代新能源科技股份有限公司",
+      "language": "zh",
+      "pdf_url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2025-03-15/c90b92f8-9d52-49d2-9c13-3c10906d0ed6.PDF",
+      "pdf_sha256": "e16ec727d5959b91586c44edcf1deedf5d3ae29133e798a0529daaea90f535f2",
+      "sampled_pdf_pages": [71, 87, 89, 91, 92],
+      "manual_commitment_count": 8,
+      "manual_commitments_recalled": 8,
+      "candidate_labels": {
+        "true_positive": ["c004", "c006", "c012", "c013", "c014", "c015", "c016", "c017"],
+        "false_positive": ["c005", "c007"]
+      },
+      "top_level_category_correct": ["c004", "c006", "c012", "c013", "c014", "c015", "c016", "c017"],
+      "subcategory_correct": ["c004", "c006", "c012", "c013", "c014", "c015", "c016", "c017"]
+    },
+    {
+      "report_id": "apple_holdout",
+      "split": "post_development_validation",
+      "title": "Apple Environmental Progress Report 2025",
+      "company": "Apple",
+      "language": "en",
+      "pdf_url": "https://www.apple.com/environment/pdf/Apple_Environmental_Progress_Report_2025.pdf",
+      "pdf_sha256": "597676e8b48ac45529303abc7ef47425ca62ff4efc3a375962a077a033525f74",
+      "sampled_pdf_pages": [5, 7, 10, 15, 48, 51, 54, 56],
+      "manual_commitment_count": 11,
+      "manual_commitments_recalled": 9,
+      "candidate_labels": {
+        "true_positive": ["c001", "c002", "c003", "c004", "c008", "c009", "c033"],
+        "false_positive": ["c007"]
+      },
+      "top_level_category_correct": ["c001", "c002", "c004", "c008", "c009"],
+      "subcategory_correct": ["c002", "c008", "c009"]
+    },
+    {
+      "report_id": "luxshare_holdout",
+      "split": "post_development_validation",
+      "title": "立讯精密 2024 可持续发展报告",
+      "company": "立讯精密工业股份有限公司",
+      "language": "zh",
+      "pdf_url": "https://www.luxshare-ict.com/Public/Uploads/uploadfile/files/20250426/lixunjingmi2024kechixufazhanbaogao.pdf",
+      "pdf_sha256": "6cbdfa0ceea22471a914bda8b6fb9b452e1806f21fa316f0f0c7e9b7ca4b9d10",
+      "sampled_pdf_pages": [20, 21, 32, 37, 39, 42, 47],
+      "manual_commitment_count": 19,
+      "manual_commitments_recalled": 10,
+      "candidate_labels": {
+        "true_positive": ["c005", "c006", "c007", "c008", "c009", "c010", "c015"],
+        "false_positive": ["c016", "c017"]
+      },
+      "top_level_category_correct": ["c005", "c006", "c007", "c008", "c009", "c015"],
+      "subcategory_correct": ["c005", "c006", "c007", "c008", "c009", "c015"]
+    }
+  ],
+  "excluded_reports": [
+    {
+      "report_id": "midea_2024",
+      "reason": "The PDF text layer retained bullets and isolated numbers but not readable body text, so it was excluded from model accuracy scoring.",
+      "pdf_sha256": "28a9952c08593aa1a7575da1cb6e35920e5da6efbe271252cc59e8c9721ca92f",
+      "pages": 79
+    }
+  ],
+  "summary": {
+    "sampled_candidates": 31,
+    "true_positive_candidates": 26,
+    "false_positive_candidates": 5,
+    "candidate_precision": 0.8387,
+    "manual_unique_commitments": 43,
+    "manual_unique_commitments_recalled": 31,
+    "unique_commitment_recall": 0.7209,
+    "top_level_category_accuracy_on_true_positive_candidates": 0.8846,
+    "subcategory_accuracy_on_true_positive_candidates": 0.8077,
+    "page_citation_coverage": 1.0,
+    "required_candidate_precision": 0.8,
+    "required_unique_commitment_recall": 0.85,
+    "required_category_accuracy": 0.9,
+    "independent_human_review_waived_by_author": true
+  }
+}

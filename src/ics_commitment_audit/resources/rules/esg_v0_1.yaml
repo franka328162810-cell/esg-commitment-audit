@@ -1,0 +1,432 @@
+version: "0.2.0"
+
+weights:
+  default:
+    V_obs: 0.35
+    V_enf: 0.35
+    V_rev: 0.30
+  obs-priority:
+    V_obs: 0.50
+    V_enf: 0.30
+    V_rev: 0.20
+  enf-priority:
+    V_obs: 0.25
+    V_enf: 0.50
+    V_rev: 0.25
+  rev-priority:
+    V_obs: 0.25
+    V_enf: 0.25
+    V_rev: 0.50
+  esg-balanced:
+    V_obs: 0.40
+    V_enf: 0.35
+    V_rev: 0.25
+
+commitment_verbs:
+  strong:
+    - commit
+    - committed
+    - pledge
+    - guarantee
+    - ensure
+    - will achieve
+    - shall
+    - 承诺
+    - 保证
+    - 确保
+  medium:
+    - aim
+    - target
+    - plan
+    - intend
+    - seek to
+    - achieve
+    - reach
+    - reduce
+    - cut
+    - eliminate
+    - 目标
+    - 计划
+    - 致力于
+    - 实现
+    - 达到
+    - 减少
+    - 降低
+    - 削减
+    - 消除
+  weak:
+    - may
+    - might
+    - could
+    - aspire
+    - endeavor
+    - strive
+    - hope
+    - 力求
+    - 努力
+    - 争取
+    - 希望
+
+categories:
+  E1:
+    label: 气候与排放 / Climate and emissions
+    terms:
+      - climate
+      - carbon
+      - emission
+      - greenhouse
+      - net zero
+      - net-zero
+      - decarbon
+      - scope 1
+      - scope 2
+      - scope 3
+      - tco2e
+      - 气候
+      - 碳
+      - 排放
+      - 温室气体
+      - 净零
+      - 碳中和
+      - 脱碳
+      - 范围一
+      - 范围二
+      - 范围三
+  E2:
+    label: 能源 / Energy
+    terms:
+      - renewable electricity
+      - renewable energy
+      - energy efficiency
+      - clean energy
+      - 可再生能源
+      - 清洁能源
+      - 能效
+      - 绿电
+  E3:
+    label: 水资源 / Water
+    terms:
+      - water use
+      - water withdrawal
+      - water intensity
+      - 用水
+      - 水资源
+      - 取水
+  E4:
+    label: 生物多样性 / Biodiversity
+    terms:
+      - biodiversity
+      - ecosystem
+      - habitat
+      - deforestation
+      - 生物多样性
+      - 生态系统
+      - 栖息地
+      - 森林砍伐
+      - 毁林
+  E5:
+    label: 循环经济与废弃物 / Circular economy and waste
+    terms:
+      - waste
+      - circular
+      - recycling
+      - recycled content
+      - 废物
+      - 废弃物
+      - 循环经济
+      - 回收
+      - 再生材料
+  S1:
+    label: 员工与工作场所 / Workforce
+    terms:
+      - employee
+      - workforce
+      - workplace safety
+      - diversity
+      - inclusion
+      - labor rights
+      - women
+      - gender
+      - senior leadership
+      - 员工
+      - 职工
+      - 职业安全
+      - 工作场所
+      - 多元
+      - 包容
+      - 劳工
+      - 女性
+      - 性别
+      - 高级管理层
+  S2:
+    label: 供应链 / Supply chain
+    terms:
+      - supply chain
+      - supplier
+      - human rights
+      - forced labor
+      - child labor
+      - 供应链
+      - 供应商
+      - 人权
+      - 强迫劳动
+      - 童工
+  S3:
+    label: 客户与数据 / Customers and data
+    terms:
+      - customer
+      - product safety
+      - data protection
+      - privacy
+      - 客户
+      - 产品安全
+      - 数据保护
+      - 隐私
+  S4:
+    label: 社区 / Community
+    terms:
+      - community
+      - philanthropy
+      - local employment
+      - 社区
+      - 公益
+      - 本地就业
+  G1:
+    label: 董事会与治理 / Board and governance
+    terms:
+      - board
+      - governance
+      - independent director
+      - 董事会
+      - 治理
+      - 独立董事
+  G2:
+    label: 薪酬 / Remuneration
+    terms:
+      - remuneration
+      - executive pay
+      - compensation link
+      - 薪酬
+      - 高管薪酬
+      - 绩效薪酬
+  G3:
+    label: 反腐败 / Anti-corruption
+    terms:
+      - anti-corruption
+      - bribery
+      - ethics
+      - whistleblower
+      - 反腐败
+      - 反贿赂
+      - 商业道德
+      - 举报
+  G4:
+    label: 税务透明 / Tax transparency
+    terms:
+      - tax transparency
+      - tax strategy
+      - 税务透明
+      - 税收策略
+
+standards:
+  GHG Protocol:
+    - ghg protocol
+    - ghg核算
+    - 温室气体核算体系
+  SBTi:
+    - sbti
+    - science based targets
+    - 科学碳目标
+  CSRD:
+    - csrd
+    - corporate sustainability reporting directive
+    - 企业可持续发展报告指令
+  ISSB:
+    - issb
+    - ifrs s1
+    - ifrs s2
+  TCFD:
+    - tcfd
+    - task force on climate-related financial disclosures
+  GRI:
+    - gri standards
+    - global reporting initiative
+    - gri标准
+  ISO 14064:
+    - iso 14064
+  CDP:
+    - cdp
+
+owners:
+  - esg committee
+  - sustainability committee
+  - board
+  - hse
+  - sustainability department
+  - chief sustainability officer
+  - 可持续发展委员会
+  - esg委员会
+  - 董事会
+  - 安全环保部
+  - 可持续发展部
+  - 首席可持续发展官
+
+assurance_terms:
+  - third-party assurance
+  - independent assurance
+  - independent verification
+  - limited assurance
+  - reasonable assurance
+  - external audit
+  - 第三方鉴证
+  - 第三方审验
+  - 独立鉴证
+  - 独立验证
+  - 有限保证
+  - 合理保证
+  - 外部审计
+
+reporting_terms:
+  - annual report
+  - sustainability report
+  - annual progress
+  - quarterly
+  - semi-annual
+  - regular disclosure
+  - 年度报告
+  - 可持续发展报告
+  - 年度进展
+  - 季度
+  - 半年度
+  - 定期披露
+
+binding_terms:
+  - regulatory requirement
+  - legally binding
+  - contractual
+  - sustainability-linked loan
+  - linked to remuneration
+  - stock exchange rule
+  - law
+  - regulation
+  - 法律约束
+  - 监管要求
+  - 合同约定
+  - 可持续发展挂钩贷款
+  - 与薪酬挂钩
+  - 上市规则
+  - 法律法规
+
+remedy_terms:
+  - penalty
+  - corrective action
+  - corrective plan
+  - remediation
+  - compensation
+  - escalation
+  - clawback
+  - 处罚
+  - 纠正措施
+  - 纠正计划
+  - 补救
+  - 赔偿
+  - 追索
+  - 扣回
+  - 问责
+  - 升级处理
+
+review_terms:
+  - annual review
+  - periodic review
+  - review mechanism
+  - recalibrate
+  - revise
+  - update target
+  - 年度复核
+  - 定期审议
+  - 审查机制
+  - 校准
+  - 修订
+  - 更新目标
+
+revision_trigger_terms:
+  - if technology
+  - if policy changes
+  - when methodology changes
+  - trigger condition
+  - material change
+  - 技术变化
+  - 政策变化
+  - 方法更新
+  - 触发条件
+  - 重大变化
+  - 不可抗力
+
+withdrawal_terms:
+  - withdraw
+  - terminate
+  - revoke
+  - exit
+  - no longer maintain
+  - 撤销
+  - 终止
+  - 退出
+  - 不再维持
+
+mitigation_terms:
+  - fallback
+  - corrective plan
+  - recovery plan
+  - offset plan
+  - transition plan
+  - phase out
+  - rollback
+  - restore
+  - 备用方案
+  - 纠正计划
+  - 恢复计划
+  - 过渡计划
+  - 逐步退出
+  - 回滚
+  - 恢复
+  - 替代方案
+
+conditional_terms:
+  - subject to
+  - depending on
+  - conditional on
+  - if feasible
+  - where possible
+  - if technology matures
+  - 在条件允许时
+  - 条件允许时
+  - 视情况而定
+  - 以技术成熟为前提
+  - 如果可行
+  - 尽可能
+  - 力争
+
+method_terms:
+  - methodology
+  - calculation method
+  - emissions factor
+  - measurement method
+  - inventory boundary
+  - baseline methodology
+  - 核算方法
+  - 计算方法
+  - 排放因子
+  - 测量方法
+  - 清单边界
+  - 基准方法
+
+staged_terms:
+  - interim milestone
+  - phase
+  - staged
+  - roadmap
+  - 分阶段
+  - 阶段性
+  - 路线图
+  - 中间目标
+  - 里程碑

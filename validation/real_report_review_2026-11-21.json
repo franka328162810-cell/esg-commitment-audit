@@ -1,0 +1,469 @@
+{
+  "review_date": "2026-11-21",
+  "reviewer": "Codex assistant manual adjudication; not an independent human expert review",
+  "product_version": "ics-commitment-audit 0.1.0",
+  "inclusion_rule": "Count a candidate as a unique commitment only when it contains a future-directed obligation, target, or quantified goal. Exclude historical achievements, methodology descriptions, governance arrangements, completed actions, general principles, and duplicate restatements of an already-counted commitment.",
+  "reports": [
+    {
+      "report_id": "microsoft",
+      "language": "en",
+      "title": "2026 Environmental Sustainability Report",
+      "company": "Microsoft",
+      "official_page": "https://www.microsoft.com/en-us/corporate-responsibility/topics/sustainability/report/",
+      "pdf_url": "https://aka.ms/SustainabilityReport2026",
+      "pdf_sha256": "20918e9fc4a02241f55d12f1f5b6228a832b706499f9963a1a3f91e3d3e693ba",
+      "pages": 66,
+      "sampled_pdf_pages": [62],
+      "sampled_printed_pages": [62],
+      "manual_commitments": [
+        {
+          "truth_id": "MS-1",
+          "summary": "Become carbon negative by 2030",
+          "category": "E",
+          "subcategory": "Climate and emissions"
+        },
+        {
+          "truth_id": "MS-2",
+          "summary": "Become water positive by 2030",
+          "category": "E",
+          "subcategory": "Water"
+        },
+        {
+          "truth_id": "MS-3",
+          "summary": "Achieve a 40% reduction target for datacenter water usage effectiveness",
+          "category": "E",
+          "subcategory": "Water"
+        },
+        {
+          "truth_id": "MS-4",
+          "summary": "Become zero waste by 2030",
+          "category": "E",
+          "subcategory": "Circular economy and waste"
+        },
+        {
+          "truth_id": "MS-5",
+          "summary": "Protect more land than Microsoft uses while preserving and restoring ecosystems",
+          "category": "E",
+          "subcategory": "Biodiversity"
+        }
+      ],
+      "candidate_labels": [
+        {
+          "candidate_id": "c093",
+          "page": 62,
+          "label": "true_positive",
+          "truth_ids": ["MS-1"],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "reason": "Explicit carbon-negative target with a target year."
+        },
+        {
+          "candidate_id": "c094",
+          "page": 62,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Historical 2025 achievements and progress metrics, not a future obligation."
+        },
+        {
+          "candidate_id": "c095",
+          "page": 62,
+          "label": "true_positive",
+          "truth_ids": ["MS-2"],
+          "category_correct": true,
+          "subcategory_correct": false,
+          "reason": "Explicit water-positive target, but classified as biodiversity."
+        },
+        {
+          "candidate_id": "c096",
+          "page": 62,
+          "label": "true_positive",
+          "truth_ids": ["MS-3"],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "reason": "Progress text contains an explicit 40% reduction target."
+        },
+        {
+          "candidate_id": "c097",
+          "page": 62,
+          "label": "true_positive",
+          "truth_ids": ["MS-4"],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "reason": "Explicit zero-waste target with a target year."
+        },
+        {
+          "candidate_id": "c098",
+          "page": 62,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Method and implementation explanation without a separate target."
+        },
+        {
+          "candidate_id": "c099",
+          "page": 62,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Historical waste-diversion and packaging results."
+        },
+        {
+          "candidate_id": "c100",
+          "page": 62,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Historical reuse and recycling results."
+        },
+        {
+          "candidate_id": "c101",
+          "page": 62,
+          "label": "true_positive",
+          "truth_ids": ["MS-5"],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "reason": "Explicit ecosystem commitment to protect more land than is used."
+        },
+        {
+          "candidate_id": "c102",
+          "page": 62,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Completed projects and activity metrics, not a future obligation."
+        }
+      ]
+    },
+    {
+      "report_id": "catl",
+      "language": "zh",
+      "title": "宁德时代新能源科技股份有限公司 2024 年环境、社会与公司治理（ESG）报告",
+      "company": "宁德时代新能源科技股份有限公司",
+      "official_page": "https://www.szse.cn/",
+      "pdf_url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2025-03-15/c90b92f8-9d52-49d2-9c13-3c10906d0ed6.PDF",
+      "pdf_sha256": "e16ec727d5959b91586c44edcf1deedf5d3ae29133e798a0529daaea90f535f2",
+      "pages": 170,
+      "sampled_pdf_pages": [66, 71, 87, 88, 89, 90, 91, 92],
+      "sampled_printed_pages": [63, 68, 84, 85, 86, 87, 88, 89],
+      "manual_commitments": [
+        {
+          "truth_id": "CATL-1",
+          "summary": "实现 2025 年核心运营碳中和",
+          "category": "E",
+          "subcategory": "Climate and emissions"
+        },
+        {
+          "truth_id": "CATL-2",
+          "summary": "实现 2035 年价值链碳中和",
+          "category": "E",
+          "subcategory": "Climate and emissions"
+        },
+        {
+          "truth_id": "CATL-3",
+          "summary": "要求战略供应商制定重点污染物和固废减量目标并跟踪整改",
+          "category": "S",
+          "subcategory": "Supply chain"
+        },
+        {
+          "truth_id": "CATL-4",
+          "summary": "持续推进总镍提标改造并扩展至其他分子公司",
+          "category": "E",
+          "subcategory": "Water"
+        },
+        {
+          "truth_id": "CATL-5",
+          "summary": "2025 年电池基地单位产量 COD 产生量较 2021 年减少 10%",
+          "category": "E",
+          "subcategory": "Water"
+        },
+        {
+          "truth_id": "CATL-6",
+          "summary": "2025 年电池生产基地单位产能 NOx 排放量较 2021 年减少 10%",
+          "category": "E",
+          "subcategory": "Climate and emissions"
+        },
+        {
+          "truth_id": "CATL-7",
+          "summary": "持续推进 RTO 升级以稳定实现 VOCs 达标排放",
+          "category": "E",
+          "subcategory": "Climate and emissions"
+        },
+        {
+          "truth_id": "CATL-8",
+          "summary": "2025 年电池基地单位产能危险废物产生量较 2023 年减少 5%",
+          "category": "E",
+          "subcategory": "Circular economy and waste"
+        },
+        {
+          "truth_id": "CATL-9",
+          "summary": "持续完善生物多样性保护策略并推动价值链伙伴落实",
+          "category": "E",
+          "subcategory": "Biodiversity"
+        }
+      ],
+      "candidate_labels": [
+        {
+          "candidate_id": "c071",
+          "page": 66,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Current climate governance arrangement, not a separate target."
+        },
+        {
+          "candidate_id": "c072",
+          "page": 66,
+          "label": "true_positive",
+          "truth_ids": ["CATL-1", "CATL-2"],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "reason": "Explicit 2025 and 2035 carbon-neutrality targets, bundled into one candidate."
+        },
+        {
+          "candidate_id": "c073",
+          "page": 66,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Implementation-plan description repeating the existing target."
+        },
+        {
+          "candidate_id": "c074",
+          "page": 66,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "General approach without a separate measurable obligation."
+        },
+        {
+          "candidate_id": "c081",
+          "page": 71,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Duplicate restatement of CATL-1 and CATL-2."
+        },
+        {
+          "candidate_id": "c082",
+          "page": 71,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Scenario-selection methodology, not a company commitment."
+        },
+        {
+          "candidate_id": "c083",
+          "page": 71,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Financial-risk table repeating existing milestones and targets."
+        },
+        {
+          "candidate_id": "c120",
+          "page": 87,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Description of existing environmental management documents."
+        },
+        {
+          "candidate_id": "c121",
+          "page": 88,
+          "label": "true_positive",
+          "truth_ids": ["CATL-3"],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "reason": "Explicit requirement for strategic suppliers to set reduction targets."
+        },
+        {
+          "candidate_id": "c122",
+          "page": 88,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Description of existing emergency plans and drills."
+        },
+        {
+          "candidate_id": "c123",
+          "page": 89,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Legal compliance and pollution-management description."
+        },
+        {
+          "candidate_id": "c124",
+          "page": 89,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Completed internal procedure revisions."
+        },
+        {
+          "candidate_id": "c125",
+          "page": 89,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Description of a standardized treatment model."
+        },
+        {
+          "candidate_id": "c126",
+          "page": 89,
+          "label": "true_positive",
+          "truth_ids": ["CATL-4"],
+          "category_correct": true,
+          "subcategory_correct": false,
+          "reason": "Ongoing expansion and continued pollutant reduction, but classified as climate rather than water."
+        },
+        {
+          "candidate_id": "c127",
+          "page": 89,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": true,
+          "subcategory_correct": false,
+          "reason": "Completed construction and monitoring installation; excluded as a historical action."
+        },
+        {
+          "candidate_id": "c128",
+          "page": 90,
+          "label": "true_positive",
+          "truth_ids": ["CATL-5"],
+          "category_correct": false,
+          "subcategory_correct": false,
+          "reason": "Explicit COD target with baseline and percentage, incorrectly classified as governance."
+        },
+        {
+          "candidate_id": "c129",
+          "page": 90,
+          "label": "true_positive",
+          "truth_ids": ["CATL-6"],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "reason": "Explicit NOx target with baseline, year, and percentage."
+        },
+        {
+          "candidate_id": "c130",
+          "page": 90,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Completed installation and achieved concentration result."
+        },
+        {
+          "candidate_id": "c131",
+          "page": 90,
+          "label": "true_positive",
+          "truth_ids": ["CATL-7"],
+          "category_correct": false,
+          "subcategory_correct": false,
+          "reason": "Ongoing RTO upgrade commitment, incorrectly classified as governance."
+        },
+        {
+          "candidate_id": "c132",
+          "page": 90,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Completed alarm installation and monitoring mechanism."
+        },
+        {
+          "candidate_id": "c133",
+          "page": 90,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Duplicate table restatement of the NOx target."
+        },
+        {
+          "candidate_id": "c134",
+          "page": 91,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Current hazardous-waste handling practice."
+        },
+        {
+          "candidate_id": "c135",
+          "page": 91,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Current packaging-standard practice."
+        },
+        {
+          "candidate_id": "c136",
+          "page": 92,
+          "label": "true_positive",
+          "truth_ids": ["CATL-8"],
+          "category_correct": false,
+          "subcategory_correct": false,
+          "reason": "Explicit 5% hazardous-waste reduction target, incorrectly classified as supply chain."
+        },
+        {
+          "candidate_id": "c137",
+          "page": 92,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "General solid-waste principle without a new target."
+        },
+        {
+          "candidate_id": "c138",
+          "page": 92,
+          "label": "true_positive",
+          "truth_ids": ["CATL-9"],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "reason": "Ongoing biodiversity commitment with aspiration language."
+        },
+        {
+          "candidate_id": "c139",
+          "page": 92,
+          "label": "false_positive",
+          "truth_ids": [],
+          "category_correct": null,
+          "subcategory_correct": null,
+          "reason": "Completed publication of biodiversity and forest commitments."
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "sampled_candidates": 37,
+    "sampled_true_positive_candidates": 13,
+    "sampled_false_positive_candidates": 24,
+    "sampled_unique_manual_commitments": 14,
+    "sampled_manual_commitments_recalled": 14,
+    "candidate_precision": 0.3514,
+    "manual_commitment_recall": 1.0,
+    "top_level_category_accuracy_on_true_positive_candidates": 0.7692,
+    "subcategory_accuracy_on_true_positive_candidates": 0.5385,
+    "page_citation_coverage": 1.0
+  }
+}

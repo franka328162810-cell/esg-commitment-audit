@@ -1,0 +1,1402 @@
+{
+  "review_date": "2026-11-21",
+  "product_version": "0.2.0",
+  "reviewer": "Codex assistant adjudication under the existing written rules",
+  "independent_human_review_waived_by_author": true,
+  "sampling_unit": "Target-rich pages from official public PDF reports",
+  "inclusion_rule": "A unique commitment must contain a future-directed target, a quantified goal, or a concrete recurring obligation. Historical results, methodology, governance descriptions without an obligation, citations, and duplicates are excluded.",
+  "thresholds": {
+    "candidate_precision": 0.8,
+    "unique_commitment_recall": 0.85,
+    "top_level_category_accuracy": 0.9,
+    "page_citation_coverage": 1.0,
+    "minimum_manual_commitments": 80
+  },
+  "reports": [
+    {
+      "report_id": "microsoft_gate",
+      "company": "Microsoft",
+      "title": "2026 Environmental Sustainability Report",
+      "language": "en",
+      "pdf_sha256": "20918e9fc4a02241f55d12f1f5b6228a832b706499f9963a1a3f91e3d3e693ba",
+      "sampled_pdf_pages": [
+        8,
+        17,
+        26,
+        27,
+        37,
+        48,
+        49
+      ],
+      "manual_commitments": [
+        {
+          "manual_id": "MS-01",
+          "page": 8,
+          "summary": "Carbon negative across operations and value chain by 2030",
+          "category": "E"
+        },
+        {
+          "manual_id": "MS-02",
+          "page": 8,
+          "summary": "Water positive by 2030",
+          "category": "E"
+        },
+        {
+          "manual_id": "MS-03",
+          "page": 8,
+          "summary": "Zero waste by 2030",
+          "category": "E"
+        },
+        {
+          "manual_id": "MS-04",
+          "page": 8,
+          "summary": "Protect more land than used by 2025",
+          "category": "E"
+        },
+        {
+          "manual_id": "MS-05",
+          "page": 17,
+          "summary": "Embodied carbon 30% below baseline design",
+          "category": "E"
+        },
+        {
+          "manual_id": "MS-06",
+          "page": 27,
+          "summary": "75% circular content in rack packaging by 2030",
+          "category": "E"
+        },
+        {
+          "manual_id": "MS-07",
+          "page": 37,
+          "summary": "90% operational waste diversion target",
+          "category": "E"
+        },
+        {
+          "manual_id": "MS-08",
+          "page": 48,
+          "summary": "Eliminate single-use plastics",
+          "category": "E"
+        },
+        {
+          "manual_id": "MS-09",
+          "page": 48,
+          "summary": "Design 100% recyclable packaging",
+          "category": "E"
+        },
+        {
+          "manual_id": "MS-10",
+          "page": 49,
+          "summary": "25% recycled content in devices by 2030",
+          "category": "E"
+        }
+      ],
+      "candidate_decisions": [
+        {
+          "candidate_key": "20918e9fc4-p008-2176ce8dd06d",
+          "page": 8,
+          "verdict": "true_positive",
+          "matches": [
+            "MS-01"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "20918e9fc4-p008-53144c0782f2",
+          "page": 8,
+          "verdict": "true_positive",
+          "matches": [
+            "MS-02"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "20918e9fc4-p008-3f7b10a6d28e",
+          "page": 8,
+          "verdict": "true_positive",
+          "matches": [
+            "MS-03"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "20918e9fc4-p008-50688abd1136",
+          "page": 8,
+          "verdict": "true_positive",
+          "matches": [
+            "MS-04"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "20918e9fc4-p017-9b3952dda13c",
+          "page": 17,
+          "verdict": "true_positive",
+          "matches": [
+            "MS-05"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "20918e9fc4-p027-0fc8fdb9d09f",
+          "page": 27,
+          "verdict": "true_positive",
+          "matches": [
+            "MS-06"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "20918e9fc4-p037-e29bdaf40ed7",
+          "page": 37,
+          "verdict": "true_positive",
+          "matches": [
+            "MS-07"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "20918e9fc4-p048-19c882ceaeb0",
+          "page": 48,
+          "verdict": "true_positive",
+          "matches": [
+            "MS-08",
+            "MS-09"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "20918e9fc4-p049-5f29103b4f58",
+          "page": 49,
+          "verdict": "true_positive",
+          "matches": [
+            "MS-10"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        }
+      ]
+    },
+    {
+      "report_id": "apple_gate",
+      "company": "Apple",
+      "title": "Environmental Progress Report 2025",
+      "language": "en",
+      "pdf_sha256": "597676e8b48ac45529303abc7ef47425ca62ff4efc3a375962a077a033525f74",
+      "sampled_pdf_pages": [
+        5,
+        10,
+        21,
+        90,
+        92
+      ],
+      "manual_commitments": [
+        {
+          "manual_id": "AP-01",
+          "page": 5,
+          "summary": "100% recycled cobalt, tin, gold and rare earths by 2025",
+          "category": "E"
+        },
+        {
+          "manual_id": "AP-02",
+          "page": 5,
+          "summary": "Replenish corporate freshwater withdrawals by 2030",
+          "category": "E"
+        },
+        {
+          "manual_id": "AP-03",
+          "page": 5,
+          "summary": "Carbon neutral for corporate operations",
+          "category": "E"
+        },
+        {
+          "manual_id": "AP-04",
+          "page": 5,
+          "summary": "Certify Apple-owned data centers to AWS Standard by 2025",
+          "category": "E"
+        },
+        {
+          "manual_id": "AP-05",
+          "page": 5,
+          "summary": "Supplier average 50% water reuse by 2030",
+          "category": "E"
+        },
+        {
+          "manual_id": "AP-06",
+          "page": 5,
+          "summary": "Eliminate landfill waste from corporate facilities and suppliers",
+          "category": "E"
+        },
+        {
+          "manual_id": "AP-07",
+          "page": 5,
+          "summary": "Remove plastics from packaging by 2025",
+          "category": "E"
+        },
+        {
+          "manual_id": "AP-08",
+          "page": 10,
+          "summary": "90% emissions reduction from 2015 baseline by 2050",
+          "category": "E"
+        },
+        {
+          "manual_id": "AP-09",
+          "page": 10,
+          "summary": "100% clean electricity across value chain by 2030",
+          "category": "E"
+        },
+        {
+          "manual_id": "AP-10",
+          "page": 21,
+          "summary": "Remove plastics from refurbished-product packaging by 2027",
+          "category": "E"
+        },
+        {
+          "manual_id": "AP-11",
+          "page": 90,
+          "summary": "Carbon neutral entire footprint by 2030",
+          "category": "E"
+        },
+        {
+          "manual_id": "AP-12",
+          "page": 90,
+          "summary": "Reduce emissions 75% from 2015 by 2030",
+          "category": "E"
+        },
+        {
+          "manual_id": "AP-13",
+          "page": 92,
+          "summary": "Generate clean energy matching product-use electricity",
+          "category": "E"
+        },
+        {
+          "manual_id": "AP-14",
+          "page": 32,
+          "summary": "Supplier F-GHG abatement at least 90% by 2030",
+          "category": "E"
+        },
+        {
+          "manual_id": "AP-15",
+          "page": 5,
+          "summary": "100% corporate-facility waste diversion",
+          "category": "E"
+        }
+      ],
+      "candidate_decisions": [
+        {
+          "candidate_key": "597676e8b4-p005-59cd74049f78",
+          "page": 5,
+          "verdict": "true_positive",
+          "matches": [
+            "AP-01"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "597676e8b4-p005-16c0cae220c3",
+          "page": 5,
+          "verdict": "true_positive",
+          "matches": [
+            "AP-02"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "597676e8b4-p005-2969c078b961",
+          "page": 5,
+          "verdict": "true_positive",
+          "matches": [
+            "AP-03"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "597676e8b4-p005-e772359fdfe8",
+          "page": 5,
+          "verdict": "true_positive",
+          "matches": [
+            "AP-04"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "597676e8b4-p005-c01a76d62f92",
+          "page": 5,
+          "verdict": "true_positive",
+          "matches": [
+            "AP-05"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "597676e8b4-p005-f29f6cbac01d",
+          "page": 5,
+          "verdict": "true_positive",
+          "matches": [
+            "AP-06"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "597676e8b4-p005-937ed8801ae7",
+          "page": 5,
+          "verdict": "true_positive",
+          "matches": [
+            "AP-07"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "597676e8b4-p010-f935ec3cd444",
+          "page": 10,
+          "verdict": "true_positive",
+          "matches": [
+            "AP-12"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "597676e8b4-p010-b15f2a263949",
+          "page": 10,
+          "verdict": "true_positive",
+          "matches": [
+            "AP-08"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "597676e8b4-p010-e2fa011952d1",
+          "page": 10,
+          "verdict": "true_positive",
+          "matches": [
+            "AP-09"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "597676e8b4-p021-e5581c818498",
+          "page": 21,
+          "verdict": "true_positive",
+          "matches": [
+            "AP-10"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "597676e8b4-p090-4e969dd373ab",
+          "page": 90,
+          "verdict": "true_positive",
+          "matches": [
+            "AP-11"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "597676e8b4-p092-ac2875fbb69e",
+          "page": 92,
+          "verdict": "true_positive",
+          "matches": [
+            "AP-13"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        }
+      ]
+    },
+    {
+      "report_id": "catl_gate",
+      "company": "宁德时代新能源科技股份有限公司",
+      "title": "宁德时代 2024 年 ESG 报告",
+      "language": "zh",
+      "pdf_sha256": "e16ec727d5959b91586c44edcf1deedf5d3ae29133e798a0529daaea90f535f2",
+      "sampled_pdf_pages": [
+        25,
+        26,
+        27,
+        43,
+        45,
+        46,
+        48,
+        51,
+        57,
+        63,
+        79,
+        88,
+        90,
+        92,
+        97,
+        104,
+        109,
+        111
+      ],
+      "manual_commitments": [
+        {
+          "manual_id": "CT-01",
+          "page": 25,
+          "summary": "Supplier code signing rate 100%",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-02",
+          "page": 26,
+          "summary": "Respond immediately to customer complaints and close 100%",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-03",
+          "page": 26,
+          "summary": "Customer satisfaction at least 90%",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-04",
+          "page": 26,
+          "summary": "Core operations carbon neutral in 2025",
+          "category": "E"
+        },
+        {
+          "manual_id": "CT-05",
+          "page": 26,
+          "summary": "Value-chain carbon neutral in 2035",
+          "category": "E"
+        },
+        {
+          "manual_id": "CT-06",
+          "page": 27,
+          "summary": "Employee performance review at least annually",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-07",
+          "page": 27,
+          "summary": "Training for all employees",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-08",
+          "page": 27,
+          "summary": "Certified battery and material sites 100% ISO 45001",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-09",
+          "page": 79,
+          "summary": "Zero-carbon electricity 100% for core operations in 2025",
+          "category": "E"
+        },
+        {
+          "manual_id": "CT-10",
+          "page": 89,
+          "summary": "COD intensity down 10% versus 2021 by 2025",
+          "category": "E"
+        },
+        {
+          "manual_id": "CT-11",
+          "page": 89,
+          "summary": "NOx intensity down 10% versus 2021 by 2025",
+          "category": "E"
+        },
+        {
+          "manual_id": "CT-12",
+          "page": 92,
+          "summary": "Hazardous-waste intensity down 5% versus 2023 by 2025",
+          "category": "E"
+        },
+        {
+          "manual_id": "CT-13",
+          "page": 43,
+          "summary": "Annual supplier site-audit plan",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-14",
+          "page": 43,
+          "summary": "Core suppliers audited annually; all suppliers every three years",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-15",
+          "page": 43,
+          "summary": "Annual quality training with 100% core-supplier coverage",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-16",
+          "page": 45,
+          "summary": "Annual due diligence across mineral supply chains",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-17",
+          "page": 46,
+          "summary": "Annual responsible-minerals supplier training",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-18",
+          "page": 48,
+          "summary": "Annual customer satisfaction survey",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-19",
+          "page": 48,
+          "summary": "At least two customer interviews each year",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-20",
+          "page": 48,
+          "summary": "Annual customer-service training",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-21",
+          "page": 48,
+          "summary": "Annual multidimensional audits of service agents",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-22",
+          "page": 51,
+          "summary": "Annual performance evaluation for all board members",
+          "category": "G"
+        },
+        {
+          "manual_id": "CT-23",
+          "page": 57,
+          "summary": "Audit department risk-management review at least annually",
+          "category": "G"
+        },
+        {
+          "manual_id": "CT-24",
+          "page": 63,
+          "summary": "Annual information-security management update",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-25",
+          "page": 104,
+          "summary": "Monthly and annual employee performance appraisal",
+          "category": "G"
+        },
+        {
+          "manual_id": "CT-26",
+          "page": 88,
+          "summary": "Annual environmental sampling, all bases covered every three years",
+          "category": "E"
+        },
+        {
+          "manual_id": "CT-27",
+          "page": 97,
+          "summary": "Annual mental-health screening",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-28",
+          "page": 109,
+          "summary": "Annual safety training with 100% completion",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-29",
+          "page": 109,
+          "summary": "All employees sign annual safety responsibility letter",
+          "category": "S"
+        },
+        {
+          "manual_id": "CT-30",
+          "page": 111,
+          "summary": "Annual battery-manufacturing skill certification",
+          "category": "S"
+        }
+      ],
+      "candidate_decisions": [
+        {
+          "candidate_key": "e16ec727d5-p025-d76c0bd4d5ae",
+          "page": 25,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-01"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p025-25665c7f42c6",
+          "page": 25,
+          "verdict": "false_positive",
+          "matches": [],
+          "category_correct": false,
+          "subcategory_correct": false,
+          "note": "Unquantified supplier awareness/capability improvement"
+        },
+        {
+          "candidate_key": "e16ec727d5-p026-f50427ef022c",
+          "page": 26,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-02"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p026-d14e3cfe888b",
+          "page": 26,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-03"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p026-123f2edf72e3",
+          "page": 26,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-04",
+            "CT-05"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p027-5a9e30ef082d",
+          "page": 27,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-06"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p027-8a7a8eda88cf",
+          "page": 27,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-08"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p027-222283a49b7c",
+          "page": 27,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-07"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p043-dc85d1c5d54e",
+          "page": 43,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-13"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p043-6adad24e7933",
+          "page": 43,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-14"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p043-94ccbd9d0e0d",
+          "page": 43,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-15"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p045-4dd5c9deeb1e",
+          "page": 45,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-16"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p046-35169d892016",
+          "page": 46,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-17"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p048-bbf03812f00f",
+          "page": 48,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-18"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p048-45acbfb94123",
+          "page": 48,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-19"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p048-9d1642dcdd4c",
+          "page": 48,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-20"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p048-302f768d3062",
+          "page": 48,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-21"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p051-a51cb8ded783",
+          "page": 51,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-22"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p057-3ad2cc1bc1da",
+          "page": 57,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-23"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p063-28e783c4d711",
+          "page": 63,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-24"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p079-f9f027fd096f",
+          "page": 79,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-09"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p088-c9f9f3a76d84",
+          "page": 88,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-26"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p090-893b86b2d8fa",
+          "page": 90,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-10"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p090-19ecbcee3c96",
+          "page": 90,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-11"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p092-1ef0ee05e281",
+          "page": 92,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-12"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p097-12db28c5ce1d",
+          "page": 97,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-27"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p104-884e5dfc46bd",
+          "page": 104,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-25"
+          ],
+          "category_correct": true,
+          "subcategory_correct": false,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p109-a7f061c9efa9",
+          "page": 109,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-28"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p109-86b755ab7df9",
+          "page": 109,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-29"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "e16ec727d5-p111-e5ab0497f10c",
+          "page": 111,
+          "verdict": "true_positive",
+          "matches": [
+            "CT-30"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        }
+      ]
+    },
+    {
+      "report_id": "luxshare_gate",
+      "company": "立讯精密工业股份有限公司",
+      "title": "立讯精密 2024 可持续发展报告",
+      "language": "zh",
+      "pdf_sha256": "6cbdfa0cee22471a914bda8b6fb9b452e1806f21fa316f0f0c7e9b7ca4b9d10",
+      "sampled_pdf_pages": [
+        20,
+        21,
+        31,
+        51,
+        74
+      ],
+      "manual_commitments": [
+        {
+          "manual_id": "LX-01",
+          "page": 20,
+          "summary": "Women directors and independent directors at least one-third",
+          "category": "G"
+        },
+        {
+          "manual_id": "LX-02",
+          "page": 20,
+          "summary": "Business-ethics reports handled at 100%",
+          "category": "G"
+        },
+        {
+          "manual_id": "LX-03",
+          "page": 20,
+          "summary": "Periodic business-ethics training",
+          "category": "G"
+        },
+        {
+          "manual_id": "LX-04",
+          "page": 20,
+          "summary": "Employee integrity pledge signing 100%",
+          "category": "G"
+        },
+        {
+          "manual_id": "LX-05",
+          "page": 20,
+          "summary": "Strengthen information-security and privacy training",
+          "category": "S"
+        },
+        {
+          "manual_id": "LX-06",
+          "page": 20,
+          "summary": "Scope 1 and 2 absolute emissions down 50.4% by 2032",
+          "category": "E"
+        },
+        {
+          "manual_id": "LX-07",
+          "page": 20,
+          "summary": "Cumulative energy savings 250 million kWh in 2023-2025",
+          "category": "E"
+        },
+        {
+          "manual_id": "LX-08",
+          "page": 20,
+          "summary": "Clean-energy share 50% by 2025",
+          "category": "E"
+        },
+        {
+          "manual_id": "LX-09",
+          "page": 20,
+          "summary": "Water-use efficiency up 20% by 2025",
+          "category": "E"
+        },
+        {
+          "manual_id": "LX-10",
+          "page": 20,
+          "summary": "Third-party wastewater monitoring at least annually",
+          "category": "E"
+        },
+        {
+          "manual_id": "LX-11",
+          "page": 20,
+          "summary": "Waste conversion rate 90% by 2025",
+          "category": "E"
+        },
+        {
+          "manual_id": "LX-12",
+          "page": 20,
+          "summary": "Zero fatalities/occupational disease and 10% annual injury reduction",
+          "category": "S"
+        },
+        {
+          "manual_id": "LX-13",
+          "page": 20,
+          "summary": "Inclusive workplace and competitive compensation",
+          "category": "S"
+        },
+        {
+          "manual_id": "LX-14",
+          "page": 20,
+          "summary": "All employees average 20 training hours by 2025",
+          "category": "S"
+        },
+        {
+          "manual_id": "LX-15",
+          "page": 21,
+          "summary": "3TG 100% RMAP-conformant and origin-traced",
+          "category": "S"
+        },
+        {
+          "manual_id": "LX-16",
+          "page": 21,
+          "summary": "Scope 3 value-added intensity down 58.1% by 2032",
+          "category": "E"
+        },
+        {
+          "manual_id": "LX-17",
+          "page": 21,
+          "summary": "Supplier cumulative energy savings 100 million kWh by 2025",
+          "category": "E"
+        },
+        {
+          "manual_id": "LX-18",
+          "page": 31,
+          "summary": "Net zero no later than 2050",
+          "category": "E"
+        },
+        {
+          "manual_id": "LX-19",
+          "page": 31,
+          "summary": "SBTi-validated 1.5C climate targets",
+          "category": "E"
+        },
+        {
+          "manual_id": "LX-20",
+          "page": 31,
+          "summary": "Climate risk integrated into annual departmental work",
+          "category": "G"
+        },
+        {
+          "manual_id": "LX-21",
+          "page": 51,
+          "summary": "Raw-material suppliers sign environmental assurance",
+          "category": "E"
+        },
+        {
+          "manual_id": "LX-22",
+          "page": 74,
+          "summary": "Suppliers sign ethics, conduct and environmental codes",
+          "category": "G"
+        },
+        {
+          "manual_id": "LX-23",
+          "page": 77,
+          "summary": "Supply-chain green low-carbon commitments and targets",
+          "category": "S"
+        },
+        {
+          "manual_id": "LX-24",
+          "page": 39,
+          "summary": "AWS five-dimension water-management targets",
+          "category": "E"
+        },
+        {
+          "manual_id": "LX-25",
+          "page": 47,
+          "summary": "Clean-technology R&D investment above 470 million RMB",
+          "category": "E"
+        }
+      ],
+      "candidate_decisions": [
+        {
+          "candidate_key": "6cbdfa0cee-p020-f063d042f8e9",
+          "page": 20,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-01"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p020-9df599f2d452",
+          "page": 20,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-02"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p020-c91283cc2cab",
+          "page": 20,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-03"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p020-c3b817417317",
+          "page": 20,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-04"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p020-bedc5ecd1825",
+          "page": 20,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-05"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p020-5d581636bb5b",
+          "page": 20,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-06"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p020-cca5dc81b330",
+          "page": 20,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-07"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p020-c53c33b69026",
+          "page": 20,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-08"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p020-d84afd2c90ec",
+          "page": 20,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-09"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p020-25872e4f5100",
+          "page": 20,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-10"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p020-7a3204e71bb9",
+          "page": 20,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-11"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p020-885b0d074c14",
+          "page": 20,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-12"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p020-021f5e7c02af",
+          "page": 20,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-13"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p020-dcafe43abef4",
+          "page": 20,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-14"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p021-43144abf3ab6",
+          "page": 21,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-15"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p021-93a60d8a9111",
+          "page": 21,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-16"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p021-a8eae0f0590a",
+          "page": 21,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-17"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p031-93419c53bfef",
+          "page": 31,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-20"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p031-be36249af83b",
+          "page": 31,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-18",
+            "LX-19"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p051-dbd2f0ef2627",
+          "page": 51,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-21"
+          ],
+          "category_correct": true,
+          "subcategory_correct": true,
+          "note": "Manual adjudication"
+        },
+        {
+          "candidate_key": "6cbdfa0cee-p074-2312fa8ede1d",
+          "page": 74,
+          "verdict": "true_positive",
+          "matches": [
+            "LX-22"
+          ],
+          "category_correct": true,
+          "subcategory_correct": false,
+          "note": "Manual adjudication"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "sampled_candidates": 73,
+    "true_positive_candidates": 72,
+    "false_positive_candidates": 1,
+    "duplicate_candidates": 0,
+    "candidate_precision": 0.9863,
+    "manual_unique_commitments": 80,
+    "manual_unique_commitments_recalled": 75,
+    "unique_commitment_recall": 0.9375,
+    "top_level_category_accuracy": 1.0,
+    "subcategory_accuracy": 0.9722,
+    "page_citation_coverage": 1.0,
+    "unknown_manual_matches": []
+  }
+}
