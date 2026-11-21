@@ -229,6 +229,9 @@ document complexity can move CPU and duration materially.
 - Complete Stripe onboarding and create Starter/Pro Price IDs.
 - Review privacy, terms, refund, tax, and data-processing language.
 - Configure and test external alerts.
+- Authenticate the separate `cf` billing CLI with Billing Edit permission and
+  verify the Workers spend policy. A Workers limit does not cap Containers,
+  Durable Objects, D1, R2, Queues, or other separately billed products.
 - Test representative 50-150 page Chinese and English PDFs at expected peak
   concurrency.
 - Set retail prices from measured unit economics.
