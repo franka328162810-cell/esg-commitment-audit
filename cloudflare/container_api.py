@@ -2,13 +2,13 @@ from __future__ import annotations
 
 import os
 from io import BytesIO
+from urllib.parse import unquote
 
 from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pypdf import PdfReader
 
-from ics_commitment_audit.api import audit_bytes
-from ics_commitment_audit.report import report_to_dict
+from ics_commitment_audit.api import audit_bytes, audit_governance_bytes
 
 MAX_UPLOAD_BYTES = 50 * 1024 * 1024
 
@@ -32,6 +32,7 @@ async def audit(
     x_ics_filename: str = Header("upload.pdf"),
     x_ics_max_pages: str = Header("100"),
     x_ics_weights: str = Header("default"),
+    x_ics_mode: str = Header("commitment"),
     x_ics_internal_token: str = Header(""),
 ) -> JSONResponse:
     expected_token = request.app.state.internal_token
@@ -51,7 +52,11 @@ async def audit(
         raise HTTPException(status_code=500, detail="Invalid page limit") from exc
     if max_pages < 1:
         raise HTTPException(status_code=500, detail="Invalid page limit")
-    if x_ics_filename.lower().endswith(".pdf"):
+    filename = unquote(x_ics_filename)
+    mode = x_ics_mode.strip().lower()
+    if mode not in {"commitment", "recursive-freedom"}:
+        raise HTTPException(status_code=400, detail="Unknown audit mode")
+    if filename.lower().endswith(".pdf"):
         try:
             page_count = len(PdfReader(BytesIO(data)).pages)
         except Exception as exc:
@@ -65,11 +70,14 @@ async def audit(
                 detail=f"PDF exceeds the {max_pages}-page limit",
             )
     try:
-        report = audit_bytes(
-            data,
-            filename=x_ics_filename,
-            weight_preset=x_ics_weights,
-        )
+        if mode == "recursive-freedom":
+            report = audit_governance_bytes(data, filename)
+        else:
+            report = audit_bytes(
+                data,
+                filename=filename,
+                weight_preset=x_ics_weights,
+            )
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
-    return JSONResponse(report_to_dict(report))
+    return JSONResponse(report.model_dump(mode="json"))

@@ -5,6 +5,7 @@ import {
   landingPage,
   privacyPage,
   termsPage,
+  workspacePage,
 } from "./public-pages";
 
 const CONTAINER_PORT = 8080;
@@ -13,6 +14,8 @@ const MAX_JSON_BODY_BYTES = 64 * 1024;
 const BILLING_SYNC_CRON = "*/15 * * * *";
 const RETENTION_CRON = "17 3 * * *";
 const NON_RETRYABLE_CONTAINER_STATUSES = new Set([400, 413, 415, 422]);
+const AUDIT_MODES = ["commitment", "recursive-freedom"] as const;
+type AuditMode = (typeof AUDIT_MODES)[number];
 const PLAN_LIMITS = {
   trial: 5,
   starter: 25,
@@ -50,6 +53,7 @@ interface AuditJob {
   upload_key: string;
   report_key: string | null;
   weights: string;
+  audit_mode: AuditMode;
   error: string | null;
   attempts: number;
   created_at: string;
@@ -101,6 +105,11 @@ function cleanFilename(raw: string | null): string | null {
     return null;
   }
   return filename;
+}
+
+function cleanAuditMode(raw: string | null): AuditMode | null {
+  const value = (raw ?? "commitment").trim().toLowerCase();
+  return value === "commitment" || value === "recursive-freedom" ? value : null;
 }
 
 function bytesToHex(bytes: Uint8Array): string {
@@ -240,7 +249,7 @@ async function verifyGumroadLicense(
         method: "POST",
         headers: {
           "content-type": "application/x-www-form-urlencoded",
-          "user-agent": "ics-commitment-audit/0.2.0",
+          "user-agent": "ics-commitment-audit/0.3.0",
         },
         body: form,
         signal: AbortSignal.timeout(20_000),
@@ -381,6 +390,7 @@ async function reserveJob(
   byteCount: number,
   uploadKey: string,
   weights: string,
+  auditMode: AuditMode,
 ): Promise<boolean> {
   const period = currentPeriod();
   const createdAt = nowIso();
@@ -402,8 +412,8 @@ async function reserveJob(
     env.DB.prepare(
       `INSERT INTO audit_jobs
         (id, organization_id, status, filename, content_type, byte_count,
-         upload_key, weights, created_at)
-       SELECT ?, ?, 'queued', ?, ?, ?, ?, ?, ?
+         upload_key, weights, audit_mode, created_at)
+       SELECT ?, ?, 'queued', ?, ?, ?, ?, ?, ?, ?
         WHERE changes() = 1`,
     ).bind(
       jobId,
@@ -413,6 +423,7 @@ async function reserveJob(
       byteCount,
       uploadKey,
       weights,
+      auditMode,
       createdAt,
     ),
   ]);
@@ -449,6 +460,7 @@ function jobPayload(job: AuditJob): Record<string, unknown> {
     filename: job.filename,
     byte_count: job.byte_count,
     weights: job.weights,
+    audit_mode: job.audit_mode,
     error: job.error,
     attempts: job.attempts,
     created_at: job.created_at,
@@ -471,6 +483,7 @@ async function callContainer(
         "x-ics-filename": encodeURIComponent(job.filename),
         "x-ics-max-pages": env.MAX_DOCUMENT_PAGES,
         "x-ics-weights": job.weights,
+        "x-ics-mode": job.audit_mode,
         "x-ics-internal-token": env.ICS_INTERNAL_TOKEN,
       },
       body,
@@ -696,6 +709,9 @@ export default {
     }
     if (request.method === "GET" && path === "/activate") {
       return htmlResponse(activationPage, 200, { allowInlineScript: true });
+    }
+    if (request.method === "GET" && path === "/workspace") {
+      return htmlResponse(workspacePage, 200, { allowInlineScript: true });
     }
     if (path === "/v1/health" && request.method === "GET") {
       await env.DB.prepare("SELECT 1").first();
@@ -1086,8 +1102,19 @@ export default {
           400,
         );
       }
+      const auditMode = cleanAuditMode(request.headers.get("x-ics-mode"));
+      if (!auditMode) {
+        return json(
+          {
+            error:
+              "X-ICS-Mode must be commitment or recursive-freedom",
+          },
+          400,
+        );
+      }
       const weights = request.headers.get("x-ics-weights") ?? "default";
       if (
+        auditMode === "commitment" &&
         !["default", "obs-priority", "enf-priority", "rev-priority", "esg-balanced"].includes(
           weights,
         )
@@ -1107,6 +1134,7 @@ export default {
         contentLength,
         uploadKey,
         weights,
+        auditMode,
       );
       if (!reserved) return json({ error: "Monthly document quota exhausted" }, 429);
       try {

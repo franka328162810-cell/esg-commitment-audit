@@ -151,3 +151,31 @@ class AuditReport(BaseModel):
     summary: ReportSummary
     commitments: list[CommitmentAudit]
     disclaimer: str
+
+
+class GovernanceCheck(BaseModel):
+    key: str
+    label: str
+    status: CheckStatus
+    note: str
+    evidence: list[EvidenceSpan] = Field(default_factory=list)
+
+
+class GovernanceSummary(BaseModel):
+    check_count: int
+    present_count: int
+    partial_count: int
+    missing_count: int
+    document_warnings: list[str] = Field(default_factory=list)
+
+
+class GovernanceReport(BaseModel):
+    report_version: str = "0.3.0"
+    report_type: Literal["recursive-freedom"] = "recursive-freedom"
+    methodology_version: str = "RFP-AI-policy-structure-v0.1"
+    generated_at: datetime
+    document: DocumentSummary
+    summary: GovernanceSummary
+    checks: list[GovernanceCheck]
+    recommendations: list[str] = Field(default_factory=list)
+    disclaimer: str

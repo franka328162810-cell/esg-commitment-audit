@@ -1,5 +1,6 @@
 const style = `
   :root { color-scheme: light; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  [hidden] { display: none !important; }
   body { margin: 0; color: #182126; background: #f4f7f5; }
   main { max-width: 860px; margin: 0 auto; padding: 48px 24px 80px; }
   article { background: #fff; border: 1px solid #dbe4df; border-radius: 18px; padding: 32px; }
@@ -11,11 +12,39 @@ const style = `
   .notice { border-left: 4px solid #d69219; background: #fff8e8; padding: 14px 18px; }
   .muted { color: #5e6b66; }
   nav { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 30px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0; }
+  .button { display: inline-block; padding: 12px 18px; border: 1px solid #08734f; border-radius: 9px; background: #08734f; color: #fff; font-weight: 700; text-decoration: none; cursor: pointer; }
+  .button.secondary { background: #fff; color: #08734f; }
+  .button.danger { border-color: #a33a2b; background: #a33a2b; }
+  .button:disabled { cursor: not-allowed; opacity: .55; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 20px 0; }
+  .card { border: 1px solid #dbe4df; border-radius: 12px; padding: 18px; background: #fbfdfc; }
+  label { font-weight: 650; }
+  input[type="password"], input[type="text"], select { box-sizing: border-box; width: 100%; padding: 12px; border: 1px solid #aab8b1; border-radius: 8px; background: #fff; font: inherit; }
+  .field-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+  .field-row input { flex: 1 1 320px; }
+  .mode-card { display: block; border: 2px solid #dbe4df; border-radius: 12px; padding: 18px; background: #fff; cursor: pointer; }
+  .mode-card .muted { display: block; margin-top: 6px; }
+  .mode-card input { margin-right: 8px; }
+  .mode-card:has(input:checked) { border-color: #08734f; background: #f0faf6; }
+  .dropzone { border: 2px dashed #8aa49a; border-radius: 12px; padding: 28px 18px; text-align: center; background: #fbfdfc; cursor: pointer; }
+  .dropzone.active { border-color: #08734f; background: #edf9f3; }
+  .status { min-height: 1.5em; color: #31534a; }
+  .error { border-left: 4px solid #a33a2b; background: #fff1ef; padding: 12px 16px; }
+  .success { border-left: 4px solid #08734f; background: #edf9f3; padding: 12px 16px; }
+  .report { margin-top: 30px; }
+  .report-card { border: 1px solid #dbe4df; border-radius: 12px; padding: 18px; margin: 14px 0; background: #fff; }
+  .evidence { border-left: 3px solid #9aa9a2; padding-left: 14px; color: #34443e; }
+  .status-pill { display: inline-block; border-radius: 999px; padding: 3px 9px; font-size: .84rem; font-weight: 700; background: #edf1ef; }
+  .status-present { background: #dff5ea; color: #075c41; }
+  .status-partial { background: #fff1c9; color: #785600; }
+  .status-missing { background: #ffe2dd; color: #8b2d20; }
+  pre { white-space: pre-wrap; word-break: break-word; }
 `;
 
-function page(title: string, body: string): string {
+function page(title: string, body: string, lang = "zh-CN"): string {
   return `<!doctype html>
-<html lang="zh-CN">
+<html lang="${lang}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,28 +58,617 @@ function page(title: string, body: string): string {
 }
 
 export const landingPage = page(
-  "ICS Commitment Audit | 承诺审计工作台",
+  "ICS Commitment Audit | Evidence workbench",
   `<article>
-    <p class="eyebrow">ICS-TEC</p>
-    <h1>把可持续承诺变成可核查的结构证据</h1>
-    <p>ICS Commitment Audit 是面向 ESG、气候与组织承诺文本的结构审计工具。它识别目标、时间、范围、指标和执行强度，并在结果中保留页码或段落证据。</p>
-    <p class="notice"><strong>边界：</strong>本工具提供文本结构分析，不构成审计鉴证、法律意见、合规认证、投资建议或“漂绿”事实认定。</p>
-    <h2>当前服务</h2>
+    <p class="eyebrow">ICS-TEC / ICS STUDIES</p>
+    <h1>Audit the wording before you rely on the promise.</h1>
+    <p>ICS Commitment Audit turns long ESG and climate reports into traceable commitment evidence. The AI Policy Revision Audit Beta applies the same evidence discipline to AI rules, governance documents, and revision paths.</p>
+    <div class="actions">
+      <a class="button" href="https://icsstudies.gumroad.com/l/ics-commitment-audit" rel="noopener">Subscribe on Gumroad — US$29/month</a>
+      <a class="button secondary" href="/workspace">Open the workbench</a>
+    </div>
+    <p class="notice"><strong>Evidence, not certification.</strong> This service analyses document structure. It is not audit assurance, legal advice, compliance certification, investment advice, or proof of greenwashing.</p>
+    <h2>One workbench, two evidence modes</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>ESG / Climate commitments</h3>
+        <p>Extract commitments with page or paragraph evidence, then test observability, enforceability, and revisability.</p>
+      </div>
+      <div class="card">
+        <h3>AI policy revision audit · Beta</h3>
+        <p>Check whether an AI policy states scope, ownership, review cadence, revision authority, notice, appeal, exit, monitoring, rollback, and independent oversight.</p>
+      </div>
+    </div>
+    <h2>Founding plan</h2>
     <ul>
-      <li>支持 TXT、Markdown、DOCX 和 PDF 文本型文件。</li>
-      <li>原始文件在成功处理或最终失败后删除；报告默认保留 7 天。</li>
-      <li>当前试用账户采用邀请创建，正式在线购买入口尚在配置。</li>
+      <li>US$29 per month, capped at 100 audited documents per month.</li>
+      <li>Up to 100 pages and 50 MB per document.</li>
+      <li>Both modes are included and each completed job uses one document from the same monthly quota.</li>
+      <li>TXT, Markdown, DOCX, and text-layer PDF input.</li>
+      <li>Raw uploads are deleted after success or final failure; reports are retained for seven days by default.</li>
+      <li>The public offer is limited to 20 Founding customers.</li>
+      <li>30-day no-questions-asked full refund.</li>
     </ul>
-    <h2>开发者接口</h2>
-    <p>HTTPS API：<a href="/v1/health">/v1/health</a>。开源客户端与规则位于
-      <a href="https://github.com/franka328162810-cell/ics-commitment-audit">GitHub</a>。</p>
+    <h2>How to start</h2>
+    <ol>
+      <li>Subscribe on Gumroad and keep the license key from the receipt.</li>
+      <li><a href="/activate">Activate the license</a> to receive a one-time API key.</li>
+      <li>Paste the API key into the <a href="/workspace">workbench</a>, choose a mode, and upload a document.</li>
+    </ol>
+    <p class="notice"><strong>Beta boundary.</strong> The AI policy mode audits written governance structure only. It does not assess the personality or rights of an individual and must not be used for employment, education, credit, immigration, insurance, political, or judicial decisions.</p>
+    <p class="muted">Theory source for the revision-oriented framing:
+      <a href="https://doi.org/10.5281/zenodo.24217876" rel="noopener">Xue, Z. (2026), <em>On Recursive Freedom: A Theory of the Freedom to Revise</em>, DOI 10.5281/zenodo.24217876</a>.
+      The software applies this idea only to documented policy structure, not to the freedom or conduct of any individual.</p>
+    <h2>Developer interface</h2>
+    <p>Health endpoint: <a href="/v1/health">/v1/health</a>. Source code and rules:
+      <a href="https://github.com/franka328162810-cell/ics-commitment-audit">GitHub</a>.</p>
     <nav>
-      <a href="/privacy">隐私政策草案</a>
-      <a href="/terms">服务条款草案</a>
-      <a href="mailto:franka328162810@gmail.com">联系</a>
+      <a href="/workspace">Workbench</a>
+      <a href="/privacy">Privacy draft</a>
+      <a href="/terms">Terms draft</a>
+      <a href="mailto:franka328162810@gmail.com">Support</a>
     </nav>
-    <p class="muted">运营主体：Xue Zhi Xin (ICS-TEC)。最后更新：2026-11-21。</p>
+    <p class="muted">Operator: Xue Zhi Xin (ICS-TEC). Last updated: 2026-11-22.</p>
   </article>`,
+  "en",
+);
+
+export const workspacePage = page(
+  "Evidence Workbench | ICS Commitment Audit",
+  `<article>
+    <p class="eyebrow">ICS-TEC / EVIDENCE WORKBENCH</p>
+    <h1>Run and review an audit</h1>
+    <p>Your API key stays in this browser tab's session storage and is removed when the tab closes. Documents are uploaded over HTTPS to your ICS account.</p>
+    <p class="notice"><strong>Quota note:</strong> each completed job uses one document from the monthly allowance. Deleting a report removes stored output but does not restore quota.</p>
+
+    <section aria-labelledby="account-heading">
+      <h2 id="account-heading">1. Connect your account</h2>
+      <div id="connected-row" hidden>
+        <div id="account-summary" class="success" aria-live="polite"></div>
+        <div class="actions">
+          <button id="forget-key" class="button secondary" type="button">Forget key from this tab</button>
+          <a class="button secondary" href="/activate">Activate another license</a>
+        </div>
+      </div>
+      <form id="connect-form">
+        <label for="api-key">ICS API key</label>
+        <div class="field-row">
+          <input id="api-key" type="password" autocomplete="off" spellcheck="false" placeholder="ics_live_..." required>
+          <button id="connect-button" class="button" type="submit">Connect</button>
+        </div>
+        <p class="muted">Need a key? <a href="/activate">Activate your Gumroad license</a> or subscribe on <a href="https://icsstudies.gumroad.com/l/ics-commitment-audit" rel="noopener">Gumroad</a>.</p>
+      </form>
+      <p id="account-message" class="status" aria-live="polite"></p>
+    </section>
+
+    <section aria-labelledby="mode-heading">
+      <h2 id="mode-heading">2. Choose an evidence mode</h2>
+      <div class="grid">
+        <label class="mode-card">
+          <input type="radio" name="audit-mode" value="commitment" checked>
+          <strong>ESG / Climate Commitments</strong>
+          <span class="muted">Extraction, source evidence, and CRV structure checks.</span>
+        </label>
+        <label class="mode-card">
+          <input type="radio" name="audit-mode" value="recursive-freedom">
+          <strong>AI Policy Revision Audit · Beta</strong>
+          <span class="muted">Rules for review, revision, appeal, exit, rollback, and oversight.</span>
+        </label>
+      </div>
+      <p id="mode-note" class="muted"></p>
+      <p class="muted">The Beta's revision-oriented framing is informed by
+        <a href="https://doi.org/10.5281/zenodo.24217876" rel="noopener">On Recursive Freedom (2026), DOI 10.5281/zenodo.24217876</a>.
+        This is not a psychological or personal-rights assessment.</p>
+      <p id="weight-field">
+        <label for="weights">ESG weighting preset</label>
+        <select id="weights">
+          <option value="default">Default: balanced</option>
+          <option value="obs-priority">Prioritise observability</option>
+          <option value="enf-priority">Prioritise enforceability</option>
+          <option value="rev-priority">Prioritise revisability</option>
+          <option value="esg-balanced">ESG-balanced</option>
+        </select>
+      </p>
+    </section>
+
+    <section aria-labelledby="upload-heading">
+      <h2 id="upload-heading">3. Upload a document</h2>
+      <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-controls="file-input">
+        <strong>Drop a file here or click to choose</strong>
+        <p class="muted">PDF with a text layer, DOCX, TXT, or Markdown · maximum 50 MB · maximum 100 pages</p>
+        <p id="selected-file" class="muted">No file selected.</p>
+      </div>
+      <input id="file-input" type="file" accept=".pdf,.docx,.txt,.md,.markdown" hidden>
+      <div class="actions">
+        <button id="run-button" class="button" type="button">Run audit</button>
+        <button id="cancel-current" class="button secondary" type="button" hidden>Delete current job</button>
+      </div>
+      <p id="run-status" class="status" aria-live="polite"></p>
+      <div id="error-box" class="error" role="alert" hidden></div>
+    </section>
+
+    <section id="report-section" class="report" aria-labelledby="report-heading" hidden>
+      <div class="actions">
+        <h2 id="report-heading">Audit report</h2>
+        <button id="download-json" class="button secondary" type="button">Download JSON</button>
+        <button id="download-csv" class="button secondary" type="button">Download CSV</button>
+        <button id="delete-report" class="button danger" type="button">Delete report</button>
+      </div>
+      <div id="report-content"></div>
+    </section>
+
+    <nav>
+      <a href="/">Home</a>
+      <a href="/privacy">Privacy draft</a>
+      <a href="/terms">Terms draft</a>
+      <a href="mailto:franka328162810@gmail.com">Support</a>
+    </nav>
+  </article>
+  <script>
+    const STORAGE_KEY = "ics_commitment_audit_api_key";
+    const MAX_BYTES = 50 * 1024 * 1024;
+    const SUPPORTED_FILE = /\\.(pdf|docx|txt|md|markdown)$/i;
+    const $ = (id) => document.getElementById(id);
+    const connectForm = $("connect-form");
+    const apiKeyInput = $("api-key");
+    const connectButton = $("connect-button");
+    const connectedRow = $("connected-row");
+    const accountMessage = $("account-message");
+    const accountSummary = $("account-summary");
+    const selectedFileLabel = $("selected-file");
+    const fileInput = $("file-input");
+    const dropzone = $("dropzone");
+    const runButton = $("run-button");
+    const runStatus = $("run-status");
+    const errorBox = $("error-box");
+    const reportSection = $("report-section");
+    const reportContent = $("report-content");
+    const cancelCurrent = $("cancel-current");
+    const weightField = $("weight-field");
+    const modeNote = $("mode-note");
+    let apiKey = sessionStorage.getItem(STORAGE_KEY) || "";
+    let selectedFile = null;
+    let currentJobId = null;
+    let currentReport = null;
+    let pollGeneration = 0;
+
+    function escapeHtml(value) {
+      return String(value == null ? "" : value).replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[character]);
+    }
+
+    function selectedMode() {
+      return document.querySelector('input[name="audit-mode"]:checked').value;
+    }
+
+    function sleep(milliseconds) {
+      return new Promise((resolve) => setTimeout(resolve, milliseconds));
+    }
+
+    function setMessage(element, message, isError) {
+      element.textContent = message || "";
+      element.hidden = !message;
+      element.className = isError ? "error" : "success";
+    }
+
+    function clearError() {
+      errorBox.textContent = "";
+      errorBox.hidden = true;
+    }
+
+    function showError(message) {
+      errorBox.textContent = message;
+      errorBox.hidden = false;
+    }
+
+    async function responsePayload(response) {
+      const text = await response.text();
+      if (!text) return {};
+      try {
+        return JSON.parse(text);
+      } catch {
+        return { error: text };
+      }
+    }
+
+    function errorMessage(payload, status) {
+      if (payload && payload.error) return String(payload.error);
+      if (status === 401) return "The API key is invalid or expired.";
+      if (status === 411) return "The browser did not provide a file length. Try a current browser.";
+      if (status === 413) return "The file exceeds the upload or page limit.";
+      if (status === 429) return "The monthly document quota is exhausted.";
+      return "Request failed with HTTP " + status + ".";
+    }
+
+    async function apiFetch(path, options) {
+      const headers = new Headers((options && options.headers) || {});
+      if (apiKey) headers.set("Authorization", "Bearer " + apiKey);
+      const response = await fetch(path, Object.assign({}, options || {}, { headers }));
+      if (response.status === 401) {
+        forgetKey(false);
+        throw new Error("The API key is invalid or expired. Connect again.");
+      }
+      return response;
+    }
+
+    function renderAccount(account) {
+      accountSummary.innerHTML =
+        "<strong>" + escapeHtml(account.name) + "</strong><br>" +
+        "Plan: " + escapeHtml(account.plan) + " · " +
+        escapeHtml(account.documents_used) + " / " +
+        escapeHtml(account.monthly_document_limit) + " documents used in " +
+        escapeHtml(account.usage_period) + " · " +
+        escapeHtml(account.remaining_documents) + " remaining";
+      connectedRow.hidden = false;
+      connectForm.hidden = true;
+      apiKeyInput.value = "";
+    }
+
+    async function loadAccount() {
+      const response = await apiFetch("/v1/account", { method: "GET" });
+      const payload = await responsePayload(response);
+      if (!response.ok) throw new Error(errorMessage(payload, response.status));
+      renderAccount(payload);
+      setMessage(accountMessage, "", false);
+      return payload;
+    }
+
+    function forgetKey(showMessage) {
+      apiKey = "";
+      sessionStorage.removeItem(STORAGE_KEY);
+      connectedRow.hidden = true;
+      connectForm.hidden = false;
+      reportSection.hidden = true;
+      currentReport = null;
+      currentJobId = null;
+      pollGeneration += 1;
+      if (showMessage) setMessage(accountMessage, "API key removed from this tab.", false);
+    }
+
+    async function connectWithKey(candidate) {
+      const key = String(candidate || "").trim();
+      if (!key.startsWith("ics_live_")) {
+        setMessage(accountMessage, "Enter a valid ICS API key beginning with ics_live_.", true);
+        return;
+      }
+      connectButton.disabled = true;
+      setMessage(accountMessage, "Checking account...", false);
+      apiKey = key;
+      try {
+        await loadAccount();
+        sessionStorage.setItem(STORAGE_KEY, key);
+        setMessage(accountMessage, "Connected.", false);
+      } catch (error) {
+        apiKey = "";
+        setMessage(accountMessage, error.message || String(error), true);
+      } finally {
+        connectButton.disabled = false;
+      }
+    }
+
+    function chooseFile(file) {
+      clearError();
+      if (!file) return;
+      if (!SUPPORTED_FILE.test(file.name)) {
+        showError("Choose a PDF, DOCX, TXT, or Markdown file.");
+        return;
+      }
+      if (file.size > MAX_BYTES) {
+        showError("The file exceeds the 50 MB limit.");
+        return;
+      }
+      selectedFile = file;
+      const fileSize = file.size < 1024 * 1024
+        ? (file.size / 1024).toFixed(1) + " KB"
+        : (file.size / 1024 / 1024).toFixed(2) + " MB";
+      selectedFileLabel.textContent =
+        file.name + " · " + fileSize;
+    }
+
+    function updateMode() {
+      const governance = selectedMode() === "recursive-freedom";
+      weightField.hidden = governance;
+      modeNote.textContent = governance
+        ? "Beta mode checks ten written governance controls. It analyses the policy, not an individual person or an AI system's actual behaviour."
+        : "Commitment mode extracts ESG and climate promises and scores their written structure.";
+    }
+
+    function positionLabel(evidence) {
+      if (!evidence) return "position unavailable";
+      if (evidence.page_number != null) return "page " + evidence.page_number;
+      return "paragraph " + evidence.paragraph_index;
+    }
+
+    function evidenceBlocks(evidence) {
+      if (!evidence || !evidence.length) {
+        return '<p class="muted">No supporting text located.</p>';
+      }
+      return evidence.map((item) =>
+        '<div class="evidence"><p>' + escapeHtml(item.excerpt || item.text) +
+        '</p><p class="muted">' + escapeHtml(positionLabel(item)) +
+        (item.section ? " · " + escapeHtml(item.section) : "") +
+        '</p></div>'
+      ).join("");
+    }
+
+    function reportHeader(report) {
+      return '<div class="card"><p class="eyebrow">' +
+        escapeHtml(report.report_type === "recursive-freedom" ? "AI Policy Revision Audit Beta" : "ESG / Climate Commitment Audit") +
+        '</p><h2>' + escapeHtml(report.document.filename) + '</h2>' +
+        '<p class="muted">Generated ' + escapeHtml(report.generated_at) +
+        ' · SHA-256 ' + escapeHtml(report.document.sha256) + '</p></div>';
+    }
+
+    function renderGovernanceReport(report) {
+      const summary = report.summary;
+      let html = reportHeader(report);
+      html += '<div class="grid">';
+      html += '<div class="card"><strong>' + escapeHtml(summary.present_count) + '</strong><br>Present</div>';
+      html += '<div class="card"><strong>' + escapeHtml(summary.partial_count) + '</strong><br>Partial</div>';
+      html += '<div class="card"><strong>' + escapeHtml(summary.missing_count) + '</strong><br>Missing</div>';
+      html += '</div>';
+      if (summary.document_warnings && summary.document_warnings.length) {
+        html += '<div class="notice"><strong>Risk language found</strong><ul>' +
+          summary.document_warnings.map((item) => '<li>' + escapeHtml(item) + '</li>').join("") +
+          '</ul></div>';
+      }
+      html += report.checks.map((check) =>
+        '<div class="report-card"><p><span class="status-pill status-' + escapeHtml(check.status) + '">' +
+        escapeHtml(check.status) + '</span></p><h3>' + escapeHtml(check.label) +
+        '</h3><p>' + escapeHtml(check.note) + '</p>' + evidenceBlocks(check.evidence) + '</div>'
+      ).join("");
+      if (report.recommendations && report.recommendations.length) {
+        html += '<div class="card"><h3>Suggested next steps</h3><ul>' +
+          report.recommendations.map((item) => '<li>' + escapeHtml(item) + '</li>').join("") +
+          '</ul></div>';
+      }
+      html += '<div class="notice"><strong>Scope boundary</strong><p>' + escapeHtml(report.disclaimer) + '</p></div>';
+      return html;
+    }
+
+    function renderCommitmentReport(report) {
+      const summary = report.summary;
+      let html = reportHeader(report);
+      html += '<div class="grid">';
+      html += '<div class="card"><strong>' + escapeHtml(summary.commitment_count) + '</strong><br>Commitments detected</div>';
+      html += '<div class="card"><strong>' +
+        (summary.average_crv == null ? "N/A" : Number(summary.average_crv).toFixed(3)) +
+        '</strong><br>Average CRV structure score</div>';
+      html += '</div>';
+      if (summary.document_warnings && summary.document_warnings.length) {
+        html += '<div class="notice"><strong>Document warnings</strong><ul>' +
+          summary.document_warnings.map((item) => '<li>' + escapeHtml(item) + '</li>').join("") +
+          '</ul></div>';
+      }
+      html += report.commitments.map((item) => {
+        const dimensions = (item.dimensions || []).map((dimension) =>
+          '<li><strong>' + escapeHtml(dimension.label) + '</strong>: ' +
+          Number(dimension.score).toFixed(3) + '</li>'
+        ).join("");
+        return '<div class="report-card"><h3>' + escapeHtml(item.commitment_id) +
+          ' · ' + escapeHtml(item.subcategory) + '</h3>' +
+          '<p><span class="status-pill">' + escapeHtml(item.category) +
+          '</span> CRV <strong>' + Number(item.crv_score).toFixed(3) +
+          '</strong> · ' + escapeHtml(item.grade) + '</p>' +
+          evidenceBlocks([item.evidence]) +
+          '<h4>Structure dimensions</h4><ul>' + dimensions + '</ul>' +
+          (item.warnings && item.warnings.length
+            ? '<h4>Warnings</h4><ul>' + item.warnings.map((warning) => '<li>' + escapeHtml(warning) + '</li>').join("") + '</ul>'
+            : "") +
+          (item.recommendations && item.recommendations.length
+            ? '<h4>Suggested text improvements</h4><ul>' + item.recommendations.map((recommendation) => '<li>' + escapeHtml(recommendation) + '</li>').join("") + '</ul>'
+            : "") +
+          '</div>';
+      }).join("");
+      html += '<div class="notice"><strong>Scope boundary</strong><p>' + escapeHtml(report.disclaimer) + '</p></div>';
+      return html;
+    }
+
+    function renderReport(report) {
+      currentReport = report;
+      reportContent.innerHTML = report.report_type === "recursive-freedom"
+        ? renderGovernanceReport(report)
+        : renderCommitmentReport(report);
+      reportSection.hidden = false;
+      reportSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    async function pollJob(jobId, generation) {
+      const started = Date.now();
+      while (generation === pollGeneration && Date.now() - started < 10 * 60 * 1000) {
+        await sleep(2500);
+        if (generation !== pollGeneration) return;
+        const response = await apiFetch("/v1/audits/" + encodeURIComponent(jobId), { method: "GET" });
+        const job = await responsePayload(response);
+        if (!response.ok) throw new Error(errorMessage(job, response.status));
+        runStatus.textContent = "Job " + job.status + " · attempt " + job.attempts + " · elapsed " +
+          Math.round((Date.now() - started) / 1000) + "s";
+        if (job.status === "completed") {
+          const reportResponse = await apiFetch(
+            "/v1/audits/" + encodeURIComponent(jobId) + "/report",
+            { method: "GET" }
+          );
+          const report = await responsePayload(reportResponse);
+          if (!reportResponse.ok) throw new Error(errorMessage(report, reportResponse.status));
+          renderReport(report);
+          runStatus.textContent = "Audit complete.";
+          cancelCurrent.hidden = false;
+          await loadAccount();
+          return;
+        }
+        if (job.status === "failed" || job.status === "cancelled") {
+          throw new Error(job.error || "The audit did not complete.");
+        }
+      }
+      if (generation === pollGeneration) {
+        throw new Error("The audit is taking longer than expected. Keep this page open and retry later.");
+      }
+    }
+
+    async function runAudit() {
+      clearError();
+      if (!apiKey) {
+        showError("Connect your API key before running an audit.");
+        return;
+      }
+      if (!selectedFile) {
+        showError("Choose a document first.");
+        return;
+      }
+      const mode = selectedMode();
+      runButton.disabled = true;
+      reportSection.hidden = true;
+      currentReport = null;
+      currentJobId = null;
+      runStatus.textContent = "Uploading " + selectedFile.name + "...";
+      try {
+        const response = await apiFetch("/v1/audits", {
+          method: "POST",
+          headers: {
+            "Content-Type": selectedFile.type || "application/octet-stream",
+            "X-ICS-Filename": encodeURIComponent(selectedFile.name),
+            "X-ICS-Weights": mode === "commitment" ? $("weights").value : "default",
+            "X-ICS-Mode": mode
+          },
+          body: selectedFile
+        });
+        const payload = await responsePayload(response);
+        if (!response.ok) throw new Error(errorMessage(payload, response.status));
+        currentJobId = payload.id;
+        cancelCurrent.hidden = false;
+        pollGeneration += 1;
+        const generation = pollGeneration;
+        runStatus.textContent = "Queued. The document will be processed asynchronously.";
+        await pollJob(currentJobId, generation);
+      } catch (error) {
+        showError(error.message || String(error));
+        runStatus.textContent = "Audit stopped.";
+      } finally {
+        runButton.disabled = false;
+      }
+    }
+
+    async function deleteCurrentJob() {
+      if (!currentJobId || !apiKey) return;
+      if (!window.confirm("Delete this job and its stored report? This does not restore monthly quota.")) return;
+      const response = await apiFetch(
+        "/v1/audits/" + encodeURIComponent(currentJobId),
+        { method: "DELETE" }
+      );
+      if (!response.ok) {
+        const payload = await responsePayload(response);
+        showError(errorMessage(payload, response.status));
+        return;
+      }
+      pollGeneration += 1;
+      currentJobId = null;
+      currentReport = null;
+      reportSection.hidden = true;
+      cancelCurrent.hidden = true;
+      runStatus.textContent = "Job and stored report deleted.";
+      await loadAccount();
+    }
+
+    function downloadText(filename, text, contentType) {
+      const blob = new Blob([text], { type: contentType });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+    }
+
+    function csvCell(value) {
+      const text = String(value == null ? "" : value).replace(/"/g, '""');
+      return '"' + text + '"';
+    }
+
+    function downloadJson() {
+      if (!currentReport || !currentJobId) return;
+      downloadText(currentJobId + ".json", JSON.stringify(currentReport, null, 2), "application/json");
+    }
+
+    function downloadCsv() {
+      if (!currentReport || !currentJobId) return;
+      const rows = [];
+      if (currentReport.report_type === "recursive-freedom") {
+        rows.push(["Mode", "Check", "Status", "Note", "Evidence", "Page or paragraph"]);
+        currentReport.checks.forEach((check) => {
+          const first = check.evidence && check.evidence[0];
+          rows.push([
+            "recursive-freedom",
+            check.label,
+            check.status,
+            check.note,
+            first ? first.excerpt || first.text : "",
+            first ? positionLabel(first) : ""
+          ]);
+        });
+      } else {
+        rows.push(["Mode", "Commitment ID", "Category", "Subcategory", "CRV", "Grade", "Evidence", "Page or paragraph"]);
+        currentReport.commitments.forEach((item) => {
+          rows.push([
+            "commitment",
+            item.commitment_id,
+            item.category,
+            item.subcategory,
+            item.crv_score,
+            item.grade,
+            item.evidence ? item.evidence.excerpt || item.evidence.text : "",
+            positionLabel(item.evidence)
+          ]);
+        });
+      }
+      const csv = rows.map((row) => row.map(csvCell).join(",")).join("\\r\\n");
+      downloadText(currentJobId + ".csv", csv, "text/csv;charset=utf-8");
+    }
+
+    connectForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      await connectWithKey(apiKeyInput.value);
+    });
+    $("forget-key").addEventListener("click", () => forgetKey(true));
+    document.querySelectorAll('input[name="audit-mode"]').forEach((input) =>
+      input.addEventListener("change", updateMode)
+    );
+    dropzone.addEventListener("click", () => fileInput.click());
+    dropzone.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        fileInput.click();
+      }
+    });
+    fileInput.addEventListener("change", () => chooseFile(fileInput.files[0]));
+    ["dragenter", "dragover"].forEach((name) =>
+      dropzone.addEventListener(name, (event) => {
+        event.preventDefault();
+        dropzone.classList.add("active");
+      })
+    );
+    ["dragleave", "drop"].forEach((name) =>
+      dropzone.addEventListener(name, (event) => {
+        event.preventDefault();
+        dropzone.classList.remove("active");
+      })
+    );
+    dropzone.addEventListener("drop", (event) => chooseFile(event.dataTransfer.files[0]));
+    runButton.addEventListener("click", runAudit);
+    cancelCurrent.addEventListener("click", deleteCurrentJob);
+    $("delete-report").addEventListener("click", deleteCurrentJob);
+    $("download-json").addEventListener("click", downloadJson);
+    $("download-csv").addEventListener("click", downloadCsv);
+    updateMode();
+    if (apiKey) {
+      apiKeyInput.value = apiKey;
+      loadAccount().catch((error) => {
+        setMessage(accountMessage, error.message || String(error), true);
+      });
+    }
+  </script>`,
+  "en",
 );
 
 export const privacyPage = page(
@@ -178,6 +796,7 @@ export const activationPage = page(
       }
     });
   </script>`,
+  "en",
 );
 
 export function htmlResponse(

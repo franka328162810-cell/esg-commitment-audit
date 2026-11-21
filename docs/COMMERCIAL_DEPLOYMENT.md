@@ -4,7 +4,7 @@ Status updated: 2026-11-22
 
 ## Current state
 
-The v0.2.0 pilot is deployed on Cloudflare:
+The v0.3.0 pilot is deployed on Cloudflare:
 
 - Worker and HTTPS API:
   `https://ics-commitment-audit-api.franka328162810.workers.dev`
@@ -13,10 +13,11 @@ The v0.2.0 pilot is deployed on Cloudflare:
 - Dead-letter queue: `ics-commitment-audit-jobs-dlq`
 - Private R2 bucket: `ics-commitment-audit-reports`
 - Container application: `ics-commitment-audit-api-auditcontainer`
-- Runtime image: `0.2.0-r3`
+- Runtime image: `0.3.0-r1`
 
 The API passes the current smoke, tenant-isolation, failure-refund, concurrency,
-backup, HTTPS, 100-page boundary, and quota-refund checks.
+backup, HTTPS, 100-page boundary, and quota-refund checks. The v0.3.0 release
+also passed production checks for both audit modes and the browser workbench.
 
 The Gumroad product is published at:
 
@@ -38,6 +39,7 @@ destination has not been verified end to end.
 ```text
 GET    /
 GET    /activate
+GET    /workspace
 GET    /privacy
 GET    /terms
 GET    /v1/health
@@ -56,6 +58,10 @@ POST   /v1/admin/audits/{job_id}/stop
 
 All tenant endpoints require `Authorization: Bearer <API key>`. Admin endpoints
 require `X-ICS-Admin-Token`.
+
+`POST /v1/audits` accepts `X-ICS-Mode: commitment` for ESG/climate reports or
+`X-ICS-Mode: recursive-freedom` for the AI Policy Revision Audit Beta. Both
+modes share the same quota and document limits.
 
 ## Data handling
 
@@ -193,6 +199,14 @@ Recovery drill performed on 2026-11-22:
 - Integrity check: `ok`.
 - Restored rows: 4 organizations, 3 API keys, 13 audit jobs, 0 billing events.
 
+A second D1 export was made immediately before the v0.3.0 `audit_mode`
+migration. It is stored only in the Git-ignored local private backup directory:
+
+- export size: 16,370 bytes;
+- SHA-256: `F4D27B085D4A6F9D89A095C055A9479EBEA91D37A13C6E0EEF7042F7E3F37D4B`;
+- migration applied successfully after export;
+- all 16 pre-existing jobs were backfilled to `commitment`.
+
 Store production exports in encrypted private storage, restrict access, and
 test a restore into a separate D1 database before relying on the backup.
 
@@ -240,6 +254,11 @@ passed 3/3.
 
 Additional checks:
 
+- AI policy mode returned ten checks with a decoded source filename;
+- both modes consumed exactly one quota unit each;
+- a 101-page PDF in the new mode was rejected with `413` and refunded;
+- cross-tenant access to the new mode job returned `404`;
+- temporary production-test organizations and keys were removed after the run;
 - 101-page synthetic PDF was rejected with the explicit 100-page limit and
   refunded its quota unit.
 - A synthetic text-layer PDF completed, returned a report, and consumed exactly

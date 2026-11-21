@@ -38,8 +38,10 @@ Team plan, with a maximum of 100 pages and 50 MB per document.
 2. **Activate** the Gumroad license key at the
    [activation page](https://ics-commitment-audit-api.franka328162810.workers.dev/activate).
 3. **Run an audit** with the generated API key. The
-   [customer guide](docs/PRODUCT_GUIDE.md) includes ready-to-run `curl` commands
-   and troubleshooting steps.
+   [hosted evidence workbench](https://ics-commitment-audit-api.franka328162810.workers.dev/workspace)
+   lets you choose a mode and upload a document directly in the browser. The
+   [customer guide](docs/PRODUCT_GUIDE.md) also includes ready-to-run `curl`
+   commands and troubleshooting steps.
 
 ## What is included
 
@@ -47,7 +49,9 @@ Team plan, with a maximum of 100 pages and 50 MB per document.
 - A hosted HTTPS audit API running on Cloudflare.
 - Text-layer PDF, DOCX, TXT, and Markdown input.
 - Structured JSON reports with commitment-level evidence.
+- An AI Policy Revision Audit Beta for ten written governance controls.
 - A monthly quota of 100 documents on the founding plan.
+- A 30-day no-questions-asked full-refund policy on the Gumroad offer.
 - Seven-day report retention and tenant-scoped API access.
 - A Codex plugin manifest, skill, and local/cloud MCP tools.
 
@@ -60,7 +64,23 @@ examined text did not support a check; it does not prove that an underlying
 action is absent.
 
 The current rules are strongest for English and Chinese reports. Scanned PDFs
-require OCR, which is not included in v0.2.0.
+require OCR, which is not included in v0.3.0.
+
+### AI Policy Revision Audit Beta
+
+The same workbench now accepts `X-ICS-Mode: recursive-freedom` and reviews ten
+written controls: scope/owner, review cadence, revision process, version
+history, advance notice, appeal/human review, refusal/exit, monitoring/audit,
+rollback/deprecation, and independent oversight. This Beta analyses AI policy
+and governance documents only. It does not assess an individual's personality,
+psychology, or rights and must not be used for employment, education, credit,
+insurance, immigration, political, or judicial scoring.
+
+The revision-oriented framing is informed by Xue, Z. (2026), *On Recursive
+Freedom: A Theory of the Freedom to Revise*, DOI
+[10.5281/zenodo.24217876](https://doi.org/10.5281/zenodo.24217876). The
+software operationalises only a narrow document-review perspective; the DOI
+does not validate the audit results.
 
 ## What the audit does
 
@@ -100,6 +120,7 @@ review into independent validation.
 
 - Founding plan: https://icsstudies.gumroad.com/l/ics-commitment-audit
 - API-key activation: https://ics-commitment-audit-api.franka328162810.workers.dev/activate
+- Evidence workbench: https://ics-commitment-audit-api.franka328162810.workers.dev/workspace
 - Public landing page: https://ics-commitment-audit-api.franka328162810.workers.dev/
 - Health check: https://ics-commitment-audit-api.franka328162810.workers.dev/v1/health
 - Privacy draft: https://ics-commitment-audit-api.franka328162810.workers.dev/privacy
@@ -170,6 +191,10 @@ The founding plan permits one organization, one shared API key, 100 audited
 documents per month, and at most 100 pages and 50 MB per document. The Gumroad
 listing is capped at 20 active founding supporters. Scanned PDFs without a text
 layer are rejected because OCR is not included.
+
+`POST /v1/audits` accepts `X-ICS-Mode: commitment` for ESG/climate reports or
+`X-ICS-Mode: recursive-freedom` for the AI policy Beta. Both modes use the same
+monthly allowance and the same page and file-size limits.
 
 An owner-only Gumroad test purchase passed on 2026-11-22 without a charge. Its
 license authenticated, activated a `founding-team` organization, and produced a
@@ -276,6 +301,6 @@ python -m ics_commitment_audit audit examples\vague_statement.txt
 
 Code and rules are licensed under Apache License 2.0. Future formalizations under
 `formalizations/` are intended to be licensed separately under CC BY-SA 4.0; no
-formal proof is included in v0.2.0.
+formal proof is included in v0.3.0.
 
 Copyright 2026 Xue Zhi Xin (ICS-TEC).

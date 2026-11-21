@@ -235,7 +235,7 @@ def _ingest_pdf(data: bytes) -> tuple[list[DocumentBlock], list[str]]:
 
     if not blocks:
         raise ValueError(
-            "No text layer was found in the PDF. v0.2.0 does not perform OCR."
+            "No text layer was found in the PDF. v0.3.0 does not perform OCR."
         )
     return (blocks if used_layout_blocks else _stitch_page_fragments(blocks)), warnings
 

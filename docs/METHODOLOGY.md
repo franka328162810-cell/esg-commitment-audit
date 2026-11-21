@@ -80,3 +80,37 @@ plausible assumptions.
 | 0.85–1.00 | Very high structure | The text is unusually complete on the implemented checks. |
 
 These labels describe the written commitment only.
+
+## AI Policy Revision Audit Beta
+
+The Beta applies a separate, non-scoring structural checklist to AI policies,
+model cards, governance procedures, and similar written controls:
+
+| Check | What the analyzer looks for |
+|---|---|
+| Scope and owner | Applicability, effective date, policy owner, or accountable body |
+| Review cadence | A recurring review or reconsideration commitment |
+| Revision process | Who may propose or approve amendments, and through what process |
+| Version history | A change log, revision history, and retained prior versions |
+| Advance notice | Notice period and communication to affected people |
+| Appeal and human review | A route to challenge a decision or obtain human review |
+| Refusal and exit | Opt-out, refusal, withdrawal, or exit procedure |
+| Monitoring and audit | Logs, records, monitoring, and evidence review |
+| Rollback and deprecation | Suspension, rollback, or retirement conditions |
+| Independent oversight | Review by an external auditor, panel, or ethics body |
+
+Each check is reported as `present`, `partial`, or `missing` together with the
+matching source excerpt. Presence means only that the examined text contains a
+recognisable written control. It does not establish implementation quality,
+legal compliance, or actual system behaviour.
+
+The Beta is informed by the revision-oriented framing in Xue, Z. (2026), *On
+Recursive Freedom: A Theory of the Freedom to Revise*, DOI
+[10.5281/zenodo.24217876](https://doi.org/10.5281/zenodo.24217876). The
+implementation is an engineering interpretation for document review. The
+publication is not evidence that the rule engine has been independently
+validated.
+
+The Beta must not be used to score an individual's personality, mental state,
+political views, employability, creditworthiness, insurance risk, educational
+outcomes, immigration status, or legal culpability.

@@ -17,11 +17,14 @@ consistent with science, or legally compliant.
 
 ## Technical limitations
 
-- Scanned PDFs require OCR, which is excluded from v0.2.0.
+- Scanned PDFs require OCR, which is excluded from v0.3.0.
 - Complex tables and multi-column layouts may require manual review.
 - Chinese and English rule coverage is broader than other languages.
 - The rule engine is intentionally conservative and may miss paraphrases.
 - The internal benchmark is not an independent validation dataset.
+- The AI Policy Revision Audit is a Beta checklist of written controls. It does
+  not establish that a control exists in practice, works as described, or meets
+  any legal or safety standard.
 
 ## Privacy
 

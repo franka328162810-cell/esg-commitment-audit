@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.3.0 — 2026-11-22
+
+Hosted evidence-workbench and AI-policy Beta release.
+
+- Added a browser workbench at `/workspace` for API-key connection, account
+  quota display, drag-and-drop upload, asynchronous status polling, evidence
+  review, JSON/CSV download, and report deletion.
+- Added the AI Policy Revision Audit Beta with ten written governance checks:
+  scope/owner, review cadence, revision process, version history, notice,
+  appeal/human review, refusal/exit, monitoring/audit, rollback/deprecation,
+  and independent oversight.
+- Added `X-ICS-Mode: commitment|recursive-freedom` and persisted the selected
+  mode on each audit job through D1 migration `0003_audit_mode.sql`.
+- Kept both modes under the same document quota, page limit, file-size limit,
+  privacy boundary, and tenant-isolation controls.
+- Added per-document risk-language safeguards so a protective notice clause
+  cannot hide a separate “without notice” clause.
+- Replaced the public Chinese-only launch page with an English product page
+  linking Gumroad, activation, and the workbench.
+- Added the DOI-backed intellectual provenance for the revision-oriented Beta
+  framing without treating the publication as independent software validation.
+- Added a locked container-dependency manifest and reproducible v0.3.0 wheel
+  build.
+- Passed 65 automated Python tests and Ruff/TypeScript/Wrangler checks.
+- Passed production tests for both modes, invalid keys, cross-tenant isolation,
+  one-document quota accounting, 101-page rejection, quota refund, and report
+  deletion.
+
 ## Cloud pilot extension — 2026-11-21
 
 - Deployed the hosted Worker, D1, R2, Queue, Durable Object, and container

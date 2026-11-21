@@ -34,6 +34,7 @@ The current production rules are strongest for English and Chinese reports.
 
 The subscription renews monthly through Gumroad. Cancellation and billing are
 managed in Gumroad. Gumroad also displays the applicable taxes at checkout.
+The public offer includes a 30-day no-questions-asked full refund.
 
 ## Supported files
 
@@ -43,7 +44,7 @@ managed in Gumroad. Gumroad also displays the applicable taxes at checkout.
 - Markdown
 
 Scanned PDFs without a text layer are not supported because OCR is not included
-in v0.2.0. If the service reports `No text layer was found in the PDF`, run OCR
+in v0.3.0. If the service reports `No text layer was found in the PDF`, run OCR
 or use the original text-based source before retrying.
 
 ## Purchase and activation
@@ -58,6 +59,11 @@ or use the original text-based source before retrying.
 5. Copy the generated `ics_live_...` API key immediately. It is displayed once.
 6. Store both credentials privately. Never put the API key in a public GitHub
    repository, client-side JavaScript, screenshots, or support posts.
+7. Open the
+   [evidence workbench](https://ics-commitment-audit-api.franka328162810.workers.dev/workspace),
+   paste the API key into the current browser tab, choose a mode, and upload the
+   document. The key is kept in that tab's `sessionStorage` and is removed when
+   the tab closes.
 
 The server verifies the Gumroad purchase before issuing access. A license can be
 activated once. Gumroad membership status is rechecked every 15 minutes, and
@@ -78,7 +84,11 @@ Gumroad license key.
 
 ## Run an audit
 
-Replace the file name and path with your own document:
+Use the hosted browser workbench for the normal workflow. It supports
+drag-and-drop input, progress polling, page/paragraph evidence review, JSON and
+CSV downloads, and report deletion.
+
+For scripted clients, replace the file name and path with your own document:
 
 ```bash
 curl \
@@ -86,6 +96,7 @@ curl \
   -H "Authorization: Bearer YOUR_ICS_API_KEY" \
   -H "Content-Type: application/pdf" \
   -H "X-ICS-Filename: sustainability-report.pdf" \
+  -H "X-ICS-Mode: commitment" \
   --data-binary @sustainability-report.pdf \
   https://ics-commitment-audit-api.franka328162810.workers.dev/v1/audits
 ```
@@ -120,6 +131,28 @@ curl \
 
 See [Methodology](METHODOLOGY.md) for weights and interpretation bands.
 
+## AI Policy Revision Audit Beta
+
+Change `X-ICS-Mode` to `recursive-freedom` and submit an AI policy, model card,
+governance procedure, or similar document. The report covers ten written
+controls:
+
+- scope, effective date, and accountable owner;
+- scheduled review;
+- revision process;
+- version history;
+- advance notice;
+- appeal and human review;
+- refusal, opt-out, and exit;
+- monitoring and audit evidence;
+- rollback, suspension, and deprecation;
+- independent oversight.
+
+The Beta reviews document structure only. It does not test an individual's
+personality, psychology, political views, employability, creditworthiness,
+insurability, educational eligibility, immigration status, or legal
+culpability. Both modes consume one unit from the same monthly quota.
+
 ## Data handling
 
 - The vendor receives only documents explicitly submitted to the hosted API.
@@ -135,10 +168,9 @@ and [terms](https://ics-commitment-audit-api.franka328162810.workers.dev/terms).
 
 ## Refunds and cancellation
 
-The product displays a seven-day money-back guarantee. The listed fine print
-allows a full refund within seven days of the initial purchase if no more than
-five documents have been audited. After that threshold, fees are non-refundable
-except where required by law.
+The product displays a 30-day no-questions-asked full refund. Contact
+**franka328162810@gmail.com** or use Gumroad support within 30 days of purchase
+to request the refund.
 
 Cancel future renewals from the Gumroad purchase or library page. Ending a
 membership removes hosted API access after the Gumroad status check.
