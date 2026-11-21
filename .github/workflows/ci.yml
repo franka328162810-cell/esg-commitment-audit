@@ -29,3 +29,21 @@ jobs:
         run: python -m pytest
       - name: CLI smoke test
         run: ics-crv audit examples/strong_commitment.txt --format json --output build/report.json
+
+  cloudflare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: cloudflare/package-lock.json
+      - name: Install Cloudflare dependencies
+        run: npm ci
+        working-directory: cloudflare
+      - name: Validate plugin MCP server
+        run: node --test plugin/server.test.mjs
+      - name: Validate Worker types
+        run: npm run check
+        working-directory: cloudflare

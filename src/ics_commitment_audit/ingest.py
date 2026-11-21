@@ -5,10 +5,15 @@ import io
 import re
 from dataclasses import dataclass
 from pathlib import Path
+from zipfile import BadZipFile
 
 import pdfplumber
 from docx import Document
+from docx.opc.exceptions import PackageNotFoundError
+from lxml.etree import XMLSyntaxError
+from pdfminer.pdfparser import PDFSyntaxError
 from pypdf import PdfReader
+from pypdf.errors import PdfReadError
 
 from .models import DocumentBlock, IngestedDocument
 
@@ -709,12 +714,25 @@ def ingest_bytes(data: bytes, filename: str) -> IngestedDocument:
             f"Unsupported file type '{extension or '(none)'}'. Supported: {supported}"
         )
 
-    if extension == ".pdf":
-        blocks, warnings = _ingest_pdf(data)
-    elif extension == ".docx":
-        blocks, warnings = _ingest_docx(data)
-    else:
-        blocks, warnings = _ingest_text(data)
+    try:
+        if extension == ".pdf":
+            blocks, warnings = _ingest_pdf(data)
+        elif extension == ".docx":
+            blocks, warnings = _ingest_docx(data)
+        else:
+            blocks, warnings = _ingest_text(data)
+    except ValueError:
+        raise
+    except (
+        BadZipFile,
+        KeyError,
+        PDFSyntaxError,
+        PackageNotFoundError,
+        PdfReadError,
+        XMLSyntaxError,
+    ) as exc:
+        label = extension.lstrip(".").upper()
+        raise ValueError(f"The {label} file could not be parsed.") from exc
 
     return IngestedDocument(
         filename=filename,

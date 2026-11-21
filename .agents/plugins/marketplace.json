@@ -1,0 +1,20 @@
+{
+  "name": "ics-tec",
+  "interface": {
+    "displayName": "ICS-TEC"
+  },
+  "plugins": [
+    {
+      "name": "ics-commitment-audit",
+      "source": {
+        "source": "local",
+        "path": "./plugin"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

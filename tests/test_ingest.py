@@ -93,6 +93,21 @@ def test_unsupported_and_empty_input() -> None:
         ingest_bytes(b"", "report.txt")
 
 
+@pytest.mark.parametrize(
+    ("filename", "content"),
+    [
+        ("broken.pdf", b"not a pdf"),
+        ("broken.docx", b"not a docx"),
+    ],
+)
+def test_malformed_document_raises_clean_value_error(
+    filename: str,
+    content: bytes,
+) -> None:
+    with pytest.raises(ValueError, match="could not be parsed"):
+        ingest_bytes(content, filename)
+
+
 def test_ingest_path() -> None:
     path = Path("examples/strong_commitment.txt")
     document = ingest_path(path)

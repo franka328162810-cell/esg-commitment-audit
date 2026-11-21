@@ -1,0 +1,78 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "ics-commitment-audit-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-21",
+  "account_id": "aa7d0faa102dcea2d358907bbf96b7ec",
+  "upload_source_maps": true,
+  "containers": [
+    {
+      "class_name": "AuditContainer",
+      "image": "registry.cloudflare.com/aa7d0faa102dcea2d358907bbf96b7ec/ics-commitment-audit-api-auditcontainer:0.2.0-r2",
+      "instance_type": "standard-1",
+      "max_instances": 4,
+      "constraints": {
+        "regions": ["APAC"]
+      }
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "AUDIT_CONTAINER",
+        "class_name": "AuditContainer"
+      }
+    ]
+  },
+  "exports": {
+    "AuditContainer": {
+      "type": "durable-object",
+      "storage": "sqlite"
+    }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ics-commitment-audit-db",
+      "database_id": "85ea92a7-03a4-4f39-94b2-000aa92db12d",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "REPORTS",
+      "bucket_name": "ics-commitment-audit-reports"
+    }
+  ],
+  "queues": {
+    "producers": [
+      {
+        "binding": "AUDIT_QUEUE",
+        "queue": "ics-commitment-audit-jobs"
+      }
+    ],
+    "consumers": [
+      {
+        "queue": "ics-commitment-audit-jobs",
+        "max_batch_size": 1,
+        "max_batch_timeout": 1,
+        "max_retries": 3,
+        "dead_letter_queue": "ics-commitment-audit-jobs-dlq"
+      }
+    ]
+  },
+  "vars": {
+    "SERVICE_NAME": "ics-commitment-audit",
+    "PUBLIC_BASE_URL": "https://ics-commitment-audit-api.franka328162810.workers.dev",
+    "MAX_UPLOAD_BYTES": "52428800",
+    "REPORT_RETENTION_DAYS": "7",
+    "JOB_METADATA_RETENTION_DAYS": "180"
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "triggers": {
+    "crons": ["17 3 * * *"]
+  }
+}

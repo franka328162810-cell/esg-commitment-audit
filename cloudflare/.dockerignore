@@ -1,0 +1,12 @@
+.dev.vars
+.wrangler
+container-image*.oci.tar
+migrations
+node_modules
+scripts
+src
+tests
+worker-configuration.d.ts
+wrangler.jsonc
+package*.json
+tsconfig.json

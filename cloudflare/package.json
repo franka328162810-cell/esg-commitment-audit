@@ -1,0 +1,17 @@
+{
+  "name": "ics-commitment-audit-cloudflare",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "wrangler types && tsc --noEmit",
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "types": "wrangler types",
+    "db:migrate": "wrangler d1 migrations apply ics-commitment-audit-db --remote",
+    "container:prepare": "python -m pip wheel .. --no-deps --no-build-isolation --wheel-dir container-dist"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "wrangler": "^4.166.0"
+  }
+}

@@ -1,5 +1,22 @@
 # Changelog
 
+## Cloud pilot extension — 2026-11-21
+
+- Deployed the hosted Worker, D1, R2, Queue, Durable Object, and container
+  runtime on Cloudflare.
+- Added Stripe Checkout Session creation while keeping live payment disabled
+  until merchant credentials and Price IDs exist.
+- Added public landing, privacy draft, and terms draft pages.
+- Added 7-day report retention, 180-day metadata cleanup, and a 30-day R2
+  lifecycle backstop.
+- Fixed malformed PDF/DOCX handling so parsing failures return `400` and refund
+  quota immediately without three pointless retries.
+- Fixed container capacity and idle lifecycle behavior; 3/3 concurrent TXT,
+  DOCX, and PDF audits now pass after the capacity correction.
+- Added a dependency-free Node MCP marketplace bundle and a repository
+  marketplace manifest, validated by an isolated Codex plugin installation.
+- Added cloud smoke, load, MCP, D1 backup, and recovery-drill procedures.
+
 ## 0.2.0 — 2026-11-21
 
 Commercial-gate and Codex plugin release.

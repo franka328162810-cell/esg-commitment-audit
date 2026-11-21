@@ -28,6 +28,7 @@ dist*/
 audit-output/
 .ics-crv-output/
 .ics-crv-service/
+.wrangler/
 
 # Secrets and editor state
 .env

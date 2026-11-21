@@ -4,10 +4,10 @@ import json
 import os
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 from typing import Any
-from uuid import uuid4
 
 from . import __version__
 from .api import audit_bytes, audit_text
@@ -134,6 +134,7 @@ def _cloud_request(
     *,
     body: bytes | None = None,
     content_type: str | None = None,
+    extra_headers: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     base_url, api_key = _cloud_config()
     request = urllib.request.Request(
@@ -143,7 +144,9 @@ def _cloud_request(
         headers={
             "Authorization": f"Bearer {api_key}",
             "Accept": "application/json",
+            "User-Agent": f"ics-commitment-audit-mcp/{__version__}",
             **({"Content-Type": content_type} if content_type else {}),
+            **(extra_headers or {}),
         },
     )
     try:
@@ -160,26 +163,22 @@ def _submit_cloud(path: Path, weights: str) -> dict[str, Any]:
         raise ValueError(f"File not found: {path}")
     if path.suffix.lower() not in SUPPORTED_EXTENSIONS:
         raise ValueError(f"Unsupported file type: {path.suffix}")
-    boundary = f"----ics-{uuid4().hex}"
-    chunks = [
-        f"--{boundary}\r\n".encode(),
-        b'Content-Disposition: form-data; name="weights"\r\n\r\n',
-        weights.encode("utf-8"),
-        b"\r\n",
-        f"--{boundary}\r\n".encode(),
-        (
-            f'Content-Disposition: form-data; name="file"; filename="{path.name}"\r\n'
-        ).encode(),
-        b"Content-Type: application/octet-stream\r\n\r\n",
-        path.read_bytes(),
-        b"\r\n",
-        f"--{boundary}--\r\n".encode(),
-    ]
+    content_types = {
+        ".pdf": "application/pdf",
+        ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        ".txt": "text/plain; charset=utf-8",
+        ".md": "text/markdown; charset=utf-8",
+        ".markdown": "text/markdown; charset=utf-8",
+    }
     result = _cloud_request(
         "POST",
         "/v1/audits",
-        body=b"".join(chunks),
-        content_type=f"multipart/form-data; boundary={boundary}",
+        body=path.read_bytes(),
+        content_type=content_types[path.suffix.lower()],
+        extra_headers={
+            "X-ICS-Filename": urllib.parse.quote(path.name),
+            "X-ICS-Weights": weights,
+        },
     )
     result["api_url"] = base_url
     return result

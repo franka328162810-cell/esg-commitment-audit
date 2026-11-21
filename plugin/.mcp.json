@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "ics-commitment-audit": {
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "server.mjs"
+      ],
+      "env": {
+        "ICS_AUDIT_API_URL": "https://ics-commitment-audit-api.franka328162810.workers.dev",
+        "NODE_NO_WARNINGS": "1"
+      },
+      "env_vars": [
+        "ICS_AUDIT_API_KEY"
+      ],
+      "startup_timeout_sec": 20,
+      "tool_timeout_sec": 300,
+      "tools": {
+        "audit_document": {
+          "approval_mode": "prompt"
+        },
+        "audit_text": {
+          "approval_mode": "prompt"
+        },
+        "delete_cloud_audit": {
+          "approval_mode": "prompt"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="ICS Commitment Audit">
+  <rect width="256" height="256" rx="56" fill="#0F766E"/>
+  <path d="M128 34 211 72v57c0 48-32 80-83 96-51-16-83-48-83-96V72l83-38Z" fill="#F0FDFA" opacity=".16"/>
+  <path d="M128 52 193 82v45c0 37-24 64-65 79-41-15-65-42-65-79V82l65-30Z" fill="none" stroke="#F0FDFA" stroke-width="10"/>
+  <path d="M89 103h20v51H89zm29 0h48v13h-33v9h29v12h-29v17h-15zm0 39h24v12h-24z" fill="#F0FDFA"/>
+  <circle cx="173" cy="171" r="23" fill="#F59E0B"/>
+  <path d="m162 171 8 8 14-16" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

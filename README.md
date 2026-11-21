@@ -10,10 +10,11 @@ performing well.
 Version 0.2.0 includes:
 
 - a free local CLI and local web workbench;
-- tenant-isolated commercial API foundations;
+- a deployed HTTPS pilot API on Cloudflare Workers, D1, R2, Queues, and
+  Containers;
 - API-key authentication, monthly document quotas, persistent audit jobs, and
   tenant-scoped report retrieval;
-- a provider-neutral billing webhook for subscription activation/update/cancel;
+- provider-neutral billing webhooks and a Stripe Checkout Session endpoint;
 - a Codex plugin manifest, skill, and local/cloud MCP tools.
 
 ## What the audit does
@@ -50,6 +51,18 @@ It is a single-reviewer Codex adjudication under written rules; the author
 waived an independent second human reviewer. The waiver does not convert the
 review into independent validation.
 
+## Live pilot
+
+- Public landing page: https://ics-commitment-audit-api.franka328162810.workers.dev/
+- Health check: https://ics-commitment-audit-api.franka328162810.workers.dev/v1/health
+- Privacy draft: https://ics-commitment-audit-api.franka328162810.workers.dev/privacy
+- Terms draft: https://ics-commitment-audit-api.franka328162810.workers.dev/terms
+
+The hosted API is operational for controlled pilots. Stripe checkout code is
+deployed but returns `503` until a Stripe merchant account, secret key, webhook
+secret, and Starter/Pro Price IDs are configured. The legal pages remain drafts
+and require review before charging customers.
+
 Reproduce the calculation:
 
 ```powershell
@@ -80,6 +93,32 @@ ics-crv serve
 The local server binds to `127.0.0.1` by default and does not upload documents.
 
 ## Commercial API
+
+### Hosted Cloudflare pilot
+
+The hosted control plane uses D1 for organizations and jobs, R2 for private
+uploads/reports, Queues for asynchronous work, and one Durable Object container
+per audit. All customer records are tenant-scoped.
+
+```text
+POST   /v1/audits
+GET    /v1/audits/{job_id}
+GET    /v1/audits/{job_id}/report
+DELETE /v1/audits/{job_id}
+GET    /v1/account
+POST   /v1/billing/checkout
+POST   /v1/billing/stripe-webhook
+POST   /v1/billing/webhook
+```
+
+Raw uploads are deleted after success or final failure. Reports expire after
+seven days, job metadata after 180 days, and an R2 lifecycle rule deletes any
+remaining `orgs/` objects after 30 days.
+
+Deployment, backup, monitoring, cost, and recovery notes are in
+[`docs/COMMERCIAL_DEPLOYMENT.md`](docs/COMMERCIAL_DEPLOYMENT.md).
+
+### Local commercial server
 
 Create an organization and a one-time API key:
 
@@ -116,24 +155,39 @@ tax/refund policy. See
 
 ## Codex plugin
 
-The repository root is also a Codex plugin:
+The repository includes both a development plugin at the root and a
+dependency-free marketplace bundle in `plugin/`.
 
 ```text
 .codex-plugin/plugin.json
 .mcp.json
 skills/ics-commitment-audit/SKILL.md
+plugin/.codex-plugin/plugin.json
+plugin/.mcp.json
+plugin/server.mjs
+.agents/plugins/marketplace.json
 ```
 
-After installing this Python package, enable the repository as a local plugin or
-publish it through a Codex plugin marketplace. The MCP server provides:
+Install the hosted plugin from the repository marketplace:
 
-- `audit_local_document`
+```powershell
+codex plugin marketplace add franka328162810-cell/ics-commitment-audit --ref main
+codex plugin add ics-commitment-audit@ics-tec
+```
+
+Configure `ICS_AUDIT_API_KEY` before using hosted tools. The marketplace bundle
+uses a dependency-free Node MCP client and requires network access to the ICS
+HTTPS API. It provides:
+
+- `audit_document`
 - `audit_text`
-- `submit_cloud_audit`
 - `get_cloud_audit`
+- `get_account`
+- `delete_cloud_audit`
 
-Local audit is the default. Hosted tools require both `ICS_AUDIT_API_URL` and
-`ICS_AUDIT_API_KEY`; cloud submission is approval-gated in `.mcp.json`.
+The root development plugin additionally exposes local Python audit tools. Local
+audit remains free and on-device when the Python package is installed. Hosted
+uploads and deletion are approval-gated in `.mcp.json`.
 
 ## Report interpretation
 
