@@ -1,24 +1,28 @@
 # Commercial deployment
 
-Status updated: 2026-11-22
+Status updated: 2026-11-23
 
 ## Current state
 
-The v0.3.1 pilot is deployed on Cloudflare:
+The renamed ESG Commitment Audit development preview is deployed on Cloudflare:
 
 - Worker and HTTPS API:
   `https://esg-commitment-audit-api.franka328162810.workers.dev`
 - D1: `esg-commitment-audit-db`
+  (`dd13954a-aebc-4434-ae0f-45c6ea31fa30`)
 - Queue: `esg-commitment-audit-jobs`
 - Dead-letter queue: `esg-commitment-audit-jobs-dlq`
 - Private R2 bucket: `esg-commitment-audit-reports`
 - Container application: `esg-commitment-audit-api-auditcontainer`
-- Runtime image: `0.3.1-r1`
+- Runtime image: `0.4.0.dev1-r1`
 
-The API passes the current smoke, tenant-isolation, failure-refund, concurrency,
-backup, HTTPS, 100-page boundary, and quota-refund checks. The v0.3.1 release
-also passed production checks for both audit modes, the browser workbench, and
-the dedicated Recursive Freedom product page.
+The previous Worker name remains as a 308 redirect to the new Worker. Previous
+D1, R2 and queue resources are retained temporarily as a rollback path and are
+not used by the new Worker.
+
+The new deployment passes public page and health checks plus a three-document
+TXT, DOCX and PDF end-to-end container test. The old v0.3.1 production test
+records remain historical evidence for the pre-rename service.
 
 The Gumroad product is published at:
 

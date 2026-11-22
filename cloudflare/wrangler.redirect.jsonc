@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "ics-commitment-audit-api",
+  "main": "redirect-worker.ts",
+  "compatibility_date": "2026-11-21",
+  "account_id": "aa7d0faa102dcea2d358907bbf96b7ec",
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "AUDIT_CONTAINER",
+        "class_name": "AuditContainer"
+      }
+    ]
+  },
+  "exports": {
+    "AuditContainer": {
+      "type": "durable-object",
+      "storage": "sqlite"
+    }
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}

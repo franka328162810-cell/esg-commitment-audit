@@ -10,6 +10,7 @@ tools/
 # Local environments and tooling
 .venv/
 .docker-config/
+.chrome-gumroad/
 .wrangler-config/
 venv/
 __pycache__/
