@@ -8,7 +8,11 @@ from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pypdf import PdfReader
 
-from esg_commitment_audit.api import audit_bytes, audit_governance_bytes
+from esg_commitment_audit.api import (
+    audit_bytes,
+    audit_governance_bytes,
+    audit_revisability_bytes,
+)
 
 MAX_UPLOAD_BYTES = 50 * 1024 * 1024
 
@@ -33,6 +37,7 @@ async def audit(
     x_esg_max_pages: str = Header("100"),
     x_esg_weights: str = Header("default"),
     x_esg_mode: str = Header("commitment"),
+    x_esg_profile: str = Header("general"),
     x_esg_internal_token: str = Header(""),
 ) -> JSONResponse:
     expected_token = request.app.state.internal_token
@@ -54,8 +59,17 @@ async def audit(
         raise HTTPException(status_code=500, detail="Invalid page limit")
     filename = unquote(x_esg_filename)
     mode = x_esg_mode.strip().lower()
-    if mode not in {"commitment", "recursive-freedom"}:
+    if mode not in {"commitment", "recursive-freedom", "ai-revisability"}:
         raise HTTPException(status_code=400, detail="Unknown audit mode")
+    profile = x_esg_profile.strip().lower()
+    if profile not in {
+        "general",
+        "news_media",
+        "advertising",
+        "insurance",
+        "industrial_design",
+    }:
+        raise HTTPException(status_code=400, detail="Unknown review profile")
     if filename.lower().endswith(".pdf"):
         try:
             page_count = len(PdfReader(BytesIO(data)).pages)
@@ -72,6 +86,12 @@ async def audit(
     try:
         if mode == "recursive-freedom":
             report = audit_governance_bytes(data, filename)
+        elif mode == "ai-revisability":
+            report = audit_revisability_bytes(
+                data,
+                filename,
+                profile=profile,
+            )
         else:
             report = audit_bytes(
                 data,

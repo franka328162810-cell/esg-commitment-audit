@@ -43,6 +43,43 @@ def test_container_routes_ai_policy_mode() -> None:
     assert len(payload["checks"]) == 10
 
 
+def test_container_routes_ai_revisability_mode() -> None:
+    response = client.post(
+        "/audit",
+        headers={
+            "x-esg-filename": "ai-policy.txt",
+            "x-esg-mode": "ai-revisability",
+            "x-esg-profile": "insurance",
+        },
+        content=(
+            b"An adverse action notice states the reason for the decision. "
+            b"A qualified human review is available to contest a denial. "
+            b"The policy is reviewed annually."
+        ),
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["report_type"] == "ai-alignment-revisability"
+    assert payload["profile"] == "insurance"
+    assert payload["summary"]["check_count"] == 30
+
+
+def test_container_rejects_unknown_review_profile() -> None:
+    response = client.post(
+        "/audit",
+        headers={
+            "x-esg-filename": "ai-policy.txt",
+            "x-esg-mode": "ai-revisability",
+            "x-esg-profile": "unknown",
+        },
+        content=b"AI policy text.",
+    )
+
+    assert response.status_code == 400
+    assert response.json()["detail"] == "Unknown review profile"
+
+
 def test_container_keeps_esg_mode_as_default() -> None:
     response = client.post(
         "/audit",
@@ -80,7 +117,7 @@ def test_container_rejects_pdf_over_page_limit_in_both_modes() -> None:
     output = BytesIO()
     writer.write(output)
 
-    for mode in ("commitment", "recursive-freedom"):
+    for mode in ("commitment", "recursive-freedom", "ai-revisability"):
         response = client.post(
             "/audit",
             headers={

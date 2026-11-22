@@ -4,9 +4,17 @@ import readline from "node:readline";
 import { pathToFileURL } from "node:url";
 
 const SERVER_NAME = "esg-commitment-audit";
-const SERVER_VERSION = "0.4.0-dev.1";
+const SERVER_VERSION = "0.4.0-dev.2";
 const PROTOCOL_VERSION = "2025-06-18";
 const MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
+const AUDIT_MODES = ["commitment", "recursive-freedom", "ai-revisability"];
+const REVIEW_PROFILES = [
+  "general",
+  "news_media",
+  "advertising",
+  "insurance",
+  "industrial_design",
+];
 
 const contentTypes = {
   ".pdf": "application/pdf",
@@ -40,6 +48,16 @@ const tools = [
           ],
           default: "default",
         },
+        mode: {
+          type: "string",
+          enum: AUDIT_MODES,
+          default: "commitment",
+        },
+        profile: {
+          type: "string",
+          enum: REVIEW_PROFILES,
+          default: "general",
+        },
       },
       required: ["path"],
       additionalProperties: false,
@@ -56,6 +74,16 @@ const tools = [
         text: { type: "string" },
         filename: { type: "string", default: "pasted-text.txt" },
         weights: { type: "string", default: "default" },
+        mode: {
+          type: "string",
+          enum: AUDIT_MODES,
+          default: "commitment",
+        },
+        profile: {
+          type: "string",
+          enum: REVIEW_PROFILES,
+          default: "general",
+        },
       },
       required: ["text"],
       additionalProperties: false,
@@ -154,7 +182,7 @@ async function cloudRequest(
   return payload;
 }
 
-async function submitDocument(filePath, weights) {
+async function submitDocument(filePath, weights, mode, profile) {
   const resolved = path.resolve(filePath);
   const extension = path.extname(resolved).toLowerCase();
   const contentType = contentTypes[extension];
@@ -176,11 +204,13 @@ async function submitDocument(filePath, weights) {
     headers: {
       "X-ESG-Filename": encodeURIComponent(path.basename(resolved)),
       "X-ESG-Weights": String(weights || "default"),
+      "X-ESG-Mode": String(mode || "commitment"),
+      "X-ESG-Profile": String(profile || "general"),
     },
   });
 }
 
-async function submitText(text, filename, weights) {
+async function submitText(text, filename, weights, mode, profile) {
   if (!text || text.length > 2_000_000) {
     throw new Error("Text must contain between 1 and 2,000,000 characters");
   }
@@ -192,19 +222,28 @@ async function submitText(text, filename, weights) {
     headers: {
       "X-ESG-Filename": encodeURIComponent(finalName),
       "X-ESG-Weights": String(weights || "default"),
+      "X-ESG-Mode": String(mode || "commitment"),
+      "X-ESG-Profile": String(profile || "general"),
     },
   });
 }
 
 async function callTool(name, args) {
   if (name === "audit_document") {
-    return submitDocument(String(args.path), args.weights);
+    return submitDocument(
+      String(args.path),
+      args.weights,
+      args.mode,
+      args.profile,
+    );
   }
   if (name === "audit_text") {
     return submitText(
       String(args.text),
       String(args.filename || "pasted-text.txt"),
       args.weights,
+      args.mode,
+      args.profile,
     );
   }
   if (name === "get_cloud_audit") {

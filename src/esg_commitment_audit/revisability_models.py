@@ -56,7 +56,7 @@ class RevisabilitySummary(BaseModel):
 
 
 class RevisabilityReport(BaseModel):
-    report_version: str = "0.4.0.dev1"
+    report_version: str = "0.4.0.dev2"
     report_type: Literal["ai-alignment-revisability"] = "ai-alignment-revisability"
     methodology_version: str = "RFP-AI-revisability-document-v0.1"
     generated_at: datetime

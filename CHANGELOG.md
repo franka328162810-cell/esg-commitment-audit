@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.0.dev1 — development
+## 0.4.0.dev2 — development
 
 AI Alignment Revisability Audit development milestone.
 
@@ -18,6 +18,9 @@ AI Alignment Revisability Audit development milestone.
   and `serve` subcommands; the combined `esg-commitment-audit` commands remain compatible.
 - Added a local workbench at `/revisability`.
 - Added JSON, Markdown, and standalone HTML reports.
+- Added the hosted `ai-revisability` mode, industry-profile selection, dedicated
+  product and sample pages, and hosted workbench report rendering.
+- Added persistent `audit_profile` storage through D1 migration `0004`.
 - Added `esg-commitment-audit revisability-version` and `/revisability/versions` for
   previous/current document comparison.
 - Added check-grade movement, high-materiality regression, warning movement, and

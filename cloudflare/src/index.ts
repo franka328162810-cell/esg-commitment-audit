@@ -1,11 +1,11 @@
 import { DurableObject } from "cloudflare:workers";
 import {
   activationPage,
+  aiRevisabilityPage,
+  aiRevisabilitySamplePage,
   htmlResponse,
   landingPage,
   privacyPage,
-  recursiveFreedomSamplePage,
-  recursiveFreedomPage,
   termsPage,
   workspacePage,
 } from "./public-pages";
@@ -16,8 +16,20 @@ const MAX_JSON_BODY_BYTES = 64 * 1024;
 const BILLING_SYNC_CRON = "*/15 * * * *";
 const RETENTION_CRON = "17 3 * * *";
 const NON_RETRYABLE_CONTAINER_STATUSES = new Set([400, 413, 415, 422]);
-const AUDIT_MODES = ["commitment", "recursive-freedom"] as const;
+const AUDIT_MODES = [
+  "commitment",
+  "recursive-freedom",
+  "ai-revisability",
+] as const;
 type AuditMode = (typeof AUDIT_MODES)[number];
+const REVIEW_PROFILES = [
+  "general",
+  "news_media",
+  "advertising",
+  "insurance",
+  "industrial_design",
+] as const;
+type ReviewProfile = (typeof REVIEW_PROFILES)[number];
 const PLAN_LIMITS = {
   trial: 5,
   starter: 25,
@@ -56,6 +68,7 @@ interface AuditJob {
   report_key: string | null;
   weights: string;
   audit_mode: AuditMode;
+  audit_profile: ReviewProfile;
   error: string | null;
   attempts: number;
   created_at: string;
@@ -111,7 +124,14 @@ function cleanFilename(raw: string | null): string | null {
 
 function cleanAuditMode(raw: string | null): AuditMode | null {
   const value = (raw ?? "commitment").trim().toLowerCase();
-  return value === "commitment" || value === "recursive-freedom" ? value : null;
+  return AUDIT_MODES.includes(value as AuditMode) ? (value as AuditMode) : null;
+}
+
+function cleanReviewProfile(raw: string | null): ReviewProfile | null {
+  const value = (raw ?? "general").trim().toLowerCase();
+  return REVIEW_PROFILES.includes(value as ReviewProfile)
+    ? (value as ReviewProfile)
+    : null;
 }
 
 function bytesToHex(bytes: Uint8Array): string {
@@ -251,7 +271,7 @@ async function verifyGumroadLicense(
         method: "POST",
         headers: {
           "content-type": "application/x-www-form-urlencoded",
-          "user-agent": "esg-commitment-audit/0.4.0.dev1",
+          "user-agent": "esg-commitment-audit/0.4.0.dev2",
         },
         body: form,
         signal: AbortSignal.timeout(20_000),
@@ -393,6 +413,7 @@ async function reserveJob(
   uploadKey: string,
   weights: string,
   auditMode: AuditMode,
+  auditProfile: ReviewProfile,
 ): Promise<boolean> {
   const period = currentPeriod();
   const createdAt = nowIso();
@@ -414,8 +435,8 @@ async function reserveJob(
     env.DB.prepare(
       `INSERT INTO audit_jobs
         (id, organization_id, status, filename, content_type, byte_count,
-         upload_key, weights, audit_mode, created_at)
-       SELECT ?, ?, 'queued', ?, ?, ?, ?, ?, ?, ?
+         upload_key, weights, audit_mode, audit_profile, created_at)
+       SELECT ?, ?, 'queued', ?, ?, ?, ?, ?, ?, ?, ?
         WHERE changes() = 1`,
     ).bind(
       jobId,
@@ -426,6 +447,7 @@ async function reserveJob(
       uploadKey,
       weights,
       auditMode,
+      auditProfile,
       createdAt,
     ),
   ]);
@@ -463,6 +485,7 @@ function jobPayload(job: AuditJob): Record<string, unknown> {
     byte_count: job.byte_count,
     weights: job.weights,
     audit_mode: job.audit_mode,
+    audit_profile: job.audit_profile,
     error: job.error,
     attempts: job.attempts,
     created_at: job.created_at,
@@ -486,6 +509,7 @@ async function callContainer(
         "x-esg-max-pages": env.MAX_DOCUMENT_PAGES,
         "x-esg-weights": job.weights,
         "x-esg-mode": job.audit_mode,
+        "x-esg-profile": job.audit_profile,
         "x-esg-internal-token": env.ESG_INTERNAL_TOKEN,
       },
       body,
@@ -718,11 +742,23 @@ export default {
     if (request.method === "GET" && path === "/workspace") {
       return htmlResponse(workspacePage, 200, { allowInlineScript: true });
     }
+    if (request.method === "GET" && path === "/ai-revisability-audit") {
+      return htmlResponse(aiRevisabilityPage);
+    }
+    if (request.method === "GET" && path === "/ai-revisability-audit/sample") {
+      return htmlResponse(aiRevisabilitySamplePage);
+    }
     if (request.method === "GET" && path === "/recursive-freedom") {
-      return htmlResponse(recursiveFreedomPage);
+      return Response.redirect(
+        new URL("/ai-revisability-audit", request.url).toString(),
+        308,
+      );
     }
     if (request.method === "GET" && path === "/recursive-freedom/sample") {
-      return htmlResponse(recursiveFreedomSamplePage);
+      return Response.redirect(
+        new URL("/ai-revisability-audit/sample", request.url).toString(),
+        308,
+      );
     }
     if (path === "/v1/health" && request.method === "GET") {
       await env.DB.prepare("SELECT 1").first();
@@ -1118,10 +1154,17 @@ export default {
         return json(
           {
             error:
-              "X-ESG-Mode must be commitment or recursive-freedom",
+              "X-ESG-Mode must be commitment, recursive-freedom, or ai-revisability",
           },
           400,
         );
+      }
+      const auditProfile =
+        auditMode === "ai-revisability"
+          ? cleanReviewProfile(request.headers.get("x-esg-profile"))
+          : "general";
+      if (!auditProfile) {
+        return json({ error: "Unknown AI review profile" }, 400);
       }
       const weights = request.headers.get("x-esg-weights") ?? "default";
       if (
@@ -1146,6 +1189,7 @@ export default {
         uploadKey,
         weights,
         auditMode,
+        auditProfile,
       );
       if (!reserved) return json({ error: "Monthly document quota exhausted" }, 429);
       try {

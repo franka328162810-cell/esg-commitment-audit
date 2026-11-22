@@ -39,6 +39,13 @@ const style = `
   .status-present { background: #dff5ea; color: #075c41; }
   .status-partial { background: #fff1c9; color: #785600; }
   .status-missing { background: #ffe2dd; color: #8b2d20; }
+  .status-documented { background: #dff5ea; color: #075c41; }
+  .status-asserted { background: #fff1c9; color: #785600; }
+  .status-absent { background: #edf1ef; color: #4e5d57; }
+  .status-contradicted { background: #ffe2dd; color: #8b2d20; }
+  .status-operationally_evidenced { background: #e4eefc; color: #174e80; }
+  .status-independently_verified { background: #eee8fa; color: #4d3678; }
+  .status-not_assessable { background: #edf1ef; color: #4e5d57; }
   .table-wrap { overflow-x: auto; margin: 20px 0; }
   .data-table { width: 100%; border-collapse: collapse; font-size: .94rem; }
   .data-table th, .data-table td { border-bottom: 1px solid #dbe4df; padding: 10px 12px; text-align: left; vertical-align: top; }
@@ -67,29 +74,29 @@ export const landingPage = page(
   `<article>
     <p class="eyebrow">ICS-TEC / ICS STUDIES</p>
     <h1>Audit the wording before you rely on the promise.</h1>
-    <p>ESG Commitment Audit turns long sustainability and climate reports into traceable commitment evidence. Recursive Freedom Audit for AI applies the same evidence discipline to AI rules, governance documents, and revision paths.</p>
+    <p>ESG Commitment Audit turns long sustainability and climate reports into traceable commitment evidence. AI Alignment Revisability Audit applies the same evidence discipline to AI rules, constitutions, model cards, and revision paths.</p>
     <div class="actions">
       <a class="button" href="https://icsstudies.gumroad.com/l/esg-commitment-audit" rel="noopener">Subscribe on Gumroad — US$29/month</a>
       <a class="button secondary" href="/workspace">Open the workbench</a>
     </div>
     <p class="notice"><strong>Evidence, not certification.</strong> This service analyses document structure. It is not audit assurance, legal advice, compliance certification, investment advice, or proof of greenwashing.</p>
-    <h2>One workbench, two evidence modes</h2>
+    <h2>One workbench, two product families</h2>
     <div class="grid">
       <div class="card">
         <h3>ESG / Climate commitments</h3>
         <p>Extract commitments with page or paragraph evidence, then test observability, enforceability, and revisability.</p>
       </div>
       <div class="card">
-        <h3>Recursive Freedom Audit for AI · Beta</h3>
-        <p>Check whether an AI policy states scope, ownership, review cadence, revision authority, notice, appeal, exit, monitoring, rollback, and independent oversight.</p>
-        <p><a href="/recursive-freedom">Read the product scope and validation record</a></p>
+        <h3>AI Alignment Revisability Audit · Beta</h3>
+        <p>Review 28 written controls for alignment targets, revision authority, version history, rollback, affected-party safeguards, oversight, and technical-control evidence.</p>
+        <p><a href="/ai-revisability-audit">Read the product scope and claim boundary</a></p>
       </div>
     </div>
     <h2>Founding plan</h2>
     <ul>
       <li>US$29 per month, capped at 100 audited documents per month.</li>
       <li>Up to 100 pages and 50 MB per document.</li>
-      <li>Both modes are included and each completed job uses one document from the same monthly quota.</li>
+      <li>Both products are included in the founding Beta and each completed job uses one document from the same monthly quota.</li>
       <li>TXT, Markdown, DOCX, and text-layer PDF input.</li>
       <li>Raw uploads are deleted after success or final failure; reports are retained for seven days by default.</li>
       <li>The public offer is limited to 20 Founding customers.</li>
@@ -284,6 +291,101 @@ export const recursiveFreedomSamplePage = page(
   "en",
 );
 
+export const aiRevisabilityPage = page(
+  "AI Alignment Revisability Audit | ICS-TEC",
+  `<article>
+    <p class="eyebrow">ICS-TEC / AI ALIGNMENT REVISABILITY</p>
+    <h1>Can an AI system's rules be changed, challenged, and reversed?</h1>
+    <p>AI Alignment Revisability Audit reviews the written authorities, revision routes, version history, rollback controls, oversight, and affected-party safeguards around an AI policy, constitution, model card, or governance framework.</p>
+    <div class="actions">
+      <a class="button" href="/workspace">Run a hosted Beta audit</a>
+      <a class="button secondary" href="/ai-revisability-audit/sample">Open a public sample</a>
+      <a class="button secondary" href="https://github.com/franka328162810-cell/esg-commitment-audit/blob/main/docs/AI_ALIGNMENT_REVISABILITY_AUDIT.md" rel="noopener">Read the method</a>
+    </div>
+    <p class="notice"><strong>Scope boundary.</strong> This is a document and evidence review, not a model safety test, legal-compliance finding, certification, measurement of hidden intent, or proof that an AI system is aligned.</p>
+
+    <h2>What the audit reviews</h2>
+    <div class="grid">
+      <div class="card"><strong>Targets and authority</strong><p>Alignment targets, normative hierarchy, accountable owners, revision authority, conflict resolution, and stakeholder participation.</p></div>
+      <div class="card"><strong>Revision and rollback</strong><p>Review cadence, change triggers, gradual deployment, version history, prior-version retention, rollback authority, exercises, and protected clauses.</p></div>
+      <div class="card"><strong>People and evidence</strong><p>Notice, explanation, appeal, human review, refusal, exit, monitoring, audit logs, retention, oversight, anti-abuse controls, capability gates, and interruption.</p></div>
+    </div>
+
+    <h2>Industry profiles</h2>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Profile</th><th>Additional controls</th></tr></thead>
+        <tbody>
+          <tr><td>General AI governance</td><td>28 core written controls.</td></tr>
+          <tr><td>News media</td><td>Content provenance and editorial correction or retraction.</td></tr>
+          <tr><td>Advertising</td><td>Client disclosure and rights, consent, and usage evidence.</td></tr>
+          <tr><td>Insurance</td><td>Adverse-action explanation and independent human review.</td></tr>
+          <tr><td>Industrial design</td><td>Design-artifact provenance and design-freeze/release control.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Evidence grades</h2>
+    <p>The review distinguishes <strong>absent</strong>, <strong>asserted only</strong>, <strong>documented</strong>, <strong>contradicted</strong>, <strong>operationally evidenced</strong>, and <strong>independently verified</strong> controls. The hosted text engine currently establishes text evidence; operation records and independent verification require separate artifacts and human review.</p>
+
+    <h2>Continuous review</h2>
+    <p>Single documents can be compared with a previous version on the local workbench. The hosted workbench currently starts with single-document review; persistent source monitoring and evidence-pack intake are the next product milestone.</p>
+
+    <h2>Beta status</h2>
+    <p>This product is a development Beta included in the existing founding platform allowance while its benchmark and evidence-pack workflow are completed. It does not yet have a separate subscription or formal Codex marketplace package.</p>
+
+    <nav>
+      <a href="/">Home</a>
+      <a href="/workspace">Workbench</a>
+      <a href="/privacy">Privacy draft</a>
+      <a href="/terms">Terms draft</a>
+      <a href="mailto:franka328162810@gmail.com">Support</a>
+    </nav>
+  </article>`,
+  "en",
+);
+
+export const aiRevisabilitySamplePage = page(
+  "Public sample | AI Alignment Revisability Audit",
+  `<article>
+    <p class="eyebrow">ICS-TEC / SYNTHETIC PUBLIC SAMPLE</p>
+    <h1>AI Alignment Revisability Audit sample</h1>
+    <p><strong>Source:</strong> a synthetic AI governance policy created to demonstrate a complete written control structure. <a href="https://github.com/franka328162810-cell/esg-commitment-audit/blob/main/examples/revisability_strong_policy.md" rel="noopener">Open the sample source</a>.</p>
+    <p><strong>Method:</strong> RFP-AI-revisability-document-v0.1. <strong>Profile:</strong> General AI governance.</p>
+    <p class="notice"><strong>Read this correctly.</strong> This is not a real organisation, an independent validation, or evidence that any control operates in practice. The sample deliberately contains supporting language for all 28 core checks.</p>
+
+    <div class="grid">
+      <div class="card"><strong>28</strong><br>Checks</div>
+      <div class="card"><strong>28</strong><br>Documented controls</div>
+      <div class="card"><strong>0</strong><br>Absent or contradicted</div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Dimension</th><th>Representative written evidence</th></tr></thead>
+        <tbody>
+          <tr><td>Alignment target and hierarchy</td><td>Named constitution, redlines, precedence, and conflict adjudication.</td></tr>
+          <tr><td>Authority and participation</td><td>Policy owner, revision procedure, approval board, and public consultation.</td></tr>
+          <tr><td>Revisionability</td><td>Annual review, incident triggers, staged rollout, success criteria, and stop conditions.</td></tr>
+          <tr><td>Version traceability</td><td>Semantic version, dated change log, archive, and forward-version rollback rule.</td></tr>
+          <tr><td>Reversibility and rollback</td><td>Rollback thresholds, authority, exercises, protected clauses, and independent review.</td></tr>
+          <tr><td>Affected people</td><td>Advance notice, plain-language explanation, appeal, human review, opt-out, and exit.</td></tr>
+          <tr><td>Monitoring and oversight</td><td>Metrics, append-only logs, retention, external audit, anti-abuse controls, and uncertainty handling.</td></tr>
+          <tr><td>Technical controls</td><td>Deployment gate, named approval, stop condition, kill switch, shutdown, and interruption testing.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="notice"><strong>Interpretation boundary.</strong> Text evidence demonstrates that a control is written down. It does not prove that the control operated, was independently reviewed, or made the AI system safe.</p>
+    <nav>
+      <a href="/ai-revisability-audit">Product overview</a>
+      <a href="/workspace">Run your own audit</a>
+      <a href="/">Home</a>
+    </nav>
+  </article>`,
+  "en",
+);
+
 export const workspacePage = page(
   "Evidence Workbench | ESG Commitment Audit",
   `<article>
@@ -321,13 +423,13 @@ export const workspacePage = page(
           <span class="muted">Extraction, source evidence, and CRV structure checks.</span>
         </label>
         <label class="mode-card">
-          <input type="radio" name="audit-mode" value="recursive-freedom">
-          <strong>Recursive Freedom Audit for AI · Beta</strong>
-          <span class="muted">Rules for review, revision, appeal, exit, rollback, and oversight.</span>
+          <input type="radio" name="audit-mode" value="ai-revisability">
+          <strong>AI Alignment Revisability Audit · Beta</strong>
+          <span class="muted">Twenty-eight written controls for authority, revision, rollback, affected people, evidence, and oversight.</span>
         </label>
       </div>
       <p id="mode-note" class="muted"></p>
-      <p class="muted"><a href="/recursive-freedom">Read the Recursive Freedom Audit product scope and validation record</a></p>
+      <p class="muted"><a href="/ai-revisability-audit">Read the AI Alignment Revisability Audit scope and claim boundary</a></p>
       <p class="muted">The Beta's revision-oriented framing is informed by
         <a href="https://doi.org/10.5281/zenodo.24217876" rel="noopener">On Recursive Freedom (2026), DOI 10.5281/zenodo.24217876</a>.
         This is not a psychological or personal-rights assessment.</p>
@@ -339,6 +441,16 @@ export const workspacePage = page(
           <option value="enf-priority">Prioritise enforceability</option>
           <option value="rev-priority">Prioritise revisability</option>
           <option value="esg-balanced">ESG-balanced</option>
+        </select>
+      </p>
+      <p id="profile-field" hidden>
+        <label for="review-profile">AI review profile</label>
+        <select id="review-profile">
+          <option value="general">General AI governance</option>
+          <option value="news_media">News media</option>
+          <option value="advertising">Advertising services</option>
+          <option value="insurance">Insurance</option>
+          <option value="industrial_design">Industrial design</option>
         </select>
       </p>
     </section>
@@ -397,6 +509,8 @@ export const workspacePage = page(
     const reportContent = $("report-content");
     const cancelCurrent = $("cancel-current");
     const weightField = $("weight-field");
+    const profileField = $("profile-field");
+    const reviewProfile = $("review-profile");
     const modeNote = $("mode-note");
     let apiKey = sessionStorage.getItem(STORAGE_KEY) || "";
     let selectedFile = null;
@@ -539,10 +653,11 @@ export const workspacePage = page(
     }
 
     function updateMode() {
-      const governance = selectedMode() === "recursive-freedom";
-      weightField.hidden = governance;
-      modeNote.textContent = governance
-        ? "Beta mode checks ten written governance controls. It analyses the policy, not an individual person or an AI system's actual behaviour."
+      const mode = selectedMode();
+      weightField.hidden = mode !== "commitment";
+      profileField.hidden = mode !== "ai-revisability";
+      modeNote.textContent = mode === "ai-revisability"
+        ? "Beta mode reviews 28 core written controls plus profile-specific safeguards. It reviews documents and evidence, not an AI system's actual behaviour."
         : "Commitment mode extracts ESG and climate promises and scores their written structure.";
     }
 
@@ -565,8 +680,13 @@ export const workspacePage = page(
     }
 
     function reportHeader(report) {
+      const reportLabel = report.report_type === "recursive-freedom"
+        ? "Recursive Freedom Audit for AI Beta"
+        : report.report_type === "ai-alignment-revisability"
+          ? "AI Alignment Revisability Audit Beta"
+          : "ESG / Climate Commitment Audit";
       return '<div class="card"><p class="eyebrow">' +
-        escapeHtml(report.report_type === "recursive-freedom" ? "Recursive Freedom Audit for AI Beta" : "ESG / Climate Commitment Audit") +
+        escapeHtml(reportLabel) +
         '</p><h2>' + escapeHtml(report.document.filename) + '</h2>' +
         '<p class="muted">Generated ' + escapeHtml(report.generated_at) +
         ' · SHA-256 ' + escapeHtml(report.document.sha256) + '</p></div>';
@@ -596,6 +716,55 @@ export const workspacePage = page(
           '</ul></div>';
       }
       html += '<div class="notice"><strong>Scope boundary</strong><p>' + escapeHtml(report.disclaimer) + '</p></div>';
+      return html;
+    }
+
+    function renderRevisabilityReport(report) {
+      const summary = report.summary;
+      let html = reportHeader(report);
+      html += '<div class="grid">';
+      html += '<div class="card"><strong>' + escapeHtml(summary.check_count) + '</strong><br>Checks</div>';
+      html += '<div class="card"><strong>' + escapeHtml(summary.documented_count) + '</strong><br>Documented</div>';
+      html += '<div class="card"><strong>' + escapeHtml(summary.asserted_count) + '</strong><br>Asserted only</div>';
+      html += '<div class="card"><strong>' + escapeHtml(summary.absent_count) + '</strong><br>Absent</div>';
+      html += '<div class="card"><strong>' + escapeHtml(summary.contradicted_count) + '</strong><br>Contradicted</div>';
+      html += '</div>';
+      if (report.warnings && report.warnings.length) {
+        html += '<div class="notice"><strong>Risk warnings</strong><ul>' +
+          report.warnings.map((item) => '<li>' + escapeHtml(item) + '</li>').join("") +
+          '</ul></div>';
+      }
+      html += (report.dimensions || []).map((dimension) => {
+        const checks = (dimension.checks || []).map((check) => {
+          const artifacts = check.required_artifacts && check.required_artifacts.length
+            ? '<h4>Evidence still required</h4><ul>' +
+              check.required_artifacts.map((item) => '<li>' + escapeHtml(item) + '</li>').join("") +
+              '</ul>'
+            : "";
+          return '<div class="report-card"><p><span class="status-pill status-' +
+            escapeHtml(check.grade) + '">' + escapeHtml(check.grade.replaceAll("_", " ")) +
+            '</span></p><h3>' + escapeHtml(check.label) + '</h3><p>' +
+            escapeHtml(check.rationale) + '</p>' + evidenceBlocks(check.evidence) +
+            artifacts +
+            (check.recommendation
+              ? '<p class="muted"><strong>Recommendation:</strong> ' + escapeHtml(check.recommendation) + '</p>'
+              : "") +
+            '</div>';
+        }).join("");
+        return '<section><h2>' + escapeHtml(dimension.label) + '</h2>' + checks + '</section>';
+      }).join("");
+      if (report.recommendations && report.recommendations.length) {
+        html += '<div class="card"><h3>Priority recommendations</h3><ul>' +
+          report.recommendations.map((item) => '<li>' + escapeHtml(item) + '</li>').join("") +
+          '</ul></div>';
+      }
+      if (report.evidence_requests && report.evidence_requests.length) {
+        html += '<div class="card"><h3>Evidence request list</h3><ul>' +
+          report.evidence_requests.map((item) => '<li>' + escapeHtml(item) + '</li>').join("") +
+          '</ul></div>';
+      }
+      html += '<div class="notice"><strong>Claim boundary</strong><p>' +
+        escapeHtml(report.disclaimer) + '</p></div>';
       return html;
     }
 
@@ -641,7 +810,9 @@ export const workspacePage = page(
       currentReport = report;
       reportContent.innerHTML = report.report_type === "recursive-freedom"
         ? renderGovernanceReport(report)
-        : renderCommitmentReport(report);
+        : report.report_type === "ai-alignment-revisability"
+          ? renderRevisabilityReport(report)
+          : renderCommitmentReport(report);
       reportSection.hidden = false;
       reportSection.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -701,7 +872,8 @@ export const workspacePage = page(
             "Content-Type": selectedFile.type || "application/octet-stream",
             "X-ESG-Filename": encodeURIComponent(selectedFile.name),
             "X-ESG-Weights": mode === "commitment" ? $("weights").value : "default",
-            "X-ESG-Mode": mode
+            "X-ESG-Mode": mode,
+            "X-ESG-Profile": mode === "ai-revisability" ? reviewProfile.value : "general"
           },
           body: selectedFile
         });
@@ -778,6 +950,22 @@ export const workspacePage = page(
             first ? first.excerpt || first.text : "",
             first ? positionLabel(first) : ""
           ]);
+        });
+      } else if (currentReport.report_type === "ai-alignment-revisability") {
+        rows.push(["Mode", "Dimension", "Check", "Grade", "Rationale", "Evidence", "Page or paragraph"]);
+        currentReport.dimensions.forEach((dimension) => {
+          dimension.checks.forEach((check) => {
+            const first = check.evidence && check.evidence[0];
+            rows.push([
+              "ai-revisability",
+              dimension.label,
+              check.label,
+              check.grade,
+              check.rationale,
+              first ? first.excerpt || first.text : "",
+              first ? positionLabel(first) : ""
+            ]);
+          });
         });
       } else {
         rows.push(["Mode", "Commitment ID", "Category", "Subcategory", "CRV", "Grade", "Evidence", "Page or paragraph"]);

@@ -131,32 +131,33 @@ curl \
 
 See [Methodology](METHODOLOGY.md) for weights and interpretation bands.
 
-## Recursive Freedom Audit for AI Beta
+## AI Alignment Revisability Audit Beta
 
-Change `X-ESG-Mode` to `recursive-freedom` and submit an AI policy, model card,
-governance procedure, or similar document. The report covers ten written
-controls:
+Change `X-ESG-Mode` to `ai-revisability`, choose `X-ESG-Profile` as `general`,
+`news_media`, `advertising`, `insurance`, or `industrial_design`, and submit an
+AI policy, constitution, model card, or governance framework. General mode
+covers 28 written controls:
 
-- scope, effective date, and accountable owner;
-- scheduled review;
-- revision process;
-- version history;
-- advance notice;
-- appeal and human review;
-- refusal, opt-out, and exit;
-- monitoring and audit evidence;
-- rollback, suspension, and deprecation;
-- independent oversight.
+- alignment targets and normative hierarchy;
+- revision authority and stakeholder participation;
+- review cadence, change triggers, and gradual deployment;
+- version identifiers, change logs, and prior-version access;
+- rollback conditions, authority, exercises, and protected clauses;
+- notice, explanation, appeal, refusal, and exit;
+- monitoring metrics, audit logs, and retention;
+- independent oversight, anti-abuse controls, and uncertainty;
+- capability-gate and interruption evidence.
 
-The Beta reviews document structure only. It does not test an individual's
-personality, psychology, political views, employability, creditworthiness,
-insurability, educational eligibility, immigration status, or legal
-culpability. Both modes consume one unit from the same monthly quota.
+Industry profiles add two safeguards and therefore return 30 checks. The Beta
+reviews written evidence only. It does not test an individual's personality,
+psychology, political views, employability, creditworthiness, insurability,
+educational eligibility, immigration status, or legal culpability. Each hosted
+job consumes one unit from the same monthly quota.
 
 The dedicated product page is:
 
 ```text
-https://esg-commitment-audit-api.franka328162810.workers.dev/recursive-freedom
+https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit
 ```
 
 ## Data handling

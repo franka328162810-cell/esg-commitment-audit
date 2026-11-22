@@ -1,6 +1,6 @@
 # AI Alignment Revisability Audit
 
-Development preview: `0.4.0.dev1`
+Development preview: `0.4.0.dev2`
 
 The installable Python distribution is `esg-commitment-audit`. The user-facing
 command for this product is `ai-revisability-audit`.
@@ -30,6 +30,22 @@ http://127.0.0.1:8765/revisability/versions
 ```
 
 The local page does not upload documents to a hosted service.
+
+## Hosted Beta
+
+The hosted workbench includes `ai-revisability` as a document mode and supports
+the five review profiles above:
+
+```text
+https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit
+https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit/sample
+https://esg-commitment-audit-api.franka328162810.workers.dev/workspace
+```
+
+The hosted mode uses the same API key, monthly document allowance, 100-page
+limit, 50 MB limit, asynchronous queue, tenant isolation, and seven-day report
+retention as the existing workbench. Hosted version-to-version comparison is
+not yet available.
 
 ## Version trace
 
@@ -95,7 +111,8 @@ artifacts and human review.
 
 ## Current limitation
 
-This is a rule-based development preview. It has not completed a held-out
-benchmark, external methodological review, or live organization-level evidence
+This is a rule-based development preview. The hosted TXT/Markdown/DOCX/PDF path
+is operational, but the product has not completed a held-out benchmark,
+external methodological review, or organization-level operational-evidence
 test. The next milestone is evidence-pack intake and a persistent source-change
 registry.

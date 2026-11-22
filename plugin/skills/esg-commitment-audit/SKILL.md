@@ -23,6 +23,9 @@ Never upload a file merely because the plugin is installed.
 
 - For a local PDF, DOCX, TXT, or Markdown file, call `audit_document`.
 - For pasted text, call `audit_text`.
+- Set `mode` to `ai-revisability` for an AI policy, constitution, model card,
+  or governance framework. Choose `profile` as `general`, `news_media`,
+  `advertising`, `insurance`, or `industrial_design`.
 - Call `get_cloud_audit` after the task is queued. Set `include_report` to true
   once the status is `completed`.
 - Call `get_account` when the user asks about plan or remaining quota.

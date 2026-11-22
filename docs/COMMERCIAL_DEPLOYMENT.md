@@ -14,7 +14,7 @@ The renamed ESG Commitment Audit development preview is deployed on Cloudflare:
 - Dead-letter queue: `esg-commitment-audit-jobs-dlq`
 - Private R2 bucket: `esg-commitment-audit-reports`
 - Container application: `esg-commitment-audit-api-auditcontainer`
-- Runtime image: `0.4.0.dev1-r1`
+- Runtime image: `0.4.0.dev2-r1`
 
 The previous Worker name remains as a 308 redirect to the new Worker. Previous
 D1, R2 and queue resources are retained temporarily as a rollback path and are
@@ -23,6 +23,11 @@ not used by the new Worker.
 The new deployment passes public page and health checks plus a three-document
 TXT, DOCX and PDF end-to-end container test. The old v0.3.1 production test
 records remain historical evidence for the pre-rename service.
+
+The hosted AI Alignment Revisability Audit Beta adds `ai-revisability` as a
+third audit mode and persists its industry profile in D1. General mode returns
+28 checks; each industry profile returns 30. Both the general and insurance
+profiles passed end-to-end hosted tests on 2026-11-23.
 
 The Gumroad product is published at:
 
@@ -45,6 +50,8 @@ destination has not been verified end to end.
 GET    /
 GET    /activate
 GET    /workspace
+GET    /ai-revisability-audit
+GET    /ai-revisability-audit/sample
 GET    /recursive-freedom
 GET    /recursive-freedom/sample
 GET    /privacy
@@ -66,9 +73,11 @@ POST   /v1/admin/audits/{job_id}/stop
 All tenant endpoints require `Authorization: Bearer <API key>`. Admin endpoints
 require `X-ESG-Admin-Token`.
 
-`POST /v1/audits` accepts `X-ESG-Mode: commitment` for ESG/climate reports or
-`X-ESG-Mode: recursive-freedom` for Recursive Freedom Audit for AI. Both
-modes share the same quota and document limits.
+`POST /v1/audits` accepts `X-ESG-Mode: commitment`,
+`recursive-freedom`, or `ai-revisability`. AI Revisability also accepts
+`X-ESG-Profile` and stores it in the job record. All modes share the same quota
+and document limits. The two `/recursive-freedom` pages redirect to the new
+canonical product routes.
 
 ## Data handling
 
@@ -277,7 +286,14 @@ Additional checks:
 - the source object was removed from R2 after successful processing;
 - completed report deletion returned `204` and removed the object.
 
-## Recursive Freedom Audit validation
+## AI Alignment Revisability Audit validation
+
+The `0.4.0.dev2` hosted Beta passed end-to-end tests for the general and
+insurance profiles on 2026-11-23. General mode returned 28 checks and insurance
+mode returned 30 checks. This proves the hosted path and profile persistence,
+not rule accuracy or scientific validation.
+
+## Legacy Recursive Freedom validation
 
 The v0.2 AI-policy rule set was tested against five public policies or
 governance documents:

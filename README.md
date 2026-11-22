@@ -36,9 +36,16 @@ ai-revisability-audit compare examples\revisability_policy_v1.md examples\revisa
 ai-revisability-audit serve
 ```
 
-Open `http://127.0.0.1:8765/revisability`. This development preview does not
-replace the live Recursive Freedom Beta and has not yet been deployed as a
-separate paid service. See
+Open `http://127.0.0.1:8765/revisability`. The hosted document-review Beta is
+available at:
+
+```text
+https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit
+https://esg-commitment-audit-api.franka328162810.workers.dev/workspace
+```
+
+It is included in the existing founding platform allowance and does not yet
+have a separate subscription or formal marketplace package. See
 [AI Alignment Revisability Audit](docs/AI_ALIGNMENT_REVISABILITY_AUDIT.md) and
 [the generated sample report](docs/AI_ALIGNMENT_REVISABILITY_SAMPLE.md) and
 [the version-trace sample](docs/AI_ALIGNMENT_REVISABILITY_VERSION_SAMPLE.md).
@@ -72,7 +79,7 @@ separate paid service. See
 - A hosted HTTPS audit API running on Cloudflare.
 - Text-layer PDF, DOCX, TXT, and Markdown input.
 - Structured JSON reports with commitment-level evidence.
-- Recursive Freedom Audit for AI Beta with ten written governance controls.
+- AI Alignment Revisability Audit Beta with 28 core checks and five profiles.
 - A monthly quota of 100 documents on the founding plan.
 - A 30-day no-questions-asked full-refund policy on the Gumroad offer.
 - Seven-day report retention and tenant-scoped API access.
@@ -89,15 +96,14 @@ action is absent.
 The current rules are strongest for English and Chinese reports. Scanned PDFs
 require OCR, which is not included in the current version.
 
-### Recursive Freedom Audit for AI Beta
+### AI Alignment Revisability Audit Beta
 
-The same workbench now accepts `X-ESG-Mode: recursive-freedom` and reviews ten
-written controls: scope/owner, review cadence, revision process, version
-history, advance notice, appeal/human review, refusal/exit, monitoring/audit,
-rollback/deprecation, and independent oversight. This Beta analyses AI policy
-and governance documents only. It does not assess an individual's personality,
-psychology, or rights and must not be used for employment, education, credit,
-insurance, immigration, political, or judicial scoring.
+The same workbench now accepts `X-ESG-Mode: ai-revisability` and
+`X-ESG-Profile: general|news_media|advertising|insurance|industrial_design`.
+General mode reviews 28 written controls; industry profiles add two specific
+checks. It does not assess an individual's personality, psychology, or rights
+and must not be used for employment, education, credit, insurance,
+immigration, political, or judicial scoring.
 
 The revision-oriented framing is informed by Xue, Z. (2026), *On Recursive
 Freedom: A Theory of the Freedom to Revise*, DOI
@@ -108,18 +114,17 @@ does not validate the audit results.
 The dedicated product page is:
 
 ```text
-https://esg-commitment-audit-api.franka328162810.workers.dev/recursive-freedom
+https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit
 ```
 
 Public sample report:
 
 ```text
-https://esg-commitment-audit-api.franka328162810.workers.dev/recursive-freedom/sample
+https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit/sample
 ```
 
-See [Recursive Freedom Audit for AI](docs/RECURSIVE_FREEDOM_AUDIT.md) for the
-product scope, v0.2 benchmark result, interpretation rules, and development
-boundary.
+See [AI Alignment Revisability Audit](docs/AI_ALIGNMENT_REVISABILITY_AUDIT.md)
+for the product scope, profiles, evidence grades, and development boundary.
 
 ## What the audit does
 
@@ -160,8 +165,8 @@ review into independent validation.
 - Founding plan: https://icsstudies.gumroad.com/l/esg-commitment-audit
 - API-key activation: https://esg-commitment-audit-api.franka328162810.workers.dev/activate
 - Evidence workbench: https://esg-commitment-audit-api.franka328162810.workers.dev/workspace
-- Recursive Freedom Audit for AI: https://esg-commitment-audit-api.franka328162810.workers.dev/recursive-freedom
-- Recursive Freedom public sample: https://esg-commitment-audit-api.franka328162810.workers.dev/recursive-freedom/sample
+- AI Alignment Revisability Audit: https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit
+- AI Revisability public sample: https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit/sample
 - Public landing page: https://esg-commitment-audit-api.franka328162810.workers.dev/
 - Health check: https://esg-commitment-audit-api.franka328162810.workers.dev/v1/health
 - Privacy draft: https://esg-commitment-audit-api.franka328162810.workers.dev/privacy
@@ -233,9 +238,10 @@ documents per month, and at most 100 pages and 50 MB per document. The Gumroad
 listing is capped at 20 active founding supporters. Scanned PDFs without a text
 layer are rejected because OCR is not included.
 
-`POST /v1/audits` accepts `X-ESG-Mode: commitment` for ESG/climate reports or
-`X-ESG-Mode: recursive-freedom` for Recursive Freedom Audit for AI. Both modes use the same
-monthly allowance and the same page and file-size limits.
+`POST /v1/audits` accepts `X-ESG-Mode: commitment`,
+`recursive-freedom`, or `ai-revisability`. All modes use the same monthly
+allowance and the same page and file-size limits. The AI mode also accepts
+`X-ESG-Profile`, stored with the job so later reviews remain reproducible.
 
 An owner-only Gumroad test purchase passed on 2026-11-22 without a charge. Its
 license authenticated, activated a `founding-team` organization, and produced a

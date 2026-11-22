@@ -19,5 +19,5 @@ Freedom: A Theory of the Freedom to Revise", DOI
 https://doi.org/10.5281/zenodo.24217876. This citation identifies intellectual
 provenance and does not change the Apache License 2.0 applied to this software.
 
-No third-party source code is vendored into this v0.4.0.dev1 release. Runtime
+No third-party source code is vendored into this v0.4.0.dev2 release. Runtime
 dependencies are declared in pyproject.toml and retain their own licenses.

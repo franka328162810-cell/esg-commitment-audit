@@ -32,3 +32,22 @@ test("plugin exposes hosted audit tools", async () => {
     ],
   );
 });
+
+test("plugin exposes AI revisability mode and profiles", async () => {
+  const response = await handleMessage({
+    jsonrpc: "2.0",
+    id: 3,
+    method: "tools/list",
+  });
+  const documentTool = response.result.tools.find(
+    (tool) => tool.name === "audit_document",
+  );
+  assert.equal(
+    documentTool.inputSchema.properties.mode.enum.includes("ai-revisability"),
+    true,
+  );
+  assert.equal(
+    documentTool.inputSchema.properties.profile.enum.includes("insurance"),
+    true,
+  );
+});

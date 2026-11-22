@@ -34,6 +34,11 @@ The command waits for newline-delimited MCP JSON-RPC messages on standard input.
 - `audit_local_document`: audit a local PDF, DOCX, TXT, or Markdown file without
   uploading it.
 - `audit_text`: audit pasted commitment text.
+- `audit_revisability_document`: review a local AI policy, constitution,
+  model card, or governance framework with an industry profile.
+- `audit_revisability_text`: review pasted AI governance text.
+- `audit_revisability_version`: compare previous and current AI governance
+  document versions locally.
 
 ## Hosted tools
 
@@ -51,6 +56,10 @@ Then these tools become usable:
 
 Cloud submission is set to `approval_mode: prompt` in `.mcp.json`. The skill also
 requires the user to explicitly request hosted processing before uploading.
+
+The marketplace bridge's `audit_document` and `audit_text` tools accept
+`mode: "ai-revisability"` and a `profile` of `general`, `news_media`,
+`advertising`, `insurance`, or `industrial_design`.
 
 ## Validation
 
