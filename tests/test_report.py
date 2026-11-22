@@ -3,8 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from ics_commitment_audit.api import audit_bytes
-from ics_commitment_audit.report import render_html, render_json, render_markdown
+from esg_commitment_audit.api import audit_bytes
+from esg_commitment_audit.report import render_html, render_json, render_markdown
 
 
 def _sample_report():
@@ -16,7 +16,7 @@ def _sample_report():
 
 def test_markdown_report_contains_evidence_and_disclaimer() -> None:
     markdown = render_markdown(_sample_report())
-    assert "# ICS Commitment Audit Report" in markdown
+    assert "# ESG Commitment Audit Report" in markdown
     assert "## Disclaimer" in markdown
     assert "not a legal opinion" in markdown
     assert "V_obs" in markdown

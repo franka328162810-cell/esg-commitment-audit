@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Revisability Version Trace</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/revisability.css">
+</head>
+<body>
+  <header class="masthead">
+    <div>
+      <p class="eyebrow">ICS-TEC · VERSION TRACE</p>
+      <h1>AI Revisability<br>Version Trace</h1>
+      <p class="subtitle">
+        比较前后两版 AI 政策、宪法、模型卡或治理文件，识别检查等级提升、下降、
+        新增警告以及具体条款变化。它证明文件如何变化，不证明变化为什么发生或是否得到批准。
+      </p>
+    </div>
+    <span class="local-badge">本机运行 · 不上传云端</span>
+  </header>
+
+  <main>
+    <section class="panel input-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="step-label">01 · TWO VERSIONS</p>
+          <h2>选择旧版与新版</h2>
+        </div>
+        <label class="weights-label">
+          行业模板
+          <select id="profile">
+            <option value="general">General AI governance</option>
+            <option value="news_media">News media</option>
+            <option value="advertising">Advertising services</option>
+            <option value="insurance">Insurance</option>
+            <option value="industrial_design">Industrial design</option>
+          </select>
+        </label>
+      </div>
+
+      <form id="version-form" class="version-form">
+        <div class="version-inputs">
+          <label class="version-card">
+            <strong>Previous version</strong>
+            <span>旧版政策、宪法或治理文件</span>
+            <input id="previous-file" type="file" accept=".pdf,.docx,.txt,.md,.markdown" required>
+            <output id="previous-name">尚未选择文件</output>
+          </label>
+          <label class="version-card">
+            <strong>Current version</strong>
+            <span>新版政策、宪法或治理文件</span>
+            <input id="current-file" type="file" accept=".pdf,.docx,.txt,.md,.markdown" required>
+            <output id="current-name">尚未选择文件</output>
+          </label>
+        </div>
+        <button type="submit" class="primary-button">比较两个版本</button>
+      </form>
+      <p id="status-line" class="status-line" role="status"></p>
+    </section>
+
+    <section id="error-panel" class="error-panel" hidden></section>
+
+    <section id="results" class="results" hidden>
+      <div class="results-bar">
+        <div>
+          <p class="step-label">02 · VERSION REPORT</p>
+          <h2>版本变化结果</h2>
+        </div>
+        <div class="download-group">
+          <button id="download-html" type="button">HTML</button>
+          <button id="download-markdown" type="button">Markdown</button>
+          <button id="download-json" type="button">JSON</button>
+        </div>
+      </div>
+      <section id="summary" class="summary-grid"></section>
+      <section id="warnings" class="notice-list"></section>
+      <section id="material-changes" class="version-section"></section>
+      <section id="statement-changes" class="version-section"></section>
+      <section class="disclaimer-box">
+        <h3>解释边界</h3>
+        <p id="disclaimer"></p>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <p>v0.4 development · Apache 2.0 · Copyright 2026 Xue Zhi Xin (ICS-TEC)</p>
+    <p><a href="/revisability">Back to the single-document workbench</a></p>
+  </footer>
+
+  <script src="/static/revisability_versions.js"></script>
+</body>
+</html>

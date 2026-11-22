@@ -8,7 +8,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from ics_commitment_audit.commercial import ServiceSettings, create_commercial_app
+from esg_commitment_audit.commercial import ServiceSettings, create_commercial_app
 
 
 def _client(
@@ -129,8 +129,8 @@ def test_billing_webhook_verifies_signature_and_updates_plan(
             content=payload,
             headers={
                 "Content-Type": "application/json",
-                "X-ICS-Signature": f"sha256={signature}",
-                "X-ICS-Timestamp": timestamp,
+                "X-ESG-Signature": f"sha256={signature}",
+                "X-ESG-Timestamp": timestamp,
             },
         )
         assert accepted.status_code == 200
@@ -139,7 +139,7 @@ def test_billing_webhook_verifies_signature_and_updates_plan(
         rejected = client.post(
             "/v1/billing/webhook",
             content=payload,
-            headers={"X-ICS-Signature": "sha256=bad"},
+            headers={"X-ESG-Signature": "sha256=bad"},
         )
         assert rejected.status_code == 401
 

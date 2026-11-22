@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from ics_commitment_audit.api import audit_text
+from esg_commitment_audit.api import audit_text
 
 
 def test_internal_benchmark_meets_v01_thresholds() -> None:

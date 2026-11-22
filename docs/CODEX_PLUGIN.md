@@ -6,12 +6,12 @@
 .codex-plugin/plugin.json
 .mcp.json
 assets/icon.svg
-skills/ics-commitment-audit/SKILL.md
-skills/ics-commitment-audit/agents/openai.yaml
+skills/esg-commitment-audit/SKILL.md
+skills/esg-commitment-audit/agents/openai.yaml
 ```
 
 The plugin combines a Codex skill with a local MCP server implemented by
-`ics_commitment_audit.mcp_server`.
+`esg_commitment_audit.mcp_server`.
 
 ## Prerequisites
 
@@ -24,7 +24,7 @@ python -m pip install -e .
 Verify the MCP entry point:
 
 ```powershell
-ics-crv-mcp
+esg-commitment-audit-mcp
 ```
 
 The command waits for newline-delimited MCP JSON-RPC messages on standard input.
@@ -40,8 +40,8 @@ The command waits for newline-delimited MCP JSON-RPC messages on standard input.
 Set:
 
 ```powershell
-$env:ICS_AUDIT_API_URL = "https://audit.example.com"
-$env:ICS_AUDIT_API_KEY = "ics_live_..."
+$env:ESG_AUDIT_API_URL = "https://audit.example.com"
+$env:ESG_AUDIT_API_KEY = "esg_live_..."
 ```
 
 Then these tools become usable:
@@ -55,7 +55,7 @@ requires the user to explicitly request hosted processing before uploading.
 ## Validation
 
 ```powershell
-python 'C:\Users\Administrator\.codex\skills\.system\skill-creator\scripts\quick_validate.py' skills\ics-commitment-audit
+python 'C:\Users\Administrator\.codex\skills\.system\skill-creator\scripts\quick_validate.py' skills\esg-commitment-audit
 python -m pytest tests\test_mcp.py
 ```
 

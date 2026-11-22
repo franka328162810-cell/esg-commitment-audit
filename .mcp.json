@@ -1,18 +1,18 @@
 {
   "mcpServers": {
-    "ics-commitment-audit": {
+    "esg-commitment-audit": {
       "command": "python",
       "args": [
         "-m",
-        "ics_commitment_audit.mcp_server"
+        "esg_commitment_audit.mcp_server"
       ],
       "cwd": ".",
       "env": {
         "PYTHONPATH": "./src"
       },
       "env_vars": [
-        "ICS_AUDIT_API_URL",
-        "ICS_AUDIT_API_KEY"
+        "ESG_AUDIT_API_URL",
+        "ESG_AUDIT_API_KEY"
       ],
       "startup_timeout_sec": 20,
       "tool_timeout_sec": 900,

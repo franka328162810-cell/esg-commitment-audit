@@ -2,7 +2,7 @@
 
 ## Decision
 
-`ics-commitment-audit v0.2.0` passed the frozen commercial extraction gate on
+`esg-commitment-audit v0.2.0` passed the frozen commercial extraction gate on
 2026-11-21. Paid-service and Codex plugin development were therefore opened.
 
 The gate measures extraction and classification quality on target-rich pages

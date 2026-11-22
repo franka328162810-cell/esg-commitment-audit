@@ -26,8 +26,8 @@ def test_container_routes_ai_policy_mode() -> None:
     response = client.post(
         "/audit",
         headers={
-            "x-ics-filename": "ai%20policy.txt",
-            "x-ics-mode": "recursive-freedom",
+            "x-esg-filename": "ai%20policy.txt",
+            "x-esg-mode": "recursive-freedom",
         },
         content=(
             b"Policy owner: Chief AI Officer.\n"
@@ -46,7 +46,7 @@ def test_container_routes_ai_policy_mode() -> None:
 def test_container_keeps_esg_mode_as_default() -> None:
     response = client.post(
         "/audit",
-        headers={"x-ics-filename": "commitment.txt"},
+        headers={"x-esg-filename": "commitment.txt"},
         content=(
             b"The company commits to reducing emissions by 50% by 2030, "
             b"against a 2020 baseline."
@@ -63,8 +63,8 @@ def test_container_rejects_unknown_mode() -> None:
     response = client.post(
         "/audit",
         headers={
-            "x-ics-filename": "policy.txt",
-            "x-ics-mode": "unknown",
+            "x-esg-filename": "policy.txt",
+            "x-esg-mode": "unknown",
         },
         content=b"Policy text.",
     )
@@ -84,8 +84,8 @@ def test_container_rejects_pdf_over_page_limit_in_both_modes() -> None:
         response = client.post(
             "/audit",
             headers={
-                "x-ics-filename": "long.pdf",
-                "x-ics-mode": mode,
+                "x-esg-filename": "long.pdf",
+                "x-esg-mode": mode,
             },
             content=output.getvalue(),
         )

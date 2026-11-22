@@ -63,13 +63,13 @@ function page(title: string, body: string, lang = "zh-CN"): string {
 }
 
 export const landingPage = page(
-  "ICS Commitment Audit | Evidence workbench",
+  "ESG Commitment Audit | Evidence workbench",
   `<article>
     <p class="eyebrow">ICS-TEC / ICS STUDIES</p>
     <h1>Audit the wording before you rely on the promise.</h1>
-    <p>ICS Commitment Audit turns long ESG and climate reports into traceable commitment evidence. Recursive Freedom Audit for AI applies the same evidence discipline to AI rules, governance documents, and revision paths.</p>
+    <p>ESG Commitment Audit turns long sustainability and climate reports into traceable commitment evidence. Recursive Freedom Audit for AI applies the same evidence discipline to AI rules, governance documents, and revision paths.</p>
     <div class="actions">
-      <a class="button" href="https://icsstudies.gumroad.com/l/ics-commitment-audit" rel="noopener">Subscribe on Gumroad — US$29/month</a>
+      <a class="button" href="https://icsstudies.gumroad.com/l/esg-commitment-audit" rel="noopener">Subscribe on Gumroad — US$29/month</a>
       <a class="button secondary" href="/workspace">Open the workbench</a>
     </div>
     <p class="notice"><strong>Evidence, not certification.</strong> This service analyses document structure. It is not audit assurance, legal advice, compliance certification, investment advice, or proof of greenwashing.</p>
@@ -107,7 +107,7 @@ export const landingPage = page(
       The software applies this idea only to documented policy structure, not to the freedom or conduct of any individual.</p>
     <h2>Developer interface</h2>
     <p>Health endpoint: <a href="/v1/health">/v1/health</a>. Source code and rules:
-      <a href="https://github.com/franka328162810-cell/ics-commitment-audit">GitHub</a>.</p>
+      <a href="https://github.com/franka328162810-cell/esg-commitment-audit">GitHub</a>.</p>
     <nav>
       <a href="/workspace">Workbench</a>
       <a href="/privacy">Privacy draft</a>
@@ -128,7 +128,7 @@ export const recursiveFreedomPage = page(
     <div class="actions">
       <a class="button" href="/workspace">Run an audit in the workbench</a>
       <a class="button secondary" href="/recursive-freedom/sample">Open a public sample report</a>
-      <a class="button secondary" href="https://icsstudies.gumroad.com/l/ics-commitment-audit" rel="noopener">Access the Founding plan</a>
+      <a class="button secondary" href="https://icsstudies.gumroad.com/l/esg-commitment-audit" rel="noopener">Access the Founding plan</a>
     </div>
     <p class="notice"><strong>Scope boundary.</strong> This product checks written governance structure. It does not establish legal compliance, safety, truthfulness, or the actual behavior of an AI system. It does not score an individual person's psychology, political views, employability, creditworthiness, insurability, educational eligibility, immigration status, or legal culpability.</p>
 
@@ -194,7 +194,7 @@ export const recursiveFreedomPage = page(
     <nav>
       <a href="/">Home</a>
       <a href="/workspace">Workbench</a>
-      <a href="https://github.com/franka328162810-cell/ics-commitment-audit/blob/main/docs/METHODOLOGY.md" rel="noopener">Methodology</a>
+      <a href="https://github.com/franka328162810-cell/esg-commitment-audit/blob/main/docs/METHODOLOGY.md" rel="noopener">Methodology</a>
       <a href="mailto:franka328162810@gmail.com">Support</a>
     </nav>
   </article>`,
@@ -285,7 +285,7 @@ export const recursiveFreedomSamplePage = page(
 );
 
 export const workspacePage = page(
-  "Evidence Workbench | ICS Commitment Audit",
+  "Evidence Workbench | ESG Commitment Audit",
   `<article>
     <p class="eyebrow">ICS-TEC / EVIDENCE WORKBENCH</p>
     <h1>Run and review an audit</h1>
@@ -304,10 +304,10 @@ export const workspacePage = page(
       <form id="connect-form">
         <label for="api-key">ICS API key</label>
         <div class="field-row">
-          <input id="api-key" type="password" autocomplete="off" spellcheck="false" placeholder="ics_live_..." required>
+          <input id="api-key" type="password" autocomplete="off" spellcheck="false" placeholder="esg_live_..." required>
           <button id="connect-button" class="button" type="submit">Connect</button>
         </div>
-        <p class="muted">Need a key? <a href="/activate">Activate your Gumroad license</a> or subscribe on <a href="https://icsstudies.gumroad.com/l/ics-commitment-audit" rel="noopener">Gumroad</a>.</p>
+        <p class="muted">Need a key? <a href="/activate">Activate your Gumroad license</a> or subscribe on <a href="https://icsstudies.gumroad.com/l/esg-commitment-audit" rel="noopener">Gumroad</a>.</p>
       </form>
       <p id="account-message" class="status" aria-live="polite"></p>
     </section>
@@ -377,7 +377,7 @@ export const workspacePage = page(
     </nav>
   </article>
   <script>
-    const STORAGE_KEY = "ics_commitment_audit_api_key";
+    const STORAGE_KEY = "esg_commitment_audit_api_key";
     const MAX_BYTES = 50 * 1024 * 1024;
     const SUPPORTED_FILE = /\\.(pdf|docx|txt|md|markdown)$/i;
     const $ = (id) => document.getElementById(id);
@@ -500,8 +500,8 @@ export const workspacePage = page(
 
     async function connectWithKey(candidate) {
       const key = String(candidate || "").trim();
-      if (!key.startsWith("ics_live_")) {
-        setMessage(accountMessage, "Enter a valid ICS API key beginning with ics_live_.", true);
+      if (!key.startsWith("esg_live_")) {
+        setMessage(accountMessage, "Enter a valid ICS API key beginning with esg_live_.", true);
         return;
       }
       connectButton.disabled = true;
@@ -699,9 +699,9 @@ export const workspacePage = page(
           method: "POST",
           headers: {
             "Content-Type": selectedFile.type || "application/octet-stream",
-            "X-ICS-Filename": encodeURIComponent(selectedFile.name),
-            "X-ICS-Weights": mode === "commitment" ? $("weights").value : "default",
-            "X-ICS-Mode": mode
+            "X-ESG-Filename": encodeURIComponent(selectedFile.name),
+            "X-ESG-Weights": mode === "commitment" ? $("weights").value : "default",
+            "X-ESG-Mode": mode
           },
           body: selectedFile
         });
@@ -844,7 +844,7 @@ export const workspacePage = page(
 );
 
 export const privacyPage = page(
-  "隐私政策草案 | ICS Commitment Audit",
+  "隐私政策草案 | ESG Commitment Audit",
   `<article>
     <p class="eyebrow">隐私政策草案</p>
     <h1>我们如何处理数据</h1>
@@ -883,13 +883,13 @@ export const privacyPage = page(
 );
 
 export const termsPage = page(
-  "服务条款草案 | ICS Commitment Audit",
+  "服务条款草案 | ESG Commitment Audit",
   `<article>
     <p class="eyebrow">服务条款草案</p>
     <h1>使用本服务前请阅读</h1>
     <p class="notice"><strong>草案提示：</strong>本页不构成法律意见。正式收费、订阅、退款和责任条款须在经营主体与支付方案确定后由合格律师复核。</p>
     <h2>1. 服务范围</h2>
-    <p>ICS Commitment Audit 对用户提交的承诺文本做结构化抽取、评分和证据定位。结果可能不完整或存在误判，必须由用户结合原文复核。</p>
+    <p>ESG Commitment Audit 对用户提交的承诺文本做结构化抽取、评分和证据定位。结果可能不完整或存在误判，必须由用户结合原文复核。</p>
     <h2>2. 不提供专业鉴证</h2>
     <p>本服务不是审计、鉴证、法律、税务、投资或合规认证服务，不构成对“漂绿”、违法或重大性的事实认定。用户不得把结果作为唯一决策依据，也不得对外声称获得 ICS-TEC 或第三方的认证。</p>
     <h2>3. 账户与 API Key</h2>
@@ -913,9 +913,9 @@ export const termsPage = page(
 );
 
 export const activationPage = page(
-  "Activate API access | ICS Commitment Audit",
+  "Activate API access | ESG Commitment Audit",
   `<article>
-    <p class="eyebrow">ICS Commitment Audit</p>
+    <p class="eyebrow">ESG Commitment Audit</p>
     <h1>Activate your API access</h1>
     <p>Enter the Gumroad license key from your purchase receipt and the organization name you want to use.</p>
     <p class="notice"><strong>Important:</strong> your ICS API key is displayed only once. Store it in a password manager and never publish it.</p>
@@ -932,7 +932,7 @@ export const activationPage = page(
     </form>
     <div id="result" aria-live="polite" style="margin-top:24px"></div>
     <noscript><p class="notice">JavaScript is required for secure activation.</p></noscript>
-    <nav><a href="/">Return to ICS Commitment Audit</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a></nav>
+    <nav><a href="/">Return to ESG Commitment Audit</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a></nav>
   </article>
   <script>
     const form = document.getElementById("activation-form");

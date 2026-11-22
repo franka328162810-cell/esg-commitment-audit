@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "ics-commitment-audit-api",
+  "name": "esg-commitment-audit-api",
   "main": "src/index.ts",
   "compatibility_date": "2026-11-21",
   "account_id": "aa7d0faa102dcea2d358907bbf96b7ec",
@@ -8,7 +8,7 @@
   "containers": [
     {
       "class_name": "AuditContainer",
-      "image": "registry.cloudflare.com/aa7d0faa102dcea2d358907bbf96b7ec/ics-commitment-audit-api-auditcontainer:0.3.1-r1",
+      "image": "registry.cloudflare.com/aa7d0faa102dcea2d358907bbf96b7ec/esg-commitment-audit-api-auditcontainer:0.4.0.dev1-r1",
       "instance_type": "standard-1",
       "max_instances": 4,
       "constraints": {
@@ -33,37 +33,37 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "ics-commitment-audit-db",
-      "database_id": "85ea92a7-03a4-4f39-94b2-000aa92db12d",
+      "database_name": "esg-commitment-audit-db",
+      "database_id": "dd13954a-aebc-4434-ae0f-45c6ea31fa30",
       "migrations_dir": "migrations"
     }
   ],
   "r2_buckets": [
     {
       "binding": "REPORTS",
-      "bucket_name": "ics-commitment-audit-reports"
+      "bucket_name": "esg-commitment-audit-reports"
     }
   ],
   "queues": {
     "producers": [
       {
         "binding": "AUDIT_QUEUE",
-        "queue": "ics-commitment-audit-jobs"
+        "queue": "esg-commitment-audit-jobs"
       }
     ],
     "consumers": [
       {
-        "queue": "ics-commitment-audit-jobs",
+        "queue": "esg-commitment-audit-jobs",
         "max_batch_size": 1,
         "max_batch_timeout": 1,
         "max_retries": 3,
-        "dead_letter_queue": "ics-commitment-audit-jobs-dlq"
+        "dead_letter_queue": "esg-commitment-audit-jobs-dlq"
       }
     ]
   },
   "vars": {
-    "SERVICE_NAME": "ics-commitment-audit",
-    "PUBLIC_BASE_URL": "https://ics-commitment-audit-api.franka328162810.workers.dev",
+    "SERVICE_NAME": "esg-commitment-audit",
+    "PUBLIC_BASE_URL": "https://esg-commitment-audit-api.franka328162810.workers.dev",
     "GUMROAD_PRODUCT_ID": "F6dg2UMZ2P3xRziFH4uhfw==",
     "GUMROAD_API_URL": "https://api.gumroad.com",
     "MAX_UPLOAD_BYTES": "52428800",

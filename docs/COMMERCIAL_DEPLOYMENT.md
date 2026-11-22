@@ -7,12 +7,12 @@ Status updated: 2026-11-22
 The v0.3.1 pilot is deployed on Cloudflare:
 
 - Worker and HTTPS API:
-  `https://ics-commitment-audit-api.franka328162810.workers.dev`
-- D1: `ics-commitment-audit-db`
-- Queue: `ics-commitment-audit-jobs`
-- Dead-letter queue: `ics-commitment-audit-jobs-dlq`
-- Private R2 bucket: `ics-commitment-audit-reports`
-- Container application: `ics-commitment-audit-api-auditcontainer`
+  `https://esg-commitment-audit-api.franka328162810.workers.dev`
+- D1: `esg-commitment-audit-db`
+- Queue: `esg-commitment-audit-jobs`
+- Dead-letter queue: `esg-commitment-audit-jobs-dlq`
+- Private R2 bucket: `esg-commitment-audit-reports`
+- Container application: `esg-commitment-audit-api-auditcontainer`
 - Runtime image: `0.3.1-r1`
 
 The API passes the current smoke, tenant-isolation, failure-refund, concurrency,
@@ -23,7 +23,7 @@ the dedicated Recursive Freedom product page.
 The Gumroad product is published at:
 
 ```text
-https://icsstudies.gumroad.com/l/ics-commitment-audit
+https://icsstudies.gumroad.com/l/esg-commitment-audit
 ```
 
 Gumroad first published the product on 2026-11-22. The owner-only test purchase
@@ -60,10 +60,10 @@ POST   /v1/admin/audits/{job_id}/stop
 ```
 
 All tenant endpoints require `Authorization: Bearer <API key>`. Admin endpoints
-require `X-ICS-Admin-Token`.
+require `X-ESG-Admin-Token`.
 
-`POST /v1/audits` accepts `X-ICS-Mode: commitment` for ESG/climate reports or
-`X-ICS-Mode: recursive-freedom` for Recursive Freedom Audit for AI. Both
+`POST /v1/audits` accepts `X-ESG-Mode: commitment` for ESG/climate reports or
+`X-ESG-Mode: recursive-freedom` for Recursive Freedom Audit for AI. Both
 modes share the same quota and document limits.
 
 ## Data handling
@@ -103,10 +103,10 @@ active founding supporters. A document may contain at most 100 pages and 50 MB.
 
 | Name | Current state | Purpose |
 |---|---|---|
-| `ICS_ADMIN_TOKEN` | configured | Provision organizations and stop audit containers |
-| `ICS_INTERNAL_TOKEN` | configured | Worker-to-container authentication |
-| `ICS_GUMROAD_ENCRYPTION_KEY` | configured | AES-GCM protection for stored Gumroad license keys |
-| `ICS_STRIPE_WEBHOOK_SECRET` | blocked | Verify native Stripe webhooks |
+| `ESG_ADMIN_TOKEN` | configured | Provision organizations and stop audit containers |
+| `ESG_INTERNAL_TOKEN` | configured | Worker-to-container authentication |
+| `ESG_GUMROAD_ENCRYPTION_KEY` | configured | AES-GCM protection for stored Gumroad license keys |
+| `ESG_STRIPE_WEBHOOK_SECRET` | blocked | Verify native Stripe webhooks |
 | `STRIPE_SECRET_KEY` | blocked | Create Stripe Checkout Sessions |
 | `STRIPE_PRICE_STARTER` | blocked | Starter subscription Price ID |
 | `STRIPE_PRICE_PRO` | blocked | Pro subscription Price ID |
@@ -117,8 +117,8 @@ or exported customer reports.
 Set secrets with:
 
 ```powershell
-wrangler secret put ICS_GUMROAD_ENCRYPTION_KEY
-wrangler secret put ICS_STRIPE_WEBHOOK_SECRET
+wrangler secret put ESG_GUMROAD_ENCRYPTION_KEY
+wrangler secret put ESG_STRIPE_WEBHOOK_SECRET
 wrangler secret put STRIPE_SECRET_KEY
 wrangler secret put STRIPE_PRICE_STARTER
 wrangler secret put STRIPE_PRICE_PRO
@@ -190,7 +190,7 @@ Cloudflare D1 includes Time Travel for the paid retention window. In addition,
 run an export before schema changes and at least weekly:
 
 ```powershell
-npx wrangler d1 export ics-commitment-audit-db --remote --output backup.sql
+npx wrangler d1 export esg-commitment-audit-db --remote --output backup.sql
 ```
 
 Recovery drill performed on 2026-11-22:

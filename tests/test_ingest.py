@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from docx import Document
 
-from ics_commitment_audit.ingest import (
+from esg_commitment_audit.ingest import (
     _layout_text_regions,
     _table_role_map,
     ingest_bytes,

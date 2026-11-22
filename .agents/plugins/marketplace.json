@@ -5,7 +5,7 @@
   },
   "plugins": [
     {
-      "name": "ics-commitment-audit",
+      "name": "esg-commitment-audit",
       "source": {
         "source": "local",
         "path": "./plugin"

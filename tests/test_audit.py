@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from ics_commitment_audit.api import audit_bytes
+from esg_commitment_audit.api import audit_bytes
 
 
 def test_strong_sample_scores_higher_than_vague_sample() -> None:

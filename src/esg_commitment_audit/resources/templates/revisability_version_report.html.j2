@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Alignment Revisability Version Trace</title>
+  <style>
+    :root { --ink:#15211f; --muted:#60706b; --line:#dce1dc; --paper:#f4f2ec; --accent:#0f766e; --good:#d9f0ea; --warn:#fff0d7; --bad:#fde7e7; --bad-ink:#9f2d2d; --soft:#eef2ef; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:"Segoe UI","Microsoft YaHei",sans-serif; line-height:1.55; }
+    main { max-width:1180px; margin:0 auto; padding:42px 24px 64px; }
+    header, section.card { background:#fff; border:1px solid var(--line); border-radius:16px; padding:24px; margin-bottom:16px; }
+    h1 { margin:4px 0 8px; font-family:Georgia,"Songti SC",serif; font-size:2.5rem; }
+    h2 { margin:4px 0 16px; }
+    .eyebrow { color:var(--accent); font-size:.72rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+    .muted { color:var(--muted); }
+    .meta { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 20px; font-size:.88rem; }
+    .summary { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:10px; margin-top:18px; }
+    .summary div { background:#f8f9f6; border:1px solid var(--line); border-radius:10px; padding:14px; }
+    .summary strong { display:block; font-family:Georgia,serif; font-size:1.65rem; }
+    .summary span { color:var(--muted); font-size:.75rem; }
+    table { width:100%; border-collapse:collapse; font-size:.82rem; margin:8px 0 18px; }
+    th, td { border:1px solid var(--line); text-align:left; padding:8px; vertical-align:top; }
+    th { background:#f5f7f3; }
+    .pill { display:inline-block; border-radius:999px; padding:2px 8px; font-size:.68rem; font-weight:800; text-transform:uppercase; }
+    .improved, .positive { color:var(--accent); background:var(--good); }
+    .regressed, .high { color:var(--bad-ink); background:var(--bad); }
+    .medium { color:#7d5d14; background:var(--warn); }
+    .unchanged, .low, .changed { color:var(--muted); background:var(--soft); }
+    .notice { border-left:4px solid #9a5b13; padding:11px 13px; border-radius:6px; background:var(--warn); }
+    footer { color:var(--muted); font-size:.78rem; margin-top:22px; }
+    @media(max-width:900px) { .summary { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media(max-width:620px) { .meta { grid-template-columns:1fr; } main { padding:24px 14px 40px; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">ICS-TEC · Version trace · {{ report.report_version }}</p>
+    <h1>AI Alignment Revisability Version Trace</h1>
+    <div class="meta">
+      <div><strong>Previous:</strong> {{ report.previous.document.filename }}</div>
+      <div><strong>Current:</strong> {{ report.current.document.filename }}</div>
+      <div><strong>Profile:</strong> {{ report.profile_label }} (`{{ report.profile }}`)</div>
+      <div><strong>Generated:</strong> {{ report.generated_at.isoformat() }}</div>
+    </div>
+    <div class="summary">
+      <div><strong>{{ report.summary.improved_count }}</strong><span>Improved</span></div>
+      <div><strong>{{ report.summary.regressed_count }}</strong><span>Regressed</span></div>
+      <div><strong>{{ report.summary.high_materiality_count }}</strong><span>High materiality</span></div>
+      <div><strong>{{ report.summary.added_statement_count }}</strong><span>Added</span></div>
+      <div><strong>{{ report.summary.removed_statement_count }}</strong><span>Removed</span></div>
+      <div><strong>{{ report.summary.modified_statement_count }}</strong><span>Modified</span></div>
+    </div>
+  </header>
+
+  {% if report.new_warnings or report.resolved_warnings %}
+  <section class="card">
+    <h2>Risk-warning movement</h2>
+    {% for item in report.new_warnings %}<p class="notice"><strong>New:</strong> {{ item }}</p>{% endfor %}
+    {% for item in report.resolved_warnings %}<p><strong>Resolved:</strong> {{ item }}</p>{% endfor %}
+  </section>
+  {% endif %}
+
+  <section class="card">
+    <h2>Material check changes</h2>
+    <table>
+      <thead><tr><th>Check</th><th>Previous</th><th>Current</th><th>Direction</th><th>Materiality</th></tr></thead>
+      <tbody>
+      {% for change in report.material_changes %}
+        <tr>
+          <td>{{ change.label }}</td>
+          <td>{{ change.previous_grade.value }}</td>
+          <td>{{ change.current_grade.value }}</td>
+          <td><span class="pill {{ change.direction }}">{{ change.direction }}</span></td>
+          <td><span class="pill {{ change.materiality }}">{{ change.materiality }}</span></td>
+        </tr>
+      {% else %}
+        <tr><td colspan="5">No material check change.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>Statement changes</h2>
+    <table>
+      <thead><tr><th>Type</th><th>Similarity</th><th>Previous</th><th>Current</th><th>Text</th></tr></thead>
+      <tbody>
+      {% for change in report.statement_changes %}
+        <tr>
+          <td><span class="pill {{ change.change_type }}">{{ change.change_type }}</span></td>
+          <td>{{ "%.2f"|format(change.similarity) if change.similarity is not none else "—" }}</td>
+          <td>{% if change.previous %}p.{{ change.previous.page_number or "—" }}, paragraph {{ change.previous.paragraph_index }}{% endif %}</td>
+          <td>{% if change.current %}p.{{ change.current.page_number or "—" }}, paragraph {{ change.current.paragraph_index }}{% endif %}</td>
+          <td>
+            {% if change.change_type == "modified" %}
+              <strong>Previous:</strong> {{ change.previous.excerpt if change.previous else "" }}<br>
+              <strong>Current:</strong> {{ change.current.excerpt if change.current else "" }}
+            {% elif change.change_type == "added" %}
+              {{ change.current.excerpt if change.current else "" }}
+            {% else %}
+              {{ change.previous.excerpt if change.previous else "" }}
+            {% endif %}
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="5">No exact statement change.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>Claim boundary</h2>
+    <p>{{ report.disclaimer }}</p>
+  </section>
+  <footer>Copyright 2026 Xue Zhi Xin (ICS-TEC) · Apache License 2.0 · {{ report.report_version }}</footer>
+</main>
+</body>
+</html>

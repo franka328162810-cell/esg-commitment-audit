@@ -9,6 +9,8 @@ tools/
 
 # Local environments and tooling
 .venv/
+.docker-config/
+.wrangler-config/
 venv/
 __pycache__/
 *.py[cod]
@@ -26,8 +28,7 @@ dist*/
 *.egg-info/
 .eggs/
 audit-output/
-.ics-crv-output/
-.ics-crv-service/
+.esg-commitment-audit-service/
 .wrangler/
 
 # Secrets and editor state

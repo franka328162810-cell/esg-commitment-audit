@@ -28,7 +28,7 @@ jobs:
       - name: Test
         run: python -m pytest
       - name: CLI smoke test
-        run: ics-crv audit examples/strong_commitment.txt --format json --output build/report.json
+        run: esg-commitment-audit audit examples/strong_commitment.txt --format json --output build/report.json
 
   cloudflare:
     runs-on: ubuntu-latest

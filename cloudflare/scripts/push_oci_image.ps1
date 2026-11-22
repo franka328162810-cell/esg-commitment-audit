@@ -21,8 +21,8 @@ $ProgressPreference = "SilentlyContinue"
 if (-not (Test-Path -LiteralPath $OciArchive)) {
   throw "OCI archive not found: $OciArchive"
 }
-if ($env:ICS_REGISTRY_CREDENTIALS) {
-  $credential = $env:ICS_REGISTRY_CREDENTIALS | ConvertFrom-Json
+if ($env:ESG_REGISTRY_CREDENTIALS) {
+  $credential = $env:ESG_REGISTRY_CREDENTIALS | ConvertFrom-Json
   $registryUsername = [string] $credential.username
   $registryPassword = [string] $credential.password
 }

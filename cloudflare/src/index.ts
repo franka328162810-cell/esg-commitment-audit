@@ -180,7 +180,7 @@ function base64ToBytes(value: string): Uint8Array {
 async function importGumroadEncryptionKey(secret: string): Promise<CryptoKey> {
   const raw = base64ToBytes(secret);
   if (raw.byteLength !== 32) {
-    throw new Error("ICS_GUMROAD_ENCRYPTION_KEY must decode to 32 bytes");
+    throw new Error("ESG_GUMROAD_ENCRYPTION_KEY must decode to 32 bytes");
   }
   return crypto.subtle.importKey("raw", raw, "AES-GCM", false, [
     "encrypt",
@@ -251,7 +251,7 @@ async function verifyGumroadLicense(
         method: "POST",
         headers: {
           "content-type": "application/x-www-form-urlencoded",
-          "user-agent": "ics-commitment-audit/0.3.1",
+          "user-agent": "esg-commitment-audit/0.4.0.dev1",
         },
         body: form,
         signal: AbortSignal.timeout(20_000),
@@ -304,7 +304,7 @@ async function verifyGumroadLicense(
 }
 
 async function syncGumroadBilling(env: Env): Promise<void> {
-  const secret = env.ICS_GUMROAD_ENCRYPTION_KEY;
+  const secret = env.ESG_GUMROAD_ENCRYPTION_KEY;
   if (!secret) return;
   const rows = await env.DB.prepare(
     `SELECT id, active, gumroad_license_ciphertext, gumroad_license_iv
@@ -375,11 +375,11 @@ async function authenticate(request: Request, env: Env): Promise<Organization | 
 }
 
 async function requireAdmin(request: Request, env: Env): Promise<boolean> {
-  const supplied = request.headers.get("x-ics-admin-token") ?? "";
+  const supplied = request.headers.get("x-esg-admin-token") ?? "";
   return (
-    Boolean(env.ICS_ADMIN_TOKEN) &&
+    Boolean(env.ESG_ADMIN_TOKEN) &&
     Boolean(supplied) &&
-    (await timingSafeEqual(supplied, env.ICS_ADMIN_TOKEN))
+    (await timingSafeEqual(supplied, env.ESG_ADMIN_TOKEN))
   );
 }
 
@@ -482,11 +482,11 @@ async function callContainer(
       method: "POST",
       headers: {
         "content-type": job.content_type,
-        "x-ics-filename": encodeURIComponent(job.filename),
-        "x-ics-max-pages": env.MAX_DOCUMENT_PAGES,
-        "x-ics-weights": job.weights,
-        "x-ics-mode": job.audit_mode,
-        "x-ics-internal-token": env.ICS_INTERNAL_TOKEN,
+        "x-esg-filename": encodeURIComponent(job.filename),
+        "x-esg-max-pages": env.MAX_DOCUMENT_PAGES,
+        "x-esg-weights": job.weights,
+        "x-esg-mode": job.audit_mode,
+        "x-esg-internal-token": env.ESG_INTERNAL_TOKEN,
       },
       body,
     }),
@@ -620,8 +620,8 @@ async function verifyGenericWebhook(
   body: string,
   secret: string,
 ): Promise<boolean> {
-  const timestamp = request.headers.get("x-ics-timestamp") ?? "";
-  const signature = (request.headers.get("x-ics-signature") ?? "").replace(
+  const timestamp = request.headers.get("x-esg-timestamp") ?? "";
+  const signature = (request.headers.get("x-esg-signature") ?? "").replace(
     /^sha256=/,
     "",
   );
@@ -674,7 +674,7 @@ export class AuditContainer extends DurableObject<Env> {
     if (!container.running) {
       container.start({
         enableInternet: false,
-        env: { ICS_INTERNAL_TOKEN: this.env.ICS_INTERNAL_TOKEN },
+        env: { ESG_INTERNAL_TOKEN: this.env.ESG_INTERNAL_TOKEN },
       });
     }
     await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
@@ -700,7 +700,10 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
     const path = url.pathname.replace(/\/+$/, "") || "/";
-    if (request.method === "GET" && path === "/") {
+    if (
+      request.method === "GET" &&
+      (path === "/" || path === "/esg-commitment-audit")
+    ) {
       return htmlResponse(landingPage);
     }
     if (request.method === "GET" && path === "/privacy") {
@@ -748,7 +751,7 @@ export default {
       const organizationId = `org_${crypto.randomUUID().replaceAll("-", "")}`;
       const keyId = `key_${crypto.randomUUID().replaceAll("-", "")}`;
       const tokenBytes = crypto.getRandomValues(new Uint8Array(32));
-      const apiKey = `ics_live_${bytesToBase64Url(tokenBytes)}`;
+      const apiKey = `esg_live_${bytesToBase64Url(tokenBytes)}`;
       const keyHash = await sha256Hex(apiKey);
       const createdAt = nowIso();
       await env.DB.batch([
@@ -820,7 +823,7 @@ export default {
       if (!organizationName || organizationName.length > 160) {
         return json({ error: "Organization name is required" }, 400);
       }
-      const encryptionSecret = env.ICS_GUMROAD_ENCRYPTION_KEY;
+      const encryptionSecret = env.ESG_GUMROAD_ENCRYPTION_KEY;
       if (!encryptionSecret) {
         return json({ error: "Gumroad activation is not configured" }, 503);
       }
@@ -861,7 +864,7 @@ export default {
       const organizationId = `org_${crypto.randomUUID().replaceAll("-", "")}`;
       const keyId = `key_${crypto.randomUUID().replaceAll("-", "")}`;
       const tokenBytes = crypto.getRandomValues(new Uint8Array(32));
-      const apiKey = `ics_live_${bytesToBase64Url(tokenBytes)}`;
+      const apiKey = `esg_live_${bytesToBase64Url(tokenBytes)}`;
       const keyHash = await sha256Hex(apiKey);
       const createdAt = nowIso();
       try {
@@ -916,7 +919,7 @@ export default {
     }
 
     if (path === "/v1/billing/stripe-webhook" && request.method === "POST") {
-      const secret = env.ICS_STRIPE_WEBHOOK_SECRET;
+      const secret = env.ESG_STRIPE_WEBHOOK_SECRET;
       if (!secret) return json({ error: "Stripe billing is not configured" }, 503);
       const body = await request.text();
       if (body.length > MAX_JSON_BODY_BYTES) {
@@ -978,7 +981,7 @@ export default {
     }
 
     if (path === "/v1/billing/webhook" && request.method === "POST") {
-      const secret = env.ICS_GENERIC_WEBHOOK_SECRET;
+      const secret = env.ESG_GENERIC_WEBHOOK_SECRET;
       if (!secret) return json({ error: "Billing is not configured" }, 503);
       const body = await request.text();
       if (body.length > MAX_JSON_BODY_BYTES) {
@@ -1103,24 +1106,24 @@ export default {
       if (!contentLength) return json({ error: "Content-Length is required" }, 411);
       if (contentLength > maxUpload) return json({ error: "Upload is too large" }, 413);
       if (!request.body) return json({ error: "Upload body is required" }, 400);
-      const filename = cleanFilename(request.headers.get("x-ics-filename"));
+      const filename = cleanFilename(request.headers.get("x-esg-filename"));
       if (!filename) {
         return json(
-          { error: "X-ICS-Filename must be PDF, DOCX, TXT, or Markdown" },
+          { error: "X-ESG-Filename must be PDF, DOCX, TXT, or Markdown" },
           400,
         );
       }
-      const auditMode = cleanAuditMode(request.headers.get("x-ics-mode"));
+      const auditMode = cleanAuditMode(request.headers.get("x-esg-mode"));
       if (!auditMode) {
         return json(
           {
             error:
-              "X-ICS-Mode must be commitment or recursive-freedom",
+              "X-ESG-Mode must be commitment or recursive-freedom",
           },
           400,
         );
       }
-      const weights = request.headers.get("x-ics-weights") ?? "default";
+      const weights = request.headers.get("x-esg-weights") ?? "default";
       if (
         auditMode === "commitment" &&
         !["default", "obs-priority", "enf-priority", "rev-priority", "esg-balanced"].includes(

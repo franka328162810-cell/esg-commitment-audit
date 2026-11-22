@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Alignment Revisability Audit</title>
+  <style>
+    :root { --ink:#15211f; --muted:#60706b; --line:#dce1dc; --paper:#f4f2ec; --accent:#0f766e; --good:#d9f0ea; --soft:#eef2ef; --warn:#fff0d7; --bad:#fde7e7; --bad-ink:#9f2d2d; --grade:#e7eefc; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:"Segoe UI","Microsoft YaHei",sans-serif; line-height:1.55; }
+    main { max-width:1180px; margin:0 auto; padding:42px 24px 64px; }
+    header, section.card { background:#fff; border:1px solid var(--line); border-radius:16px; padding:24px; margin-bottom:16px; }
+    h1 { margin:4px 0 8px; font-family:Georgia,"Songti SC",serif; font-size:2.6rem; line-height:1.08; }
+    h2 { margin:4px 0 16px; }
+    h3 { margin:22px 0 8px; }
+    .eyebrow { color:var(--accent); font-size:.72rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+    .muted { color:var(--muted); }
+    .meta { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 20px; font-size:.88rem; }
+    .summary { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; margin-top:18px; }
+    .summary div { background:#f8f9f6; border:1px solid var(--line); border-radius:10px; padding:14px; }
+    .summary strong { display:block; font-family:Georgia,serif; font-size:1.7rem; }
+    .summary span { color:var(--muted); font-size:.76rem; }
+    .notice { border-left:4px solid #9a5b13; padding:11px 13px; border-radius:6px; background:var(--warn); }
+    table { width:100%; border-collapse:collapse; font-size:.82rem; margin:8px 0 18px; }
+    th, td { border:1px solid var(--line); text-align:left; padding:8px; vertical-align:top; }
+    th { background:#f5f7f3; }
+    .pill { display:inline-block; border-radius:999px; padding:2px 8px; font-size:.68rem; font-weight:800; text-transform:uppercase; }
+    .grade-documented { color:var(--accent); background:var(--good); }
+    .grade-asserted { color:#7d5d14; background:var(--warn); }
+    .grade-absent { color:var(--muted); background:var(--soft); }
+    .grade-contradicted { color:var(--bad-ink); background:var(--bad); }
+    .grade-operationally_evidenced { color:#144a78; background:var(--grade); }
+    .grade-independently_verified { color:#4d3a78; background:#eee7fa; }
+    .grade-not_assessable { color:var(--muted); background:var(--soft); }
+    .evidence { color:var(--muted); font-size:.82rem; margin:8px 0; }
+    .artifact-list, .recommendation-list { color:var(--muted); padding-left:20px; }
+    footer { color:var(--muted); font-size:.78rem; margin-top:22px; }
+    @media(max-width:900px) { .summary { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media(max-width:620px) { .meta { grid-template-columns:1fr; } .summary { grid-template-columns:1fr; } main { padding:24px 14px 40px; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">ICS-TEC · AI Alignment Revisability Audit · {{ report.report_version }}</p>
+    <h1>AI Alignment Revisability Audit</h1>
+    <p class="muted">Document-review mode · written evidence only</p>
+    <div class="meta">
+      <div><strong>Source:</strong> {{ report.document.filename }}</div>
+      <div><strong>Profile:</strong> {{ report.profile_label }} (`{{ report.profile }}`)</div>
+      <div><strong>Generated:</strong> {{ report.generated_at.isoformat() }}</div>
+      <div><strong>SHA-256:</strong> <code>{{ report.document.sha256 }}</code></div>
+    </div>
+    <div class="summary">
+      <div><strong>{{ report.summary.check_count }}</strong><span>Checks</span></div>
+      <div><strong>{{ report.summary.documented_count }}</strong><span>Documented</span></div>
+      <div><strong>{{ report.summary.asserted_count }}</strong><span>Asserted only</span></div>
+      <div><strong>{{ report.summary.absent_count }}</strong><span>Absent</span></div>
+      <div><strong>{{ report.summary.contradicted_count }}</strong><span>Contradicted</span></div>
+    </div>
+  </header>
+
+  {% if report.warnings %}
+  <section class="card">
+    <h2>Risk warnings</h2>
+    {% for warning in report.warnings %}<p class="notice">{{ warning }}</p>{% endfor %}
+  </section>
+  {% endif %}
+
+  {% for dimension in report.dimensions %}
+  <section class="card">
+    <p class="eyebrow">Dimension</p>
+    <h2>{{ dimension.label }}</h2>
+    <table>
+      <thead><tr><th>Check</th><th>Grade</th><th>Finding</th><th>Evidence</th></tr></thead>
+      <tbody>
+      {% for check in dimension.checks %}
+        <tr>
+          <td>{{ check.label }}</td>
+          <td><span class="pill grade-{{ check.grade.value }}">{{ check.grade.value.replace("_", " ") }}</span></td>
+          <td>{{ check.rationale }}</td>
+          <td>
+            {% if check.evidence %}
+              {{ check.evidence[0].excerpt }}
+              {% if check.evidence[0].page_number %}<br><span class="muted">p.{{ check.evidence[0].page_number }}, paragraph {{ check.evidence[0].paragraph_index }}</span>{% endif %}
+            {% else %}
+              <span class="muted">No source span found.</span>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </section>
+  {% endfor %}
+
+  {% if report.evidence_requests %}
+  <section class="card">
+    <h2>Evidence still required</h2>
+    <ul class="artifact-list">{% for item in report.evidence_requests %}<li>{{ item }}</li>{% endfor %}</ul>
+  </section>
+  {% endif %}
+
+  {% if report.recommendations %}
+  <section class="card">
+    <h2>Priority recommendations</h2>
+    <ul class="recommendation-list">{% for item in report.recommendations %}<li>{{ item }}</li>{% endfor %}</ul>
+  </section>
+  {% endif %}
+
+  <section class="card">
+    <h2>Claim boundary</h2>
+    <p>{{ report.disclaimer }}</p>
+  </section>
+  <footer>Copyright 2026 Xue Zhi Xin (ICS-TEC) · Apache License 2.0 · Report {{ report.report_version }}</footer>
+</main>
+</body>
+</html>

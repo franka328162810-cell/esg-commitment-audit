@@ -1,8 +1,8 @@
-# ICS Commitment Audit
+# ESG Commitment Audit
 
 ## Customer guide for the Founding Small Team plan
 
-ICS Commitment Audit is a hosted, evidence-first workbench for reviewing the
+ESG Commitment Audit is a hosted, evidence-first workbench for reviewing the
 structure of written ESG and climate commitments. It helps analysts locate what
 an organization has promised, identify the evidence attached to each finding,
 and see where measurement, accountability, or revision terms are missing.
@@ -44,23 +44,23 @@ The public offer includes a 30-day no-questions-asked full refund.
 - Markdown
 
 Scanned PDFs without a text layer are not supported because OCR is not included
-in v0.3.1. If the service reports `No text layer was found in the PDF`, run OCR
+in the current version. If the service reports `No text layer was found in the PDF`, run OCR
 or use the original text-based source before retrying.
 
 ## Purchase and activation
 
 1. Open the
-   [Gumroad product page](https://icsstudies.gumroad.com/l/ics-commitment-audit)
+   [Gumroad product page](https://icsstudies.gumroad.com/l/esg-commitment-audit)
    and subscribe to the `Founding Small Team` tier.
 2. Open the purchase receipt or Gumroad content page and copy the license key.
 3. Go to the
-   [activation page](https://ics-commitment-audit-api.franka328162810.workers.dev/activate).
+   [activation page](https://esg-commitment-audit-api.franka328162810.workers.dev/activate).
 4. Enter the Gumroad license key and your organization name.
-5. Copy the generated `ics_live_...` API key immediately. It is displayed once.
+5. Copy the generated `esg_live_...` API key immediately. It is displayed once.
 6. Store both credentials privately. Never put the API key in a public GitHub
    repository, client-side JavaScript, screenshots, or support posts.
 7. Open the
-   [evidence workbench](https://ics-commitment-audit-api.franka328162810.workers.dev/workspace),
+   [evidence workbench](https://esg-commitment-audit-api.franka328162810.workers.dev/workspace),
    paste the API key into the current browser tab, choose a mode, and upload the
    document. The key is kept in that tab's `sessionStorage` and is removed when
    the tab closes.
@@ -74,8 +74,8 @@ disputed, charged back, cancelled, or fails to renew.
 
 ```bash
 curl \
-  -H "Authorization: Bearer YOUR_ICS_API_KEY" \
-  https://ics-commitment-audit-api.franka328162810.workers.dev/v1/account
+  -H "Authorization: Bearer YOUR_ESG_API_KEY" \
+  https://esg-commitment-audit-api.franka328162810.workers.dev/v1/account
 ```
 
 The response includes the plan, active state, monthly limit, documents used,
@@ -93,12 +93,12 @@ For scripted clients, replace the file name and path with your own document:
 ```bash
 curl \
   -X POST \
-  -H "Authorization: Bearer YOUR_ICS_API_KEY" \
+  -H "Authorization: Bearer YOUR_ESG_API_KEY" \
   -H "Content-Type: application/pdf" \
-  -H "X-ICS-Filename: sustainability-report.pdf" \
-  -H "X-ICS-Mode: commitment" \
+  -H "X-ESG-Filename: sustainability-report.pdf" \
+  -H "X-ESG-Mode: commitment" \
   --data-binary @sustainability-report.pdf \
-  https://ics-commitment-audit-api.franka328162810.workers.dev/v1/audits
+  https://esg-commitment-audit-api.franka328162810.workers.dev/v1/audits
 ```
 
 The API returns HTTP `202` and a job identifier. Poll the job until its status is
@@ -106,16 +106,16 @@ The API returns HTTP `202` and a job identifier. Poll the job until its status i
 
 ```bash
 curl \
-  -H "Authorization: Bearer YOUR_ICS_API_KEY" \
-  https://ics-commitment-audit-api.franka328162810.workers.dev/v1/audits/JOB_ID
+  -H "Authorization: Bearer YOUR_ESG_API_KEY" \
+  https://esg-commitment-audit-api.franka328162810.workers.dev/v1/audits/JOB_ID
 ```
 
 Retrieve the completed JSON report:
 
 ```bash
 curl \
-  -H "Authorization: Bearer YOUR_ICS_API_KEY" \
-  https://ics-commitment-audit-api.franka328162810.workers.dev/v1/audits/JOB_ID/report
+  -H "Authorization: Bearer YOUR_ESG_API_KEY" \
+  https://esg-commitment-audit-api.franka328162810.workers.dev/v1/audits/JOB_ID/report
 ```
 
 ## What the report contains
@@ -133,7 +133,7 @@ See [Methodology](METHODOLOGY.md) for weights and interpretation bands.
 
 ## Recursive Freedom Audit for AI Beta
 
-Change `X-ICS-Mode` to `recursive-freedom` and submit an AI policy, model card,
+Change `X-ESG-Mode` to `recursive-freedom` and submit an AI policy, model card,
 governance procedure, or similar document. The report covers ten written
 controls:
 
@@ -156,7 +156,7 @@ culpability. Both modes consume one unit from the same monthly quota.
 The dedicated product page is:
 
 ```text
-https://ics-commitment-audit-api.franka328162810.workers.dev/recursive-freedom
+https://esg-commitment-audit-api.franka328162810.workers.dev/recursive-freedom
 ```
 
 ## Data handling
@@ -169,8 +169,8 @@ https://ics-commitment-audit-api.franka328162810.workers.dev/recursive-freedom
   API endpoint.
 - Terminal job metadata is retained for up to 180 days.
 
-Read the public [privacy page](https://ics-commitment-audit-api.franka328162810.workers.dev/privacy)
-and [terms](https://ics-commitment-audit-api.franka328162810.workers.dev/terms).
+Read the public [privacy page](https://esg-commitment-audit-api.franka328162810.workers.dev/privacy)
+and [terms](https://esg-commitment-audit-api.franka328162810.workers.dev/terms).
 
 ## Refunds and cancellation
 

@@ -14,13 +14,13 @@ certify legal compliance or prove how an AI system behaves.
 Product page:
 
 ```text
-https://ics-commitment-audit-api.franka328162810.workers.dev/recursive-freedom
+https://esg-commitment-audit-api.franka328162810.workers.dev/recursive-freedom
 ```
 
 Public sample report:
 
 ```text
-https://ics-commitment-audit-api.franka328162810.workers.dev/recursive-freedom/sample
+https://esg-commitment-audit-api.franka328162810.workers.dev/recursive-freedom/sample
 ```
 
 ## Ten checks

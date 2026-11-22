@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from ics_commitment_audit.api import audit_governance_text
-from ics_commitment_audit.models import CheckStatus
+from esg_commitment_audit.api import audit_governance_text
+from esg_commitment_audit.models import CheckStatus
 
 
 def test_complete_policy_covers_all_ten_structural_checks() -> None:

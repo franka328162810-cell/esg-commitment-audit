@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Alignment Revisability Audit Workbench</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/revisability.css">
+</head>
+<body>
+  <header class="masthead">
+    <div>
+      <p class="eyebrow">ICS-TEC · LOCAL REVISABILITY WORKBENCH</p>
+      <h1>AI Alignment<br>Revisability Audit</h1>
+      <p class="subtitle">
+        检查 AI 政策、宪法原则、模型卡与治理文件是否明确规定了谁可以修改规则、
+        如何保留版本、如何申诉以及如何回滚。这里审查的是书面证据，不是模型安全认证。
+      </p>
+    </div>
+    <span class="local-badge">本机运行 · 不上传云端</span>
+  </header>
+
+  <main>
+    <section class="panel input-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="step-label">01 · INPUT</p>
+          <h2>读取治理文件</h2>
+        </div>
+        <label class="weights-label">
+          行业模板
+          <select id="profile">
+            <option value="general">General AI governance</option>
+            <option value="news_media">News media</option>
+            <option value="advertising">Advertising services</option>
+            <option value="insurance">Insurance</option>
+            <option value="industrial_design">Industrial design</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="input-grid">
+        <form id="upload-form" class="drop-zone">
+          <input id="file-input" type="file" name="file" accept=".pdf,.docx,.txt,.md,.markdown" required>
+          <label for="file-input">
+            <strong>选择或拖入文件</strong>
+            <span>PDF（需文本层）、DOCX、TXT、Markdown；本机上限 20 MB</span>
+          </label>
+          <p id="selected-file" class="selected-file">尚未选择文件</p>
+          <button type="submit" class="primary-button">开始可修正性审查</button>
+        </form>
+
+        <form id="text-form" class="text-zone">
+          <label for="text-input"><strong>或者直接粘贴政策文本</strong></label>
+          <textarea id="text-input" placeholder="粘贴 AI 政策、宪法原则、模型卡或治理条款……"></textarea>
+          <button type="submit" class="secondary-button">审查粘贴文本</button>
+        </form>
+      </div>
+
+      <p id="status-line" class="status-line" role="status"></p>
+    </section>
+
+    <section id="error-panel" class="error-panel" hidden></section>
+
+    <section class="panel">
+      <p class="step-label">CONTINUOUS REVIEW</p>
+      <h2>已经有两个版本？</h2>
+      <p class="subtitle">比较旧版和新版，查看检查等级、风险警告与具体条款发生了什么变化。</p>
+      <p><a href="/revisability/versions">Open Version Trace →</a></p>
+    </section>
+
+    <section id="results" class="results" hidden>
+      <div class="results-bar">
+        <div>
+          <p class="step-label">02 · EVIDENCE REPORT</p>
+          <h2>可修正性审查结果</h2>
+        </div>
+        <div class="download-group" aria-label="下载报告">
+          <button id="download-html" type="button">HTML</button>
+          <button id="download-markdown" type="button">Markdown</button>
+          <button id="download-json" type="button">JSON</button>
+        </div>
+      </div>
+
+      <section id="summary" class="summary-grid"></section>
+      <section id="warnings" class="notice-list"></section>
+      <section id="dimensions" class="dimension-list"></section>
+      <section id="actions" class="action-grid"></section>
+      <section class="disclaimer-box">
+        <h3>解释边界</h3>
+        <p id="disclaimer"></p>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <p>v0.4 development · Apache 2.0 · Copyright 2026 Xue Zhi Xin (ICS-TEC)</p>
+    <p>文本审查最多确认 E2「具体书面制度」；E3 需要运行记录，E4 需要独立验证。</p>
+    <p><a href="/">返回 ESG Commitment Audit Workbench</a></p>
+  </footer>
+
+  <script src="/static/revisability.js"></script>
+</body>
+</html>

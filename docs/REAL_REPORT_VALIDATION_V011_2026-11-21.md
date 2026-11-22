@@ -2,7 +2,7 @@
 
 ## Decision
 
-`ics-commitment-audit v0.1.1-dev` still does **not** pass the commercial gate.
+`esg-commitment-audit v0.1.1-dev` still does **not** pass the commercial gate.
 Paid service and formal Codex plugin development remain paused.
 
 The extraction changes reduced obvious historical-result false positives and

@@ -2,7 +2,7 @@
 
 ## Decision
 
-`ics-commitment-audit v0.1.0` should **not** enter paid service or formal Codex
+`esg-commitment-audit v0.1.0` should **not** enter paid service or formal Codex
 plugin development yet.
 
 The reference implementation proves the concept, but it does not meet the

@@ -1,7 +1,7 @@
 {
   "review_date": "2026-11-21",
   "reviewer": "Codex assistant manual adjudication; not an independent human expert review",
-  "product_version": "ics-commitment-audit 0.1.0",
+  "product_version": "esg-commitment-audit 0.1.0",
   "inclusion_rule": "Count a candidate as a unique commitment only when it contains a future-directed obligation, target, or quantified goal. Exclude historical achievements, methodology descriptions, governance arrangements, completed actions, general principles, and duplicate restatements of an already-counted commitment.",
   "reports": [
     {

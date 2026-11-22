@@ -1,6 +1,7 @@
 node_modules/
 .wrangler/
 .dev.vars
+.esg-commitment-audit-service/
 worker-configuration.d.ts
 container-dist/
 container-image*.oci.tar

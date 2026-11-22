@@ -20,29 +20,29 @@ def main() -> int:
     parser.add_argument(
         "--url",
         default=os.environ.get(
-            "ICS_AUDIT_API_URL",
-            "https://ics-commitment-audit-api.franka328162810.workers.dev",
+            "ESG_AUDIT_API_URL",
+            "https://esg-commitment-audit-api.franka328162810.workers.dev",
         ),
     )
     parser.add_argument(
         "--output",
         type=Path,
-        default=ROOT / ".ics-crv-service/cloudflare-pilot.json",
+        default=ROOT / ".esg-commitment-audit-service/cloudflare-pilot.json",
     )
     args = parser.parse_args()
 
-    admin_token = os.environ.get("ICS_ADMIN_TOKEN", "")
+    admin_token = os.environ.get("ESG_ADMIN_TOKEN", "")
     if not admin_token:
-        token_file = ROOT / ".ics-crv-service/cloudflare-secrets.json"
+        token_file = ROOT / ".esg-commitment-audit-service/cloudflare-secrets.json"
         if token_file.is_file():
             admin_token = str(
                 json.loads(token_file.read_text(encoding="utf-8")).get(
-                    "ICS_ADMIN_TOKEN",
+                    "ESG_ADMIN_TOKEN",
                     "",
                 )
             )
     if not admin_token:
-        raise SystemExit("ICS_ADMIN_TOKEN is not configured")
+        raise SystemExit("ESG_ADMIN_TOKEN is not configured")
 
     body = json.dumps({"name": args.name, "plan": args.plan}).encode("utf-8")
     request = urllib.request.Request(
@@ -51,8 +51,8 @@ def main() -> int:
         method="POST",
         headers={
             "Content-Type": "application/json",
-            "X-ICS-Admin-Token": admin_token,
-            "User-Agent": "ics-commitment-audit-provisioner/0.3.1",
+            "X-ESG-Admin-Token": admin_token,
+            "User-Agent": "esg-commitment-audit-provisioner/0.4.0.dev1",
         },
     )
     with urllib.request.urlopen(request, timeout=60) as response:

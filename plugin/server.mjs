@@ -3,8 +3,8 @@ import path from "node:path";
 import readline from "node:readline";
 import { pathToFileURL } from "node:url";
 
-const SERVER_NAME = "ics-commitment-audit";
-const SERVER_VERSION = "0.2.0";
+const SERVER_NAME = "esg-commitment-audit";
+const SERVER_VERSION = "0.4.0-dev.1";
 const PROTOCOL_VERSION = "2025-06-18";
 const MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
 
@@ -106,17 +106,17 @@ const tools = [
 
 function cloudConfig() {
   const baseUrl = (
-    process.env.ICS_AUDIT_API_URL ||
-    "https://ics-commitment-audit-api.franka328162810.workers.dev"
+    process.env.ESG_AUDIT_API_URL ||
+    "https://esg-commitment-audit-api.franka328162810.workers.dev"
   ).replace(/\/+$/, "");
-  const apiKey = process.env.ICS_AUDIT_API_KEY || "";
+  const apiKey = process.env.ESG_AUDIT_API_KEY || "";
   if (!apiKey) {
     throw new Error(
-      "ICS_AUDIT_API_KEY is required. Configure the plugin environment with a trial or paid API key.",
+      "ESG_AUDIT_API_KEY is required. Configure the plugin environment with a trial or paid API key.",
     );
   }
   if (!baseUrl.startsWith("https://") && !baseUrl.startsWith("http://127.0.0.1")) {
-    throw new Error("ICS_AUDIT_API_URL must use HTTPS or loopback HTTP");
+    throw new Error("ESG_AUDIT_API_URL must use HTTPS or loopback HTTP");
   }
   return { baseUrl, apiKey };
 }
@@ -133,7 +133,7 @@ async function cloudRequest(
     headers: {
       Authorization: `Bearer ${apiKey}`,
       Accept: "application/json",
-      "User-Agent": `ics-commitment-audit-plugin/${SERVER_VERSION}`,
+      "User-Agent": `esg-commitment-audit-plugin/${SERVER_VERSION}`,
       ...(contentType ? { "Content-Type": contentType } : {}),
       ...headers,
     },
@@ -174,8 +174,8 @@ async function submitDocument(filePath, weights) {
     body,
     contentType,
     headers: {
-      "X-ICS-Filename": encodeURIComponent(path.basename(resolved)),
-      "X-ICS-Weights": String(weights || "default"),
+      "X-ESG-Filename": encodeURIComponent(path.basename(resolved)),
+      "X-ESG-Weights": String(weights || "default"),
     },
   });
 }
@@ -190,8 +190,8 @@ async function submitText(text, filename, weights) {
     body: Buffer.from(text, "utf8"),
     contentType: contentTypes[path.extname(finalName).toLowerCase()] || "text/plain",
     headers: {
-      "X-ICS-Filename": encodeURIComponent(finalName),
-      "X-ICS-Weights": String(weights || "default"),
+      "X-ESG-Filename": encodeURIComponent(finalName),
+      "X-ESG-Weights": String(weights || "default"),
     },
   });
 }

@@ -10,7 +10,7 @@ test("plugin initializes as an MCP tool server", async () => {
     method: "initialize",
     params: { protocolVersion: "2025-06-18" },
   });
-  assert.equal(response.result.serverInfo.name, "ics-commitment-audit");
+  assert.equal(response.result.serverInfo.name, "esg-commitment-audit");
   assert.equal(response.result.capabilities.tools !== undefined, true);
 });
 

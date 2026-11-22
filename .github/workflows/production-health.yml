@@ -23,8 +23,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          base_url="https://ics-commitment-audit-api.franka328162810.workers.dev"
-          user_agent="ics-commitment-audit-monitor/0.3.0"
+          base_url="https://esg-commitment-audit-api.franka328162810.workers.dev"
+          user_agent="esg-commitment-audit-monitor/0.3.0"
           health_file="$RUNNER_TEMP/health.json"
           workspace_file="$RUNNER_TEMP/workspace.html"
           recursive_file="$RUNNER_TEMP/recursive-freedom.html"
@@ -40,7 +40,7 @@ jobs:
 
           test "$health_status" = "200"
           jq --exit-status \
-            '.status == "ok" and .service == "ics-commitment-audit"' \
+            '.status == "ok" and .service == "esg-commitment-audit"' \
             "$health_file"
 
           activation_status="$(curl --silent --show-error --retry 3 --retry-delay 2 \
@@ -83,5 +83,5 @@ jobs:
             "$base_url/")"
           printf 'Landing HTTP %s\n' "$landing_status"
           test "$landing_status" = "200"
-          grep --quiet 'icsstudies.gumroad.com/l/ics-commitment-audit' "$landing_file"
+          grep --quiet 'icsstudies.gumroad.com/l/esg-commitment-audit' "$landing_file"
           grep --quiet '30-day no-questions-asked full refund' "$landing_file"

@@ -17,7 +17,7 @@ consistent with science, or legally compliant.
 
 ## Technical limitations
 
-- Scanned PDFs require OCR, which is excluded from v0.3.1.
+- Scanned PDFs require OCR, which is not included in the current package.
 - Complex tables and multi-column layouts may require manual review.
 - Chinese and English rule coverage is broader than other languages.
 - The rule engine is intentionally conservative and may miss paraphrases.
@@ -25,6 +25,12 @@ consistent with science, or legally compliant.
 - Recursive Freedom Audit for AI is a Beta checklist of written controls. It does
   not establish that a control exists in practice, works as described, or meets
   any legal or safety standard.
+- AI Alignment Revisability Audit is a rule-based document-review development
+  preview. Its `documented` grade is limited to text evidence and does not imply
+  operational evidence or independent verification.
+- The AI-revisability profiles for news media, advertising, insurance, and
+  industrial design do not establish truth, legal clearance, actuarial fairness,
+  product safety, IP ownership, or engineering safety.
 
 ## Privacy
 

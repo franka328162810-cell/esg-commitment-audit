@@ -1,5 +1,5 @@
 {
-  "name": "ics-commitment-audit-cloudflare",
+  "name": "esg-commitment-audit-cloudflare",
   "private": true,
   "type": "module",
   "scripts": {
@@ -7,7 +7,7 @@
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
     "types": "wrangler types",
-    "db:migrate": "wrangler d1 migrations apply ics-commitment-audit-db --remote",
+    "db:migrate": "wrangler d1 migrations apply esg-commitment-audit-db --remote",
     "container:prepare": "python -m pip wheel .. --no-deps --no-build-isolation --wheel-dir container-dist"
   },
   "devDependencies": {

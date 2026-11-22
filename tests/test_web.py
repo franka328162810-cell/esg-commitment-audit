@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from fastapi.testclient import TestClient
 
-from ics_commitment_audit.web import app
+from esg_commitment_audit.web import app
 
 client = TestClient(app)
 
@@ -31,7 +31,7 @@ def test_text_audit_endpoint() -> None:
     payload = response.json()
     assert payload["report"]["summary"]["commitment_count"] == 1
     assert "<!doctype html>" in payload["html"]
-    assert "# ICS Commitment Audit Report" in payload["markdown"]
+    assert "# ESG Commitment Audit Report" in payload["markdown"]
 
 
 def test_upload_endpoint_rejects_unsupported_file() -> None:

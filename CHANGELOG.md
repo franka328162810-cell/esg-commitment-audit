@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.4.0.dev1 — development
+
+AI Alignment Revisability Audit development milestone.
+
+- Added a new document-review engine with 28 core checks across alignment
+  targets, authority, revision, version history, rollback, affected-party
+  safeguards, monitoring, oversight, and written technical controls.
+- Added four first-cohort profiles: news media, advertising, insurance, and
+  industrial design.
+- Added E0-E4-compatible evidence grades while limiting automatic document-only
+  results to absent, asserted, documented, and contradicted.
+- Added evidence requests, risk warnings, priority recommendations, and a
+  strict non-certification claim boundary.
+- Added `esg-commitment-audit revisability`.
+- Added the product-specific `ai-revisability-audit` command with `audit`, `compare`,
+  and `serve` subcommands; the combined `esg-commitment-audit` commands remain compatible.
+- Added a local workbench at `/revisability`.
+- Added JSON, Markdown, and standalone HTML reports.
+- Added `esg-commitment-audit revisability-version` and `/revisability/versions` for
+  previous/current document comparison.
+- Added check-grade movement, high-materiality regression, warning movement, and
+  statement addition/removal/modification reporting.
+- Added an English strong sample policy and initial automated tests.
+- Engineering-design review remains deferred.
+- Hosted AI-revisability jobs, persistent source monitoring, evidence-pack
+  intake, and the cross-organisation evidence graph are not yet part of this
+  milestone.
+
 ## 0.3.1 — 2026-11-22
 
 Recursive Freedom Audit rule-quality release.
@@ -33,7 +61,7 @@ Hosted evidence-workbench and AI-policy Beta release.
   scope/owner, review cadence, revision process, version history, notice,
   appeal/human review, refusal/exit, monitoring/audit, rollback/deprecation,
   and independent oversight.
-- Added `X-ICS-Mode: commitment|recursive-freedom` and persisted the selected
+- Added `X-ESG-Mode: commitment|recursive-freedom` and persisted the selected
   mode on each audit job through D1 migration `0003_audit_mode.sql`.
 - Kept both modes under the same document quota, page limit, file-size limit,
   privacy boundary, and tenant-isolation controls.
@@ -83,7 +111,7 @@ Commercial-gate and Codex plugin release.
   unique-commitment recall, 100% E/S/G top-level accuracy, and 100% page coverage.
 - Added organization tenants, hashed API keys, monthly quotas, persistent audit
   jobs, report retention/deletion, and provider-neutral signed billing webhooks.
-- Added `ics-crv-admin`, `ics-crv-mcp`, and `ics-crv serve-commercial`.
+- Added `esg-commitment-audit-admin`, `esg-commitment-audit-mcp`, and `esg-commitment-audit serve-commercial`.
 - Added a formal Codex plugin manifest, skill, UI metadata, icon, and local/cloud
   MCP tools.
 - Added commercial deployment and plugin publication guides.

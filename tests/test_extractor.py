@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import hashlib
 
-from ics_commitment_audit.api import audit_text
-from ics_commitment_audit.extractor import extract_commitments
-from ics_commitment_audit.ingest import ingest_bytes
-from ics_commitment_audit.models import DocumentBlock, IngestedDocument
+from esg_commitment_audit.api import audit_text
+from esg_commitment_audit.extractor import extract_commitments
+from esg_commitment_audit.ingest import ingest_bytes
+from esg_commitment_audit.models import DocumentBlock, IngestedDocument
 
 
 def test_extracts_structured_climate_commitment() -> None:

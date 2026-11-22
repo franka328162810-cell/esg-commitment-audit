@@ -3,16 +3,25 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ics-commitment-audit"
-version = "0.3.1"
-description = "Local-first commitment and AI-policy structure audit workbench"
+name = "esg-commitment-audit"
+version = "0.4.0.dev1"
+description = "Local-first commitment and AI-revisability audit workbench"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { file = "LICENSE" }
 authors = [
   { name = "Xue Zhi Xin (ICS-TEC)" }
 ]
-keywords = ["ESG", "climate", "commitment", "CRV", "assurance", "audit"]
+keywords = [
+  "ESG",
+  "climate",
+  "commitment",
+  "CRV",
+  "assurance",
+  "audit",
+  "AI governance",
+  "revisability",
+]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Financial and Insurance Industry",
@@ -45,9 +54,11 @@ dev = [
 ]
 
 [project.scripts]
-ics-crv = "ics_commitment_audit.cli:main"
-ics-crv-admin = "ics_commitment_audit.admin:main"
-ics-crv-mcp = "ics_commitment_audit.mcp_server:main"
+esg-commitment-audit-workbench = "esg_commitment_audit.cli:main"
+esg-commitment-audit-admin = "esg_commitment_audit.admin:main"
+esg-commitment-audit-mcp = "esg_commitment_audit.mcp_server:main"
+ai-revisability-audit = "esg_commitment_audit.revisability_cli:main"
+esg-commitment-audit = "esg_commitment_audit.esg_cli:main"
 
 [tool.setuptools]
 package-dir = { "" = "src" }
@@ -57,7 +68,7 @@ include-package-data = true
 where = ["src"]
 
 [tool.setuptools.package-data]
-ics_commitment_audit = [
+esg_commitment_audit = [
   "resources/**/*",
 ]
 

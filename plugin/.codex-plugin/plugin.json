@@ -1,13 +1,13 @@
 {
-  "name": "ics-commitment-audit",
-  "version": "0.2.0",
+  "name": "esg-commitment-audit",
+  "version": "0.4.0-dev.1",
   "description": "Evidence-first ESG and climate commitment auditing through the ICS hosted API.",
   "author": {
     "name": "Xue Zhi Xin (ICS-TEC)",
     "url": "https://github.com/franka328162810-cell"
   },
-  "homepage": "https://github.com/franka328162810-cell/ics-commitment-audit",
-  "repository": "https://github.com/franka328162810-cell/ics-commitment-audit",
+  "homepage": "https://github.com/franka328162810-cell/esg-commitment-audit",
+  "repository": "https://github.com/franka328162810-cell/esg-commitment-audit",
   "license": "Apache-2.0",
   "keywords": [
     "esg",
@@ -20,12 +20,12 @@
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "ICS Commitment Audit",
+    "displayName": "ESG Commitment Audit",
     "shortDescription": "Audit ESG and climate commitments with traceable evidence",
     "longDescription": "Extract written ESG and climate commitments, apply the ICS CRV framework, and surface missing baselines, boundaries, owners, review mechanisms, remedies, and page evidence. This marketplace bundle uses the authorized hosted API and requires an ICS API key.",
     "developerName": "Xue Zhi Xin (ICS-TEC)",
     "category": "Productivity",
-    "websiteURL": "https://ics-commitment-audit-api.franka328162810.workers.dev/",
+    "websiteURL": "https://esg-commitment-audit-api.franka328162810.workers.dev/",
     "capabilities": [
       "Read",
       "Write"

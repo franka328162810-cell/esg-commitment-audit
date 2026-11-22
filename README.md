@@ -1,15 +1,15 @@
-# ICS Commitment Audit
+# ESG Commitment Audit
 
 **Find ESG and climate commitments in long reports, trace each one to its source
 evidence, and test whether the wording is observable, enforceable, and
 revisable.**
 
-[Subscribe — US$29/month](https://icsstudies.gumroad.com/l/ics-commitment-audit)
+[Subscribe — US$29/month](https://icsstudies.gumroad.com/l/esg-commitment-audit)
 · [Customer guide](docs/PRODUCT_GUIDE.md)
 · [Methodology](docs/METHODOLOGY.md)
 · [Limitations](docs/LIMITATIONS.md)
 
-![ICS Commitment Audit cover](assets/ics-commitment-audit-cover.png)
+![ESG Commitment Audit cover](assets/esg-commitment-audit-cover.png)
 
 Built for sustainability analysts, boutique ESG consultancies, researchers, and
 procurement teams that need a repeatable evidence trail before human review.
@@ -20,9 +20,32 @@ Team plan, with a maximum of 100 pages and 50 MB per document.
 > legal advice, compliance certification, investment advice, or a finding of
 > greenwashing.
 
+## AI Alignment Revisability Audit — development preview
+
+The local package now includes a separate AI-revisability review mode for news
+media, advertising, insurance, and industrial-design governance documents. It
+checks written authority, revision routes, version history, rollback, affected
+party safeguards, monitoring, oversight, and technical-control evidence.
+
+The shared Python distribution is `esg-commitment-audit`. This product's
+command is `ai-revisability-audit`.
+
+```powershell
+ai-revisability-audit audit examples\revisability_strong_policy.md
+ai-revisability-audit compare examples\revisability_policy_v1.md examples\revisability_policy_v2.md
+ai-revisability-audit serve
+```
+
+Open `http://127.0.0.1:8765/revisability`. This development preview does not
+replace the live Recursive Freedom Beta and has not yet been deployed as a
+separate paid service. See
+[AI Alignment Revisability Audit](docs/AI_ALIGNMENT_REVISABILITY_AUDIT.md) and
+[the generated sample report](docs/AI_ALIGNMENT_REVISABILITY_SAMPLE.md) and
+[the version-trace sample](docs/AI_ALIGNMENT_REVISABILITY_VERSION_SAMPLE.md).
+
 ## Why teams use it
 
-| Review question | What ICS Commitment Audit provides |
+| Review question | What ESG Commitment Audit provides |
 |---|---|
 | What exactly did the organization promise? | Extracted commitment text and target values |
 | Where is the supporting evidence? | Page- or paragraph-level source locations |
@@ -34,11 +57,11 @@ Team plan, with a maximum of 100 pages and 50 MB per document.
 ## Start in three steps
 
 1. **Subscribe** to the Founding Small Team plan on
-   [Gumroad](https://icsstudies.gumroad.com/l/ics-commitment-audit).
+   [Gumroad](https://icsstudies.gumroad.com/l/esg-commitment-audit).
 2. **Activate** the Gumroad license key at the
-   [activation page](https://ics-commitment-audit-api.franka328162810.workers.dev/activate).
+   [activation page](https://esg-commitment-audit-api.franka328162810.workers.dev/activate).
 3. **Run an audit** with the generated API key. The
-   [hosted evidence workbench](https://ics-commitment-audit-api.franka328162810.workers.dev/workspace)
+   [hosted evidence workbench](https://esg-commitment-audit-api.franka328162810.workers.dev/workspace)
    lets you choose a mode and upload a document directly in the browser. The
    [customer guide](docs/PRODUCT_GUIDE.md) also includes ready-to-run `curl`
    commands and troubleshooting steps.
@@ -64,11 +87,11 @@ examined text did not support a check; it does not prove that an underlying
 action is absent.
 
 The current rules are strongest for English and Chinese reports. Scanned PDFs
-require OCR, which is not included in v0.3.1.
+require OCR, which is not included in the current version.
 
 ### Recursive Freedom Audit for AI Beta
 
-The same workbench now accepts `X-ICS-Mode: recursive-freedom` and reviews ten
+The same workbench now accepts `X-ESG-Mode: recursive-freedom` and reviews ten
 written controls: scope/owner, review cadence, revision process, version
 history, advance notice, appeal/human review, refusal/exit, monitoring/audit,
 rollback/deprecation, and independent oversight. This Beta analyses AI policy
@@ -85,13 +108,13 @@ does not validate the audit results.
 The dedicated product page is:
 
 ```text
-https://ics-commitment-audit-api.franka328162810.workers.dev/recursive-freedom
+https://esg-commitment-audit-api.franka328162810.workers.dev/recursive-freedom
 ```
 
 Public sample report:
 
 ```text
-https://ics-commitment-audit-api.franka328162810.workers.dev/recursive-freedom/sample
+https://esg-commitment-audit-api.franka328162810.workers.dev/recursive-freedom/sample
 ```
 
 See [Recursive Freedom Audit for AI](docs/RECURSIVE_FREEDOM_AUDIT.md) for the
@@ -134,15 +157,15 @@ review into independent validation.
 
 ## Live pilot
 
-- Founding plan: https://icsstudies.gumroad.com/l/ics-commitment-audit
-- API-key activation: https://ics-commitment-audit-api.franka328162810.workers.dev/activate
-- Evidence workbench: https://ics-commitment-audit-api.franka328162810.workers.dev/workspace
-- Recursive Freedom Audit for AI: https://ics-commitment-audit-api.franka328162810.workers.dev/recursive-freedom
-- Recursive Freedom public sample: https://ics-commitment-audit-api.franka328162810.workers.dev/recursive-freedom/sample
-- Public landing page: https://ics-commitment-audit-api.franka328162810.workers.dev/
-- Health check: https://ics-commitment-audit-api.franka328162810.workers.dev/v1/health
-- Privacy draft: https://ics-commitment-audit-api.franka328162810.workers.dev/privacy
-- Terms draft: https://ics-commitment-audit-api.franka328162810.workers.dev/terms
+- Founding plan: https://icsstudies.gumroad.com/l/esg-commitment-audit
+- API-key activation: https://esg-commitment-audit-api.franka328162810.workers.dev/activate
+- Evidence workbench: https://esg-commitment-audit-api.franka328162810.workers.dev/workspace
+- Recursive Freedom Audit for AI: https://esg-commitment-audit-api.franka328162810.workers.dev/recursive-freedom
+- Recursive Freedom public sample: https://esg-commitment-audit-api.franka328162810.workers.dev/recursive-freedom/sample
+- Public landing page: https://esg-commitment-audit-api.franka328162810.workers.dev/
+- Health check: https://esg-commitment-audit-api.franka328162810.workers.dev/v1/health
+- Privacy draft: https://esg-commitment-audit-api.franka328162810.workers.dev/privacy
+- Terms draft: https://esg-commitment-audit-api.franka328162810.workers.dev/terms
 
 The hosted API and Gumroad founding offer are live. Stripe checkout code is
 deployed but is not the current production checkout route. A verified and
@@ -173,9 +196,9 @@ python -m venv .venv
 ## Free local use
 
 ```powershell
-ics-crv audit examples\strong_commitment.txt
-ics-crv audit examples\strong_commitment.txt --format html --output audit-output\strong.html
-ics-crv serve
+esg-commitment-audit audit examples\strong_commitment.txt
+esg-commitment-audit audit examples\strong_commitment.txt --format html --output audit-output\strong.html
+esg-commitment-audit serve
 ```
 
 The local server binds to `127.0.0.1` by default and does not upload documents.
@@ -210,8 +233,8 @@ documents per month, and at most 100 pages and 50 MB per document. The Gumroad
 listing is capped at 20 active founding supporters. Scanned PDFs without a text
 layer are rejected because OCR is not included.
 
-`POST /v1/audits` accepts `X-ICS-Mode: commitment` for ESG/climate reports or
-`X-ICS-Mode: recursive-freedom` for Recursive Freedom Audit for AI. Both modes use the same
+`POST /v1/audits` accepts `X-ESG-Mode: commitment` for ESG/climate reports or
+`X-ESG-Mode: recursive-freedom` for Recursive Freedom Audit for AI. Both modes use the same
 monthly allowance and the same page and file-size limits.
 
 An owner-only Gumroad test purchase passed on 2026-11-22 without a charge. Its
@@ -227,12 +250,12 @@ Deployment, backup, monitoring, cost, and recovery notes are in
 Create an organization and a one-time API key:
 
 ```powershell
-$env:ICS_SERVICE_DATA_DIR = "C:\ics-service-data"
-$env:ICS_BILLING_WEBHOOK_SECRET = "replace-with-a-long-random-secret"
+$env:ESG_SERVICE_DATA_DIR = "C:\ics-service-data"
+$env:ESG_BILLING_WEBHOOK_SECRET = "replace-with-a-long-random-secret"
 
-ics-crv-admin create-org --name "Example Corp" --plan starter
-ics-crv-admin issue-key --organization-id org_... --name production
-ics-crv serve-commercial --host 127.0.0.1 --port 8766
+esg-commitment-audit-admin create-org --name "Example Corp" --plan starter
+esg-commitment-audit-admin issue-key --organization-id org_... --name production
+esg-commitment-audit-workbench serve-commercial --host 127.0.0.1 --port 8766
 ```
 
 Then use:
@@ -249,7 +272,7 @@ POST   /v1/billing/webhook
 Authentication uses `Authorization: Bearer <API key>`. Only a SHA-256 hash of
 each key is stored. Uploads and reports are isolated by organization, input
 files are deleted after processing, and completed reports expire according to
-`ICS_REPORT_RETENTION_DAYS`.
+`ESG_REPORT_RETENTION_DAYS`.
 
 The API accepts signed subscription events through a provider-neutral webhook
 and provides native Stripe signature verification. Actual charging still
@@ -265,7 +288,7 @@ dependency-free marketplace bundle in `plugin/`.
 ```text
 .codex-plugin/plugin.json
 .mcp.json
-skills/ics-commitment-audit/SKILL.md
+skills/esg-commitment-audit/SKILL.md
 plugin/.codex-plugin/plugin.json
 plugin/.mcp.json
 plugin/server.mjs
@@ -275,11 +298,11 @@ plugin/server.mjs
 Install the hosted plugin from the repository marketplace:
 
 ```powershell
-codex plugin marketplace add franka328162810-cell/ics-commitment-audit --ref main
-codex plugin add ics-commitment-audit@ics-tec
+codex plugin marketplace add franka328162810-cell/esg-commitment-audit --ref main
+codex plugin add esg-commitment-audit@ics-tec
 ```
 
-Configure `ICS_AUDIT_API_KEY` before using hosted tools. The marketplace bundle
+Configure `ESG_AUDIT_API_KEY` before using hosted tools. The marketplace bundle
 uses a dependency-free Node MCP client and requires network access to the ICS
 HTTPS API. It provides:
 
@@ -312,7 +335,7 @@ See:
 ```powershell
 python -m pytest
 python -m ruff check src tests validation
-python -m ics_commitment_audit audit examples\vague_statement.txt
+python -m esg_commitment_audit audit examples\vague_statement.txt
 ```
 
 ## License

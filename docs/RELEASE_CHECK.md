@@ -27,7 +27,7 @@ review, monitoring, backups, and capacity testing.
 | Static analysis | Ruff check passed |
 | Format check | Ruff format passed |
 | Commercial gate check | Passed |
-| Local CLI | `ics-crv 0.2.0` |
+| Local CLI | `esg-commitment-audit 0.2.0` |
 | Commercial admin CLI | organization/key/plan commands present |
 | MCP server | initialize and 4 tools verified |
 | Skill validation | `Skill is valid!` |
@@ -79,7 +79,7 @@ See `docs/REAL_REPORT_VALIDATION_V020_2026-11-21.md`.
 |---|---|
 | `.codex-plugin/plugin.json` | Present |
 | `.mcp.json` | Present |
-| `skills/ics-commitment-audit/SKILL.md` | Present |
+| `skills/esg-commitment-audit/SKILL.md` | Present |
 | `agents/openai.yaml` | Present |
 | Local audit tools | Present |
 | Cloud job tools | Present |

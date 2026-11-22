@@ -1,7 +1,7 @@
 # Publishing to GitHub
 
 The v0.2.0 repository is prepared for a new public GitHub repository named
-`ics-commitment-audit`.
+`esg-commitment-audit`.
 
 ## Before publishing
 
@@ -12,7 +12,7 @@ The v0.2.0 repository is prepared for a new public GitHub repository named
    - `_audit_reports/`
    - `audit-output/`
    - `dist*/`
-   - `.ics-crv-service/`
+   - `.esg-commitment-audit-service/`
 3. Confirm no unpublished manuscript, customer report, API key, or credential is
    present in the tracked files.
 4. Review `LICENSE`, `NOTICE`, `README.md`, and `docs/RELEASE_CHECK.md`.
@@ -24,18 +24,18 @@ Run from the repository root after reviewing the exact file list:
 ```powershell
 git add .codex-plugin .env.example .github .gitignore .mcp.json CHANGELOG.md LICENSE NOTICE README.md assets docs examples formalizations pyproject.toml skills src tests validation
 git status --short
-git commit -m "release: ICS commitment audit workbench v0.2.0"
+git commit -m "release: ESG commitment audit workbench v0.2.0"
 ```
 
 Do not use `git add .` until the ignored-path check above has passed.
 
 ## Add the GitHub remote
 
-Create an empty public repository named `ics-commitment-audit` under the target
+Create an empty public repository named `esg-commitment-audit` under the target
 account, then:
 
 ```powershell
-git remote add origin https://github.com/franka328162810-cell/ics-commitment-audit.git
+git remote add origin https://github.com/franka328162810-cell/esg-commitment-audit.git
 git push -u origin master
 ```
 

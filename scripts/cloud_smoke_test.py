@@ -112,7 +112,7 @@ def request(
     request_headers = {
         "Authorization": f"Bearer {api_key}",
         "Accept": "application/json",
-        "User-Agent": "ics-commitment-audit-cloud-smoke/0.2.0",
+        "User-Agent": "esg-commitment-audit-cloud-smoke/0.2.0",
     }
     if headers:
         request_headers.update(headers)
@@ -148,8 +148,8 @@ def audit_sample(base_url: str, api_key: str, sample: Sample) -> dict[str, Any]:
         data=sample.data,
         headers={
             "Content-Type": sample.content_type,
-            "X-ICS-Filename": sample.name,
-            "X-ICS-Weights": "default",
+            "X-ESG-Filename": sample.name,
+            "X-ESG-Weights": "default",
         },
     )
     if status != 202:
@@ -210,20 +210,20 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--base-url",
-        default="https://ics-commitment-audit-api.franka328162810.workers.dev",
+        default="https://esg-commitment-audit-api.franka328162810.workers.dev",
     )
     parser.add_argument("--api-key-file", type=Path)
     parser.add_argument("--health-requests", type=int, default=30)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
 
-    api_key = os.environ.get("ICS_AUDIT_API_KEY", "")
+    api_key = os.environ.get("ESG_AUDIT_API_KEY", "")
     if not api_key and args.api_key_file:
         api_key = str(
             json.loads(args.api_key_file.read_text(encoding="utf-8"))["api_key"]
         )
     if not api_key:
-        raise SystemExit("Set ICS_AUDIT_API_KEY or pass --api-key-file")
+        raise SystemExit("Set ESG_AUDIT_API_KEY or pass --api-key-file")
 
     def timed_health() -> dict[str, Any]:
         return health_probe(args.base_url, api_key)
