@@ -66,7 +66,7 @@ jobs:
           printf 'AI Revisability HTTP %s\n' "$ai_revisability_status"
           test "$ai_revisability_status" = "200"
           grep --quiet 'AI Alignment Revisability Audit' "$ai_revisability_file"
-          grep --quiet '28 written controls' "$ai_revisability_file"
+          grep --quiet '28 core written controls' "$ai_revisability_file"
 
           ai_revisability_sample_status="$(curl --silent --show-error --retry 3 --retry-delay 2 \
             --max-time 20 --user-agent "$user_agent" \
