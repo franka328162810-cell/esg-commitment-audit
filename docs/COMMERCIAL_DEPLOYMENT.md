@@ -42,6 +42,7 @@ GET    /
 GET    /activate
 GET    /workspace
 GET    /recursive-freedom
+GET    /recursive-freedom/sample
 GET    /privacy
 GET    /terms
 GET    /v1/health

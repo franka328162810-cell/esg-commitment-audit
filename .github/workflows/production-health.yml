@@ -28,6 +28,7 @@ jobs:
           health_file="$RUNNER_TEMP/health.json"
           workspace_file="$RUNNER_TEMP/workspace.html"
           recursive_file="$RUNNER_TEMP/recursive-freedom.html"
+          recursive_sample_file="$RUNNER_TEMP/recursive-freedom-sample.html"
           landing_file="$RUNNER_TEMP/landing.html"
 
           health_status="$(curl --silent --show-error --retry 3 --retry-delay 2 \
@@ -66,6 +67,15 @@ jobs:
           test "$recursive_status" = "200"
           grep --quiet 'Recursive Freedom Audit for AI' "$recursive_file"
           grep --quiet '50 check-level decisions' "$recursive_file"
+
+          recursive_sample_status="$(curl --silent --show-error --retry 3 --retry-delay 2 \
+            --max-time 20 --user-agent "$user_agent" \
+            --output "$recursive_sample_file" --write-out '%{http_code}' \
+            "$base_url/recursive-freedom/sample")"
+          printf 'Recursive Freedom sample HTTP %s\n' "$recursive_sample_status"
+          test "$recursive_sample_status" = "200"
+          grep --quiet 'Recursive Freedom Audit sample' "$recursive_sample_file"
+          grep --quiet 'Anthropic' "$recursive_sample_file"
 
           landing_status="$(curl --silent --show-error --retry 3 --retry-delay 2 \
             --max-time 20 --user-agent "$user_agent" \

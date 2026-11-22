@@ -11,6 +11,18 @@ personality, political views, employability, creditworthiness, insurability,
 education eligibility, immigration status, or legal culpability. It does not
 certify legal compliance or prove how an AI system behaves.
 
+Product page:
+
+```text
+https://ics-commitment-audit-api.franka328162810.workers.dev/recursive-freedom
+```
+
+Public sample report:
+
+```text
+https://ics-commitment-audit-api.franka328162810.workers.dev/recursive-freedom/sample
+```
+
 ## Ten checks
 
 | Check | Question |

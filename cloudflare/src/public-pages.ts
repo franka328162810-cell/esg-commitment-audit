@@ -127,6 +127,7 @@ export const recursiveFreedomPage = page(
     <p>Recursive Freedom Audit for AI reviews the written revision architecture of AI policies, model cards, and governance documents. It shows whether the document identifies who can change the rules, when they are reviewed, how changes are communicated, and whether affected people have appeal, refusal, and exit routes.</p>
     <div class="actions">
       <a class="button" href="/workspace">Run an audit in the workbench</a>
+      <a class="button secondary" href="/recursive-freedom/sample">Open a public sample report</a>
       <a class="button secondary" href="https://icsstudies.gumroad.com/l/ics-commitment-audit" rel="noopener">Access the Founding plan</a>
     </div>
     <p class="notice"><strong>Scope boundary.</strong> This product checks written governance structure. It does not establish legal compliance, safety, truthfulness, or the actual behavior of an AI system. It does not score an individual person's psychology, political views, employability, creditworthiness, insurability, educational eligibility, immigration status, or legal culpability.</p>
@@ -195,6 +196,89 @@ export const recursiveFreedomPage = page(
       <a href="/workspace">Workbench</a>
       <a href="https://github.com/franka328162810-cell/ics-commitment-audit/blob/main/docs/METHODOLOGY.md" rel="noopener">Methodology</a>
       <a href="mailto:franka328162810@gmail.com">Support</a>
+    </nav>
+  </article>`,
+  "en",
+);
+
+export const recursiveFreedomSamplePage = page(
+  "Public sample | Recursive Freedom Audit for AI",
+  `<article>
+    <p class="eyebrow">ICS-TEC / PUBLIC SAMPLE</p>
+    <h1>Recursive Freedom Audit sample</h1>
+    <p><strong>Source reviewed:</strong> Anthropic's public Responsible Scaling Policy overview page. <a href="https://www.anthropic.com/responsible-scaling-policy" rel="noopener">Open the source</a>.</p>
+    <p><strong>Information cut-off:</strong> 22 November 2026. <strong>Method:</strong> RFP-AI-policy-structure-v0.2. <strong>Report:</strong> 0.3.1.</p>
+    <p class="notice"><strong>Read this correctly.</strong> This sample audits the structure of one public overview page, not the full linked policy, internal controls, or actual conduct. Missing means the examined text did not provide evidence. It does not prove that Anthropic lacks an internal practice.</p>
+
+    <div class="grid">
+      <div class="card"><strong>2</strong><br>Present</div>
+      <div class="card"><strong>4</strong><br>Partial</div>
+      <div class="card"><strong>4</strong><br>Missing</div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Check</th><th>Status</th><th>Evidence and finding</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Scope and accountable owner</td>
+            <td><span class="status-pill status-missing">missing</span></td>
+            <td>The reviewed overview does not combine applicability, effective scope, and an accountable policy owner in one complete statement.</td>
+          </tr>
+          <tr>
+            <td>Review cadence</td>
+            <td><span class="status-pill status-partial">partial</span></td>
+            <td>"We have ... made two minor updates to the text of the Responsible Scaling Policy, updating it to version 3.1." Updates are shown, but no scheduled review cadence is stated.</td>
+          </tr>
+          <tr>
+            <td>Revision authority and process</td>
+            <td><span class="status-pill status-partial">partial</span></td>
+            <td>The version update process is visible, but the page does not state who may propose, approve, or veto changes.</td>
+          </tr>
+          <tr>
+            <td>Version history and change log</td>
+            <td><span class="status-pill status-present">present</span></td>
+            <td>"We expect to make further changes, all of which will be logged both on this page and in a changelog in the policy document itself."</td>
+          </tr>
+          <tr>
+            <td>Advance notice</td>
+            <td><span class="status-pill status-partial">partial</span></td>
+            <td>"We ... will use this page to inform the public of any developments." The page promises updates, but not advance notice before a material change.</td>
+          </tr>
+          <tr>
+            <td>Appeal and human review</td>
+            <td><span class="status-pill status-missing">missing</span></td>
+            <td>No appeal route or policy-enforcement human-review process was located in the examined overview.</td>
+          </tr>
+          <tr>
+            <td>Refusal, opt-out, and exit</td>
+            <td><span class="status-pill status-missing">missing</span></td>
+            <td>No affected-person refusal, opt-out, or exit route was located.</td>
+          </tr>
+          <tr>
+            <td>Monitoring, audit logs, and evidence</td>
+            <td><span class="status-pill status-partial">partial</span></td>
+            <td>"Asynchronous monitoring classifiers for a more detailed analysis of the completions for threats." Monitoring is present; audit-log access, retention, and governance are incomplete.</td>
+          </tr>
+          <tr>
+            <td>Rollback, suspension, and deprecation</td>
+            <td><span class="status-pill status-missing">missing</span></td>
+            <td>No rule for rollback, suspension, or deprecation of the policy or affected system was located.</td>
+          </tr>
+          <tr>
+            <td>Independent oversight</td>
+            <td><span class="status-pill status-present">present</span></td>
+            <td>"External review of our Risk Reports can involve multiple external reviewers..." The source states an external-review mechanism.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="notice"><strong>Interpretation boundary.</strong> This sample is not legal advice, an assurance opinion, a safety certification, or a conclusion about Anthropic's internal governance. It demonstrates how the rule engine exposes written evidence, partial controls, and omissions.</p>
+    <nav>
+      <a href="/recursive-freedom">Product overview</a>
+      <a href="/workspace">Run your own audit</a>
+      <a href="/">Home</a>
     </nav>
   </article>`,
   "en",

@@ -8,6 +8,9 @@ The Recursive Freedom Audit rule-quality update is ready for the controlled
 commercial pilot. It adds a dedicated product entry at `/recursive-freedom` and
 replaces broad word matches with compound evidence rules.
 
+A public source-based sample is available at
+`/recursive-freedom/sample`.
+
 ## Verification
 
 | Check | Result |

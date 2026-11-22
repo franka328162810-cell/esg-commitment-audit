@@ -4,6 +4,7 @@ import {
   htmlResponse,
   landingPage,
   privacyPage,
+  recursiveFreedomSamplePage,
   recursiveFreedomPage,
   termsPage,
   workspacePage,
@@ -716,6 +717,9 @@ export default {
     }
     if (request.method === "GET" && path === "/recursive-freedom") {
       return htmlResponse(recursiveFreedomPage);
+    }
+    if (request.method === "GET" && path === "/recursive-freedom/sample") {
+      return htmlResponse(recursiveFreedomSamplePage);
     }
     if (path === "/v1/health" && request.method === "GET") {
       await env.DB.prepare("SELECT 1").first();

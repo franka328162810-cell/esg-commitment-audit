@@ -5,6 +5,7 @@
 Recursive Freedom Audit rule-quality release.
 
 - Added a dedicated public product page at `/recursive-freedom`.
+- Added a public source-based sample report at `/recursive-freedom/sample`.
 - Tightened scope/owner checks so a generic policy reference is not treated as
   a complete scope, owner, and effective-date statement.
 - Removed false-positive matches for generic consent, general legal oversight,

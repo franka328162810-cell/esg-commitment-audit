@@ -88,6 +88,12 @@ The dedicated product page is:
 https://ics-commitment-audit-api.franka328162810.workers.dev/recursive-freedom
 ```
 
+Public sample report:
+
+```text
+https://ics-commitment-audit-api.franka328162810.workers.dev/recursive-freedom/sample
+```
+
 See [Recursive Freedom Audit for AI](docs/RECURSIVE_FREEDOM_AUDIT.md) for the
 product scope, v0.2 benchmark result, interpretation rules, and development
 boundary.
@@ -132,6 +138,7 @@ review into independent validation.
 - API-key activation: https://ics-commitment-audit-api.franka328162810.workers.dev/activate
 - Evidence workbench: https://ics-commitment-audit-api.franka328162810.workers.dev/workspace
 - Recursive Freedom Audit for AI: https://ics-commitment-audit-api.franka328162810.workers.dev/recursive-freedom
+- Recursive Freedom public sample: https://ics-commitment-audit-api.franka328162810.workers.dev/recursive-freedom/sample
 - Public landing page: https://ics-commitment-audit-api.franka328162810.workers.dev/
 - Health check: https://ics-commitment-audit-api.franka328162810.workers.dev/v1/health
 - Privacy draft: https://ics-commitment-audit-api.franka328162810.workers.dev/privacy
