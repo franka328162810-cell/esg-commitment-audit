@@ -25,17 +25,35 @@ CHECK_DEFINITIONS = [
     {
         "key": "scope_and_owner",
         "label": "Scope, effective date, and accountable owner",
-        "strong": [
-            r"\bscope\b",
-            r"\bapplies to\b",
-            r"\beffective date\b",
-            r"\bpolicy owner\b",
-            r"\baccountable (?:owner|executive|body)\b",
-            r"适用范围",
-            r"生效日期",
-            r"政策负责人",
-            r"责任主体",
+        "groups": [
+            [
+                r"\b(?:this|the) (?:usage )?policy (?:applies to|covers|governs)\b",
+                r"\bapplies to (?:all )?(?:users|people|developers|organizations|customers)\b",
+                r"\byour use of .{0,80}\b(?:must|shall) follow\b",
+                r"\b(?:restrictions|requirements) apply to\b",
+                r"本政策(?:适用于|覆盖)",
+                r"适用范围",
+            ],
+            [
+                r"\bpolicy owner\b",
+                r"\bowner of (?:this|the) policy\b",
+                r"\baccountable (?:owner|executive|body)\b",
+                (
+                    r"\b(?:team|department|officer|committee)\b.{0,80}"
+                    r"\bresponsible for (?:this|the) policy\b"
+                ),
+                r"政策负责人",
+                r"责任主体",
+            ],
+            [
+                r"\beffective(?: date)?\s*:\s*",
+                r"\blast (?:modified|updated)\s*:\s*",
+                r"\bversion date\s*:\s*",
+                r"生效日期",
+                r"最后更新",
+            ],
         ],
+        "present_min_groups": 3,
         "partial": [r"\bpolicy\b", r"\bgovernance\b", r"政策", r"治理"],
         "note": "Identifies what the policy governs and who is accountable.",
         "recommendation": "State the policy scope, effective date, and accountable owner.",
@@ -51,7 +69,18 @@ CHECK_DEFINITIONS = [
             r"定期(?:审查|复核|评估)",
             r"复核周期",
         ],
-        "partial": [r"\breview(?:ed)?\b", r"复核", r"审查"],
+        "partial": [
+            (
+                r"\b(?:review(?:ed)?|reconsider|update|revise)\b.{0,100}"
+                r"\b(?:policy|policies|rules|terms)\b"
+            ),
+            (
+                r"\b(?:policy|policies|rules|terms)\b.{0,100}"
+                r"\b(?:review(?:ed)?|reconsider|update|revise)\b"
+            ),
+            r"(?:复核|审查|更新|修订).{0,60}(?:政策|规则|条款)",
+            r"(?:政策|规则|条款).{0,60}(?:复核|审查|更新|修订)",
+        ],
         "note": "Provides a recurring opportunity to reconsider the policy.",
         "recommendation": "Specify a review cadence and the role responsible for initiating review.",
     },
@@ -67,7 +96,17 @@ CHECK_DEFINITIONS = [
             r"变更审批",
             r"修改本政策",
         ],
-        "partial": [r"\bamend\b", r"\bupdate\b", r"修订", r"更新"],
+        "partial": [
+            (
+                r"\b(?:amend|revise|modify|update)\b.{0,60}"
+                r"\b(?:policy|policies|rules|terms)\b"
+            ),
+            (
+                r"\b(?:policy|policies|rules|terms)\b.{0,60}"
+                r"\b(?:amend|revise|modify|update)\b"
+            ),
+            r"(?:修订|更新|修改).{0,40}(?:政策|规则|条款)",
+        ],
         "note": "Explains how the normative document itself can be changed.",
         "recommendation": "Define who may propose and approve changes, and what evidence is required.",
     },
@@ -91,13 +130,24 @@ CHECK_DEFINITIONS = [
         "key": "notice",
         "label": "Advance notice to affected people",
         "strong": [
-            r"\b(?:notify|inform|notice) (?:users|affected|stakeholders|the public)\b",
             r"\badvance notice\b",
+            r"\b\d+\s+days?\s+(?:of )?(?:advance )?notice\b",
+            (
+                r"\b(?:notify|inform) "
+                r"(?:users|affected|stakeholders|the public)\b.{0,80}\bbefore\b"
+            ),
+            r"\bprior notice\b|\bnotice prior to\b",
             r"提前通知",
             r"通知受影响",
             r"公告变更",
         ],
-        "partial": [r"\bnotice\b", r"通知", r"公告"],
+        "partial": [
+            r"\b(?:notify|inform|notice) (?:users|affected|stakeholders|the public)\b",
+            r"\bkeep up with .{0,40}\bupdates?\b",
+            r"\bupdates? (?:page|feed|newsletter|form|subscription)\b",
+            r"\bnotice\b.{0,80}\b(?:policy|policies|rules)\b",
+            r"(?:订阅|关注).{0,40}(?:更新|修订|通知)",
+        ],
         "note": "Allows affected parties to understand and respond to changes.",
         "recommendation": "Commit to advance notice, a minimum notice period, and a public archive.",
     },
@@ -130,7 +180,12 @@ CHECK_DEFINITIONS = [
             r"拒绝",
             r"撤回同意",
         ],
-        "partial": [r"\bconsent\b", r"同意", r"选择退出"],
+        "partial": [
+            r"\bstop using (?:our|the) (?:services|products|platform)\b",
+            r"\b(?:close|delete|terminate) your (?:account|workspace)\b",
+            r"停止使用(?:本|该)?(?:服务|产品|平台)",
+            r"(?:关闭|注销|删除).{0,20}(?:账户|账号)",
+        ],
         "note": "Preserves an affected person's ability to decline or leave.",
         "recommendation": "Explain how refusal or exit works and what consequences follow.",
     },
@@ -138,16 +193,20 @@ CHECK_DEFINITIONS = [
         "key": "monitoring_audit",
         "label": "Monitoring, audit logs, and evidence",
         "strong": [
-            r"\baudit log\b",
-            r"\baudit trail\b",
-            r"\bmonitoring\b",
-            r"\bevidence record\b",
+            r"\baudit logs?\b",
+            r"\baudit trails?\b",
+            r"\bevidence records?\b",
             r"审计日志",
             r"审计追踪",
-            r"监控记录",
-            r"证据记录",
+            r"证据记录(?:文件)?",
         ],
-        "partial": [r"\baudit\b", r"\brecord\b", r"审计", r"记录"],
+        "partial": [
+            r"\bmonitor(?:ing|ed)?\b",
+            r"\bdetection and monitoring\b",
+            r"\baudit(?:ing)?\b",
+            r"监控",
+            r"审计",
+        ],
         "note": "Supports verification of whether stated controls are operating.",
         "recommendation": "Define what is logged, who can review it, and how long it is retained.",
     },
@@ -157,15 +216,17 @@ CHECK_DEFINITIONS = [
         "strong": [
             r"\brollback\b",
             r"\brevert\b",
-            r"\bsuspend(?:ed|ing)?\b",
             r"\bdeprecat(?:e|ed|ion)\b",
             r"\bsunset\b",
+            r"\bsuspend (?:this|the) (?:policy|model|system|feature)\b",
             r"回滚",
-            r"暂停",
-            r"停用",
             r"退役",
         ],
-        "partial": [r"\bwithdraw\b", r"\bterminate\b", r"撤回", r"终止"],
+        "partial": [
+            r"\bretir(?:e|ed|ing) (?:this|the) (?:policy|model|system|feature)\b",
+            r"\bwithdraw (?:this|the) (?:policy|model|system|feature)\b",
+            r"(?:停用|暂停).{0,20}(?:政策|模型|系统|功能)",
+        ],
         "note": "Preserves recoverability when a policy or system change fails.",
         "recommendation": "Describe rollback, suspension, or deprecation conditions and authority.",
     },
@@ -176,10 +237,16 @@ CHECK_DEFINITIONS = [
             r"\bindependent (?:review|audit|oversight|ethics) (?:board|committee|panel|auditor)\b",
             r"\bindependent oversight\b.{0,120}\b(?:board|committee|panel|auditor)\b",
             r"\bexternal audit\b",
+            r"\bexternal (?:review|reviewer|reviewers)\b",
+            r"\b(?:board|trust|committee)\b.{0,120}\bexternal reviewers?\b",
             r"独立(?:审查|审计|监督|伦理委员会)",
             r"外部审计",
         ],
-        "partial": [r"\boversight\b", r"\bcommittee\b", r"监督", r"委员会"],
+        "partial": [
+            r"\boversight (?:board|committee|body|panel)\b",
+            r"\bethics (?:board|committee|panel)\b",
+            r"(?:监督|伦理).{0,12}(?:委员会|机构|小组)",
+        ],
         "note": "Checks whether review is independent of the operating team.",
         "recommendation": "Specify who conducts independent review and how its findings are handled.",
     },
@@ -243,6 +310,18 @@ def _matches(document: IngestedDocument, patterns: list[str]) -> list[EvidenceSp
     return evidence
 
 
+def _dedupe_evidence(items: list[EvidenceSpan]) -> list[EvidenceSpan]:
+    deduped: list[EvidenceSpan] = []
+    seen: set[tuple[str, int | None]] = set()
+    for item in items:
+        marker = (item.block_id, item.unit_index)
+        if marker in seen:
+            continue
+        seen.add(marker)
+        deduped.append(item)
+    return deduped
+
+
 def _has_unqualified_change_without_notice(text: str) -> bool:
     phrase = re.compile(
         r"\b(?:without|no) (?:advance )?notice\b|不另行通知",
@@ -289,15 +368,33 @@ def audit_governance_document(document: IngestedDocument) -> GovernanceReport:
     checks: list[GovernanceCheck] = []
     recommendations: list[str] = []
     for definition in CHECK_DEFINITIONS:
-        strong_evidence = _matches(document, definition["strong"])
-        evidence = strong_evidence or _matches(document, definition["partial"])
-        status = (
-            CheckStatus.PRESENT
-            if strong_evidence
-            else CheckStatus.PARTIAL
-            if evidence
-            else CheckStatus.MISSING
-        )
+        groups = definition.get("groups")
+        if groups:
+            group_evidence = [
+                _matches(document, group_patterns) for group_patterns in groups
+            ]
+            covered_groups = sum(bool(items) for items in group_evidence)
+            evidence = _dedupe_evidence(
+                [item for items in group_evidence for item in items]
+            )
+            present_min_groups = int(definition.get("present_min_groups", len(groups)))
+            status = (
+                CheckStatus.PRESENT
+                if covered_groups >= present_min_groups
+                else CheckStatus.PARTIAL
+                if covered_groups
+                else CheckStatus.MISSING
+            )
+        else:
+            strong_evidence = _matches(document, definition["strong"])
+            evidence = strong_evidence or _matches(document, definition["partial"])
+            status = (
+                CheckStatus.PRESENT
+                if strong_evidence
+                else CheckStatus.PARTIAL
+                if evidence
+                else CheckStatus.MISSING
+            )
         checks.append(
             GovernanceCheck(
                 key=definition["key"],

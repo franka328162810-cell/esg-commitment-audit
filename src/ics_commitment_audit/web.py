@@ -26,7 +26,7 @@ def create_app() -> FastAPI:
 
     app = FastAPI(
         title="ICS Commitment Audit Workbench",
-        version="0.3.0",
+        version="0.3.1",
         docs_url="/api/docs",
         redoc_url=None,
     )
@@ -50,7 +50,7 @@ def create_app() -> FastAPI:
 
     @app.get("/health")
     def health() -> dict[str, str]:
-        return {"status": "ok", "version": "0.3.0"}
+        return {"status": "ok", "version": "0.3.1"}
 
     def response_payload(report) -> JSONResponse:
         return JSONResponse(

@@ -52,7 +52,7 @@ def main() -> int:
         headers={
             "Content-Type": "application/json",
             "X-ICS-Admin-Token": admin_token,
-            "User-Agent": "ics-commitment-audit-provisioner/0.3.0",
+            "User-Agent": "ics-commitment-audit-provisioner/0.3.1",
         },
     )
     with urllib.request.urlopen(request, timeout=60) as response:

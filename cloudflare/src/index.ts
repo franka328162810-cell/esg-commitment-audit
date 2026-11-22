@@ -4,6 +4,7 @@ import {
   htmlResponse,
   landingPage,
   privacyPage,
+  recursiveFreedomPage,
   termsPage,
   workspacePage,
 } from "./public-pages";
@@ -249,7 +250,7 @@ async function verifyGumroadLicense(
         method: "POST",
         headers: {
           "content-type": "application/x-www-form-urlencoded",
-          "user-agent": "ics-commitment-audit/0.3.0",
+          "user-agent": "ics-commitment-audit/0.3.1",
         },
         body: form,
         signal: AbortSignal.timeout(20_000),
@@ -712,6 +713,9 @@ export default {
     }
     if (request.method === "GET" && path === "/workspace") {
       return htmlResponse(workspacePage, 200, { allowInlineScript: true });
+    }
+    if (request.method === "GET" && path === "/recursive-freedom") {
+      return htmlResponse(recursiveFreedomPage);
     }
     if (path === "/v1/health" && request.method === "GET") {
       await env.DB.prepare("SELECT 1").first();

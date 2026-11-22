@@ -170,9 +170,9 @@ class GovernanceSummary(BaseModel):
 
 
 class GovernanceReport(BaseModel):
-    report_version: str = "0.3.0"
+    report_version: str = "0.3.1"
     report_type: Literal["recursive-freedom"] = "recursive-freedom"
-    methodology_version: str = "RFP-AI-policy-structure-v0.1"
+    methodology_version: str = "RFP-AI-policy-structure-v0.2"
     generated_at: datetime
     document: DocumentSummary
     summary: GovernanceSummary

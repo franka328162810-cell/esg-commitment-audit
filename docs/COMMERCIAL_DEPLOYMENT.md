@@ -4,7 +4,7 @@ Status updated: 2026-11-22
 
 ## Current state
 
-The v0.3.0 pilot is deployed on Cloudflare:
+The v0.3.1 pilot is deployed on Cloudflare:
 
 - Worker and HTTPS API:
   `https://ics-commitment-audit-api.franka328162810.workers.dev`
@@ -13,11 +13,12 @@ The v0.3.0 pilot is deployed on Cloudflare:
 - Dead-letter queue: `ics-commitment-audit-jobs-dlq`
 - Private R2 bucket: `ics-commitment-audit-reports`
 - Container application: `ics-commitment-audit-api-auditcontainer`
-- Runtime image: `0.3.0-r1`
+- Runtime image: `0.3.1-r1`
 
 The API passes the current smoke, tenant-isolation, failure-refund, concurrency,
-backup, HTTPS, 100-page boundary, and quota-refund checks. The v0.3.0 release
-also passed production checks for both audit modes and the browser workbench.
+backup, HTTPS, 100-page boundary, and quota-refund checks. The v0.3.1 release
+also passed production checks for both audit modes, the browser workbench, and
+the dedicated Recursive Freedom product page.
 
 The Gumroad product is published at:
 
@@ -40,6 +41,7 @@ destination has not been verified end to end.
 GET    /
 GET    /activate
 GET    /workspace
+GET    /recursive-freedom
 GET    /privacy
 GET    /terms
 GET    /v1/health
@@ -60,7 +62,7 @@ All tenant endpoints require `Authorization: Bearer <API key>`. Admin endpoints
 require `X-ICS-Admin-Token`.
 
 `POST /v1/audits` accepts `X-ICS-Mode: commitment` for ESG/climate reports or
-`X-ICS-Mode: recursive-freedom` for the AI Policy Revision Audit Beta. Both
+`X-ICS-Mode: recursive-freedom` for Recursive Freedom Audit for AI. Both
 modes share the same quota and document limits.
 
 ## Data handling
@@ -269,6 +271,27 @@ Additional checks:
 - completed report retrieval returned `200` with evidence;
 - the source object was removed from R2 after successful processing;
 - completed report deletion returned `204` and removed the object.
+
+## Recursive Freedom Audit validation
+
+The v0.2 AI-policy rule set was tested against five public policies or
+governance documents:
+
+- OpenAI Usage Policies;
+- Anthropic Usage Policy;
+- Google Generative AI Prohibited Use Policy;
+- Anthropic Responsible Scaling Policy;
+- Google DeepMind's introduction to the Frontier Safety Framework.
+
+The development benchmark contains 50 check-level decisions. The current rules
+and Codex-assisted written adjudication agree on all 50. Nineteen checks were
+expected to be present or partial; all 19 were detected, with zero recorded
+false positives and zero recorded false negatives in this development set.
+
+This is not independent external validation. The rules were refined after
+reviewing initial false positives, so the benchmark is not a fully held-out
+test. The public product page and `docs/RECURSIVE_FREEDOM_AUDIT.md` state that
+limitation.
 
 ## Cost basis
 

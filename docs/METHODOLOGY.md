@@ -81,7 +81,7 @@ plausible assumptions.
 
 These labels describe the written commitment only.
 
-## AI Policy Revision Audit Beta
+## Recursive Freedom Audit for AI Beta
 
 The Beta applies a separate, non-scoring structural checklist to AI policies,
 model cards, governance procedures, and similar written controls:
@@ -114,3 +114,10 @@ validated.
 The Beta must not be used to score an individual's personality, mental state,
 political views, employability, creditworthiness, insurance risk, educational
 outcomes, immigration status, or legal culpability.
+
+The current method version is `RFP-AI-policy-structure-v0.2`. Its development
+benchmark covers five public policies or governance documents and 50
+check-level decisions. The written adjudication and current rules agree on all
+50; 19 expected positive or partial checks were detected with no recorded false
+positives or false negatives in that development set. This is not independent
+validation and must not be marketed as one.

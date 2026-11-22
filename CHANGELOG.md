@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.3.1 — 2026-11-22
+
+Recursive Freedom Audit rule-quality release.
+
+- Added a dedicated public product page at `/recursive-freedom`.
+- Tightened scope/owner checks so a generic policy reference is not treated as
+  a complete scope, owner, and effective-date statement.
+- Removed false-positive matches for generic consent, general legal oversight,
+  user access suspension, and unrelated human-review language.
+- Distinguished advance notice from a public updates page.
+- Distinguished audit logs from general monitoring.
+- Added external-review evidence as independent oversight.
+- Tested the v0.2 AI-policy rule set against five public AI policies or
+  governance documents.
+- Recorded 50/50 exact status matches in the internal written adjudication,
+  with 19 expected positive checks, zero recorded false positives, and zero
+  recorded false negatives.
+- Added a public validation record that explicitly states this is not an
+  independent external validation.
+- Expanded automated tests to 74.
+
 ## 0.3.0 — 2026-11-22
 
 Hosted evidence-workbench and AI-policy Beta release.

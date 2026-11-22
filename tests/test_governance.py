@@ -75,3 +75,95 @@ def test_partial_check_keeps_evidence() -> None:
     assert review.status == CheckStatus.PARTIAL
     assert review.evidence
     assert review.evidence[0].excerpt
+
+
+def test_generic_consent_is_not_a_refusal_or_exit_route() -> None:
+    report = audit_governance_text(
+        "Do not process personal data without the person's consent."
+    )
+    check = next(item for item in report.checks if item.key == "refusal_exit")
+
+    assert check.status == CheckStatus.MISSING
+    assert check.evidence == []
+
+
+def test_general_oversight_language_is_not_independent_oversight() -> None:
+    report = audit_governance_text(
+        "The programme will not evade legal oversight or accountability."
+    )
+    check = next(item for item in report.checks if item.key == "independent_oversight")
+
+    assert check.status == CheckStatus.MISSING
+
+
+def test_suspending_user_access_is_not_policy_rollback() -> None:
+    report = audit_governance_text(
+        "We may suspend or terminate your access if you violate this policy."
+    )
+    check = next(item for item in report.checks if item.key == "rollback_deprecation")
+
+    assert check.status == CheckStatus.MISSING
+
+
+def test_human_in_the_loop_review_is_not_policy_review_cadence() -> None:
+    report = audit_governance_text(
+        "A qualified person must review a high-risk recommendation before delivery."
+    )
+    check = next(item for item in report.checks if item.key == "review_cadence")
+
+    assert check.status == CheckStatus.MISSING
+
+
+def test_scope_check_requires_scope_owner_and_effective_date() -> None:
+    partial = audit_governance_text("This policy applies to all users.")
+    complete = audit_governance_text(
+        "Effective date: 1 January 2027. "
+        "This policy applies to all users. "
+        "Policy owner: Chief AI Officer."
+    )
+    partial_check = next(
+        item for item in partial.checks if item.key == "scope_and_owner"
+    )
+    complete_check = next(
+        item for item in complete.checks if item.key == "scope_and_owner"
+    )
+
+    assert partial_check.status == CheckStatus.PARTIAL
+    assert complete_check.status == CheckStatus.PRESENT
+
+
+def test_external_reviewers_count_as_independent_oversight() -> None:
+    report = audit_governance_text(
+        "The board approves external reviewers for the public risk report."
+    )
+    check = next(item for item in report.checks if item.key == "independent_oversight")
+
+    assert check.status == CheckStatus.PRESENT
+    assert check.evidence
+
+
+def test_public_update_page_is_partial_notice_without_advance_period() -> None:
+    report = audit_governance_text(
+        "We will use this page to inform the public of future policy developments."
+    )
+    check = next(item for item in report.checks if item.key == "notice")
+
+    assert check.status == CheckStatus.PARTIAL
+
+
+def test_notice_before_change_is_present() -> None:
+    report = audit_governance_text(
+        "We will notify affected users at least 30 days before changing this policy."
+    )
+    check = next(item for item in report.checks if item.key == "notice")
+
+    assert check.status == CheckStatus.PRESENT
+
+
+def test_plural_audit_logs_count_as_monitoring_evidence() -> None:
+    report = audit_governance_text(
+        "Audit logs are retained and reviewed by an independent team."
+    )
+    check = next(item for item in report.checks if item.key == "monitoring_audit")
+
+    assert check.status == CheckStatus.PRESENT

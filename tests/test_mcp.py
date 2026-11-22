@@ -128,4 +128,4 @@ def test_mcp_cloud_request_sets_product_user_agent(
     request = captured["request"]
     assert result == {"status": "ok"}
     assert isinstance(request, mcp_server.urllib.request.Request)
-    assert request.get_header("User-agent") == "ics-commitment-audit-mcp/0.3.0"
+    assert request.get_header("User-agent") == "ics-commitment-audit-mcp/0.3.1"

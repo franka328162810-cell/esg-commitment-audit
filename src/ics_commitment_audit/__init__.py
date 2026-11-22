@@ -10,4 +10,4 @@ __all__ = [
     "audit_governance_text",
     "audit_text",
 ]
-__version__ = "0.3.0"
+__version__ = "0.3.1"

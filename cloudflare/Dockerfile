@@ -12,9 +12,9 @@ COPY container-requirements.lock /tmp/
 RUN pip install --no-cache-dir --prefer-binary --timeout 120 --retries 10 \
     -r /tmp/container-requirements.lock
 
-COPY container-dist/ics_commitment_audit-0.3.0-py3-none-any.whl /tmp/
+COPY container-dist/ics_commitment_audit-0.3.1-py3-none-any.whl /tmp/
 RUN pip install --no-cache-dir --no-deps \
-    /tmp/ics_commitment_audit-0.3.0-py3-none-any.whl
+    /tmp/ics_commitment_audit-0.3.1-py3-none-any.whl
 
 COPY container_api.py /app/container_api.py
 

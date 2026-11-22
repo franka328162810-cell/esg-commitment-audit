@@ -39,6 +39,11 @@ const style = `
   .status-present { background: #dff5ea; color: #075c41; }
   .status-partial { background: #fff1c9; color: #785600; }
   .status-missing { background: #ffe2dd; color: #8b2d20; }
+  .table-wrap { overflow-x: auto; margin: 20px 0; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: .94rem; }
+  .data-table th, .data-table td { border-bottom: 1px solid #dbe4df; padding: 10px 12px; text-align: left; vertical-align: top; }
+  .data-table th { background: #21384a; color: #fff; font-weight: 700; }
+  .data-table tr:nth-child(even) td { background: #f6f9f8; }
   pre { white-space: pre-wrap; word-break: break-word; }
 `;
 
@@ -62,7 +67,7 @@ export const landingPage = page(
   `<article>
     <p class="eyebrow">ICS-TEC / ICS STUDIES</p>
     <h1>Audit the wording before you rely on the promise.</h1>
-    <p>ICS Commitment Audit turns long ESG and climate reports into traceable commitment evidence. The AI Policy Revision Audit Beta applies the same evidence discipline to AI rules, governance documents, and revision paths.</p>
+    <p>ICS Commitment Audit turns long ESG and climate reports into traceable commitment evidence. Recursive Freedom Audit for AI applies the same evidence discipline to AI rules, governance documents, and revision paths.</p>
     <div class="actions">
       <a class="button" href="https://icsstudies.gumroad.com/l/ics-commitment-audit" rel="noopener">Subscribe on Gumroad — US$29/month</a>
       <a class="button secondary" href="/workspace">Open the workbench</a>
@@ -75,8 +80,9 @@ export const landingPage = page(
         <p>Extract commitments with page or paragraph evidence, then test observability, enforceability, and revisability.</p>
       </div>
       <div class="card">
-        <h3>AI policy revision audit · Beta</h3>
+        <h3>Recursive Freedom Audit for AI · Beta</h3>
         <p>Check whether an AI policy states scope, ownership, review cadence, revision authority, notice, appeal, exit, monitoring, rollback, and independent oversight.</p>
+        <p><a href="/recursive-freedom">Read the product scope and validation record</a></p>
       </div>
     </div>
     <h2>Founding plan</h2>
@@ -109,6 +115,87 @@ export const landingPage = page(
       <a href="mailto:franka328162810@gmail.com">Support</a>
     </nav>
     <p class="muted">Operator: Xue Zhi Xin (ICS-TEC). Last updated: 2026-11-22.</p>
+  </article>`,
+  "en",
+);
+
+export const recursiveFreedomPage = page(
+  "Recursive Freedom Audit for AI | ICS-TEC",
+  `<article>
+    <p class="eyebrow">ICS-TEC / AI GOVERNANCE REVIEW</p>
+    <h1>Can an AI policy be revised without locking people in?</h1>
+    <p>Recursive Freedom Audit for AI reviews the written revision architecture of AI policies, model cards, and governance documents. It shows whether the document identifies who can change the rules, when they are reviewed, how changes are communicated, and whether affected people have appeal, refusal, and exit routes.</p>
+    <div class="actions">
+      <a class="button" href="/workspace">Run an audit in the workbench</a>
+      <a class="button secondary" href="https://icsstudies.gumroad.com/l/ics-commitment-audit" rel="noopener">Access the Founding plan</a>
+    </div>
+    <p class="notice"><strong>Scope boundary.</strong> This product checks written governance structure. It does not establish legal compliance, safety, truthfulness, or the actual behavior of an AI system. It does not score an individual person's psychology, political views, employability, creditworthiness, insurability, educational eligibility, immigration status, or legal culpability.</p>
+
+    <h2>What the audit checks</h2>
+    <div class="grid">
+      <div class="card"><strong>Authority and traceability</strong><p>Scope, effective date, accountable owner, review cadence, revision authority, and version history.</p></div>
+      <div class="card"><strong>People and recourse</strong><p>Advance notice, appeal, human review, refusal, opt-out, exit, and future-resident protection.</p></div>
+      <div class="card"><strong>Recoverability</strong><p>Monitoring evidence, audit logs, rollback, suspension, deprecation, and independent oversight.</p></div>
+    </div>
+    <ol>
+      <li>Scope and accountable owner</li>
+      <li>Review cadence</li>
+      <li>Revision authority and process</li>
+      <li>Version history and change log</li>
+      <li>Advance notice</li>
+      <li>Appeal and human review</li>
+      <li>Refusal, opt-out, and exit</li>
+      <li>Monitoring, audit logs, and evidence</li>
+      <li>Rollback, suspension, and deprecation</li>
+      <li>Independent oversight</li>
+    </ol>
+
+    <h2>Current validation record</h2>
+    <p>The v0.2 rule set was tested against five public AI policies or governance documents: OpenAI Usage Policies, Anthropic Usage Policy, Google Generative AI Prohibited Use Policy, Anthropic Responsible Scaling Policy, and Google DeepMind's Frontier Safety Framework introduction.</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Document</th><th>Present</th><th>Partial</th><th>Missing</th></tr></thead>
+        <tbody>
+          <tr><td>OpenAI Usage Policies</td><td>2</td><td>5</td><td>3</td></tr>
+          <tr><td>Anthropic Usage Policy</td><td>0</td><td>4</td><td>6</td></tr>
+          <tr><td>Google Generative AI Prohibited Use Policy</td><td>0</td><td>1</td><td>9</td></tr>
+          <tr><td>Anthropic Responsible Scaling Policy</td><td>2</td><td>4</td><td>4</td></tr>
+          <tr><td>Google DeepMind Frontier Safety Framework introduction</td><td>0</td><td>1</td><td>9</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Across 50 check-level decisions, the current rule set matched the written adjudication in 50 cases. The review found 19 positive or partial controls, with zero recorded false positives and zero recorded false negatives under the adjudication method.</p>
+    <p class="notice"><strong>Validation limit.</strong> This is a five-document internal development benchmark reviewed by Codex under written rules. It is not an independent external validation or an assurance opinion. The rules were refined after reviewing initial false positives, so the sample is not a fully held-out test. Missing means the examined text did not contain supporting evidence; it does not prove that the organization lacks an internal practice.</p>
+
+    <h2>What the statuses mean</h2>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Status</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><span class="status-pill status-present">present</span></td><td>The text contains the relevant structural control and source evidence.</td></tr>
+          <tr><td><span class="status-pill status-partial">partial</span></td><td>Some supporting language is present, but a material element is absent or incomplete.</td></tr>
+          <tr><td><span class="status-pill status-missing">missing</span></td><td>No supporting evidence was located in the examined document.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Commercial status</h2>
+    <p>The audit is currently included as a Beta mode in the existing US$29/month Founding plan. It shares the plan's 100-document monthly allowance and 100-page, 50 MB per-document limits. It does not yet have a separate subscription, public commitment database, or formal Codex plugin package.</p>
+    <p>Planned layers are separate products rather than duplicate names:</p>
+    <ul>
+      <li><strong>Recursive Freedom Audit for AI:</strong> the policy-text audit described on this page.</li>
+      <li><strong>AI Public Commitment & Revision Monitor:</strong> a future independent data product that tracks public policy changes over time.</li>
+      <li><strong>Organizational Revisability Audit:</strong> a future professional service that tests actual governance, appeals, exit paths, and continuity, not only text.</li>
+    </ul>
+
+    <h2>Theory source</h2>
+    <p>The revision-oriented framing is informed by <a href="https://doi.org/10.5281/zenodo.24217876" rel="noopener">Xue, Z. (2026), <em>On Recursive Freedom: A Theory of the Freedom to Revise</em></a>. The publication identifies intellectual provenance. It is not evidence that this rule engine has been independently validated.</p>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/workspace">Workbench</a>
+      <a href="https://github.com/franka328162810-cell/ics-commitment-audit/blob/main/docs/METHODOLOGY.md" rel="noopener">Methodology</a>
+      <a href="mailto:franka328162810@gmail.com">Support</a>
+    </nav>
   </article>`,
   "en",
 );
@@ -151,11 +238,12 @@ export const workspacePage = page(
         </label>
         <label class="mode-card">
           <input type="radio" name="audit-mode" value="recursive-freedom">
-          <strong>AI Policy Revision Audit · Beta</strong>
+          <strong>Recursive Freedom Audit for AI · Beta</strong>
           <span class="muted">Rules for review, revision, appeal, exit, rollback, and oversight.</span>
         </label>
       </div>
       <p id="mode-note" class="muted"></p>
+      <p class="muted"><a href="/recursive-freedom">Read the Recursive Freedom Audit product scope and validation record</a></p>
       <p class="muted">The Beta's revision-oriented framing is informed by
         <a href="https://doi.org/10.5281/zenodo.24217876" rel="noopener">On Recursive Freedom (2026), DOI 10.5281/zenodo.24217876</a>.
         This is not a psychological or personal-rights assessment.</p>
@@ -394,7 +482,7 @@ export const workspacePage = page(
 
     function reportHeader(report) {
       return '<div class="card"><p class="eyebrow">' +
-        escapeHtml(report.report_type === "recursive-freedom" ? "AI Policy Revision Audit Beta" : "ESG / Climate Commitment Audit") +
+        escapeHtml(report.report_type === "recursive-freedom" ? "Recursive Freedom Audit for AI Beta" : "ESG / Climate Commitment Audit") +
         '</p><h2>' + escapeHtml(report.document.filename) + '</h2>' +
         '<p class="muted">Generated ' + escapeHtml(report.generated_at) +
         ' · SHA-256 ' + escapeHtml(report.document.sha256) + '</p></div>';

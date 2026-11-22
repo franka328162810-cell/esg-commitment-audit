@@ -44,7 +44,7 @@ The public offer includes a 30-day no-questions-asked full refund.
 - Markdown
 
 Scanned PDFs without a text layer are not supported because OCR is not included
-in v0.3.0. If the service reports `No text layer was found in the PDF`, run OCR
+in v0.3.1. If the service reports `No text layer was found in the PDF`, run OCR
 or use the original text-based source before retrying.
 
 ## Purchase and activation
@@ -131,7 +131,7 @@ curl \
 
 See [Methodology](METHODOLOGY.md) for weights and interpretation bands.
 
-## AI Policy Revision Audit Beta
+## Recursive Freedom Audit for AI Beta
 
 Change `X-ICS-Mode` to `recursive-freedom` and submit an AI policy, model card,
 governance procedure, or similar document. The report covers ten written
@@ -152,6 +152,12 @@ The Beta reviews document structure only. It does not test an individual's
 personality, psychology, political views, employability, creditworthiness,
 insurability, educational eligibility, immigration status, or legal
 culpability. Both modes consume one unit from the same monthly quota.
+
+The dedicated product page is:
+
+```text
+https://ics-commitment-audit-api.franka328162810.workers.dev/recursive-freedom
+```
 
 ## Data handling
 
