@@ -8,7 +8,7 @@
   "containers": [
     {
       "class_name": "AuditContainer",
-      "image": "registry.cloudflare.com/aa7d0faa102dcea2d358907bbf96b7ec/esg-commitment-audit-api-auditcontainer:0.5.0.dev1-r1",
+      "image": "registry.cloudflare.com/aa7d0faa102dcea2d358907bbf96b7ec/esg-commitment-audit-api-auditcontainer:0.6.0-r2",
       "instance_type": "standard-1",
       "max_instances": 4,
       "constraints": {

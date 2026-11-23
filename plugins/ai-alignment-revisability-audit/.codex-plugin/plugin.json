@@ -1,6 +1,6 @@
 {
   "name": "ai-alignment-revisability-audit",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Review AI policy revision authority, rollback, oversight, and sealed operating evidence through the ICS hosted API.",
   "author": {
     "name": "Xue Zhi Xin (ICS-TEC)",

@@ -131,7 +131,7 @@ def test_plugin_manifest_and_mcp_config_are_consistent() -> None:
         )
         mcp = json.loads((plugin_root / ".mcp.json").read_text(encoding="utf-8"))
         assert manifest["name"] == entry["name"]
-        assert manifest["version"] == "0.5.0"
+        assert manifest["version"] == "0.6.0"
         assert mcp["mcpServers"][entry["name"]]["command"] == "node"
         assert (plugin_root / "server.mjs").is_file()
 

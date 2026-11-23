@@ -1,6 +1,6 @@
 # Codex plugin GA
 
-Plugin release: `0.5.0`
+Plugin release: `0.6.0`
 
 ## Product entries
 
@@ -77,6 +77,7 @@ modes, and the correct activation page without uploading the file.
 
 Shared:
 
+- `get_purchase_options`
 - `audit_document`
 - `audit_text`
 - `get_cloud_audit`

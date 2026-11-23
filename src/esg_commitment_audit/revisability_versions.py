@@ -48,7 +48,7 @@ class VersionTraceSummary(BaseModel):
 
 
 class VersionTraceReport(BaseModel):
-    report_version: str = "0.5.0.dev1"
+    report_version: str = "0.6.0"
     report_type: Literal["ai-revisability-version-trace"] = (
         "ai-revisability-version-trace"
     )

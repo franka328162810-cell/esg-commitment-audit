@@ -1,8 +1,8 @@
 # AI Alignment Revisability Audit
 
-Local release: `0.5.0.dev1`
+Local release: `0.6.0`
 
-Hosted founding release: `0.5.0.dev1`.
+Hosted founding release: `0.6.0`.
 
 The installable Python distribution is `esg-commitment-audit`. The user-facing
 command for this product is `ai-revisability-audit`.

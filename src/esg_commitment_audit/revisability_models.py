@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 
 from .models import DocumentSummary, EvidenceSpan
 
-REVISABILITY_REPORT_VERSION = "0.5.0.dev1"
+REVISABILITY_REPORT_VERSION = "0.6.0"
 REVISABILITY_METHODOLOGY_VERSION = "RFP-AI-revisability-document-v0.2"
 
 ReviewProfile = Literal[

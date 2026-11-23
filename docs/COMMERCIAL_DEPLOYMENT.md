@@ -14,7 +14,7 @@ The renamed ESG Commitment Audit service is deployed on Cloudflare:
 - Dead-letter queue: `esg-commitment-audit-jobs-dlq`
 - Private R2 bucket: `esg-commitment-audit-reports`
 - Container application: `esg-commitment-audit-api-auditcontainer`
-- Runtime image: `0.5.0.dev1-r1`
+- Runtime image: `0.6.0-r2`
 
 The previous Worker name remains as a 308 redirect to the new Worker. Previous
 D1, R2 and queue resources are retained temporarily as a rollback path and are
@@ -321,7 +321,7 @@ Additional checks:
 
 ## AI Alignment Revisability Audit validation
 
-The `0.5.0.dev1` hosted release passed end-to-end tests for the general and
+The `0.6.0` hosted release passed end-to-end tests for the general and
 insurance profiles on 2026-11-23. General mode returned 28 checks and insurance
 mode returned 30 checks. This proves the hosted path and profile persistence,
 not rule accuracy or scientific validation.

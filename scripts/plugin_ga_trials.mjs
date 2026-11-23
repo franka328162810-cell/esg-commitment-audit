@@ -195,17 +195,17 @@ async function runAuditPersona({
 const esgServer = path.join(
   cacheRoot,
   "esg-commitment-audit",
-  "0.5.0",
+  "0.6.0",
   "server.mjs",
 );
 const aiServer = path.join(
   cacheRoot,
   "ai-alignment-revisability-audit",
-  "0.5.0",
+  "0.6.0",
   "server.mjs",
 );
-const esgKey = await credential("plugin-esg-ga-smoke.json");
-const aiKey = await credential("plugin-ai-ga-smoke.json");
+const esgKey = await credential("plugin-esg-0.6.0-smoke.json");
+const aiKey = await credential("plugin-ai-0.6.0-smoke.json");
 
 const results = [];
 results.push(

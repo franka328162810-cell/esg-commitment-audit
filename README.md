@@ -61,7 +61,7 @@ See
 [AI Alignment Revisability Audit](docs/AI_ALIGNMENT_REVISABILITY_AUDIT.md) and
 [the generated sample report](docs/AI_ALIGNMENT_REVISABILITY_SAMPLE.md) and
 [the version-trace sample](docs/AI_ALIGNMENT_REVISABILITY_VERSION_SAMPLE.md).
-The local and hosted `0.5.0.dev1` build adds a 588-decision real-policy
+The local and hosted `0.6.0` build adds a 588-decision real-policy
 benchmark, sealed evidence-pack intake, an independent `ai-founding-team` plan,
 a server-enforced 20-customer organization cap, and `ai_live_` API keys.
 
@@ -351,6 +351,7 @@ from the wrong product is rejected before the document is uploaded.
 
 Shared tools:
 
+- `get_purchase_options`
 - `audit_document`
 - `audit_text`
 - `get_cloud_audit`
@@ -391,6 +392,6 @@ python -m esg_commitment_audit audit examples\vague_statement.txt
 
 Code and rules are licensed under Apache License 2.0. Future formalizations under
 `formalizations/` are intended to be licensed separately under CC BY-SA 4.0; no
-formal proof is included in v0.5.0.dev1.
+formal proof is included in v0.6.0.
 
 Copyright 2026 Xue Zhi Xin (ICS-TEC).

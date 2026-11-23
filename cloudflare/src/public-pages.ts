@@ -1243,12 +1243,33 @@ export const termsPage = page(
   </article>`,
 );
 
-export const activationPage = page(
-  "Activate API access | ICS-TEC",
-  `<article>
+export function activationPageFor(product: "esg" | "ai"): string {
+  const offer =
+    product === "ai"
+      ? {
+          name: "AI Alignment Revisability Audit — Founding Team",
+          price: "US$99/month",
+          limit: "100 policy or evidence-pack jobs per month",
+          productPath: "/ai-revisability-audit",
+          checkoutUrl:
+            "https://icsstudies.gumroad.com/l/ai-alignment-revisability-audit",
+        }
+      : {
+          name: "ESG Commitment Audit — Founding Small Team",
+          price: "US$29/month",
+          limit: "100 audited documents per month",
+          productPath: "/",
+          checkoutUrl:
+            "https://icsstudies.gumroad.com/l/esg-commitment-audit",
+        };
+  return page(
+    "Activate API access | ICS-TEC",
+    `<article>
     <p class="eyebrow">ICS-TEC / PRODUCT ACTIVATION</p>
     <h1>Activate your API access</h1>
+    <p><strong>${offer.name}</strong><br>${offer.price} · ${offer.limit} · one organization · first 20 customer organizations.</p>
     <p>Enter the Gumroad license key from your purchase receipt and the organization name you want to use.</p>
+    <p class="muted">Need to purchase first? <a href="${offer.checkoutUrl}" rel="noopener">Open the Gumroad product page</a>.</p>
     <p class="notice"><strong>Important:</strong> your ICS API key is displayed only once. Store it in a password manager and never publish it.</p>
     <form id="activation-form">
       <p>
@@ -1263,13 +1284,14 @@ export const activationPage = page(
     </form>
     <div id="result" aria-live="polite" style="margin-top:24px"></div>
     <noscript><p class="notice">JavaScript is required for secure activation.</p></noscript>
-    <nav><a href="/">Return to ESG Commitment Audit</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a></nav>
+    <p class="muted">The offer includes a 30-day no-questions-asked full refund. Read the <a href="${offer.productPath}">product scope</a> before purchase.</p>
+    <nav><a href="${offer.productPath}">Return to product</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a></nav>
   </article>
   <script>
     const form = document.getElementById("activation-form");
     const result = document.getElementById("result");
     const button = document.getElementById("activate-button");
-    const product = location.pathname === "/ai-revisability-audit/activate" ? "ai" : "esg";
+    const product = ${JSON.stringify(product)};
     function escapeHtml(value) {
       return String(value).replace(/[&<>"']/g, (character) => ({
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -1301,8 +1323,9 @@ export const activationPage = page(
       }
     });
   </script>`,
-  "en",
-);
+    "en",
+  );
+}
 
 export function htmlResponse(
   body: string,

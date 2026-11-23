@@ -20,10 +20,13 @@ key in `ICS_AUDIT_API_KEY` (`ESG_AUDIT_API_KEY` is accepted for compatibility).
 2. Continue only when `compatible` is `true` and
    `allowed_audit_modes` contains `ai-revisability`; evidence-pack review also
    requires `evidence-pack`.
-3. If the key is missing, belongs to the ESG product, or the subscription is
+3. If no key is configured and the user asks how to buy or activate, call
+   `get_purchase_options` to return the current price, checkout, activation,
+   refund and policy links.
+4. If the key is missing, belongs to the ESG product, or the subscription is
    inactive, do not upload. Direct the user to the AI activation page:
    https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit/activate
-4. A paid key is obtained after subscribing at
+5. A paid key is obtained after subscribing at
    https://icsstudies.gumroad.com/l/ai-alignment-revisability-audit and
    activating the Gumroad license key.
 

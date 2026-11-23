@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.6.0 — commercial onboarding release
+
+- Added the public `/v1/offers` contract for current price, plan, quota,
+  checkout, activation, privacy and terms links.
+- Added the read-only `get_purchase_options` Codex tool so users can begin
+  purchase and activation without first exposing an API key.
+- Added product-specific ESG and AI activation pages with price, usage limit,
+  refund policy, checkout link and scope link.
+- Upgraded both independent Codex plugins to `0.6.0` while retaining one
+  byte-identical shared MCP core.
+- Added public purchase options tests and repeated all production role trials.
+
 ## Codex plugins 0.5.0 — GA candidate
 
 - Split the public Codex marketplace into independent ESG Commitment Audit and

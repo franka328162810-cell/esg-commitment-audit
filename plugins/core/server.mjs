@@ -3,7 +3,7 @@ import path from "node:path";
 import readline from "node:readline";
 import { pathToFileURL } from "node:url";
 
-const SERVER_VERSION = "0.5.0";
+const SERVER_VERSION = "0.6.0";
 const PROTOCOL_VERSION = "2025-06-18";
 const MAX_DOCUMENT_BYTES = 50 * 1024 * 1024;
 const MAX_EVIDENCE_PACK_BYTES = 100 * 1024 * 1024;
@@ -169,6 +169,17 @@ function toolDefinitions(product) {
   }
   tools.push(
     {
+      name: "get_purchase_options",
+      description:
+        "Show current pricing, checkout, activation, limits, refund, privacy and terms links for this plugin.",
+      inputSchema: {
+        type: "object",
+        properties: {},
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+    },
+    {
       name: "get_cloud_audit",
       description:
         "Get an audit job status and optionally fetch its completed JSON report.",
@@ -214,11 +225,7 @@ function toolDefinitions(product) {
 
 function cloudConfig() {
   const product = currentProduct();
-  const baseUrl = (
-    process.env.ICS_AUDIT_API_URL ||
-    process.env.ESG_AUDIT_API_URL ||
-    "https://esg-commitment-audit-api.franka328162810.workers.dev"
-  ).replace(/\/+$/, "");
+  const baseUrl = publicBaseUrl();
   const apiKey =
     process.env.ICS_AUDIT_API_KEY || process.env.ESG_AUDIT_API_KEY || "";
   if (!apiKey) {
@@ -227,13 +234,48 @@ function cloudConfig() {
         `Activation: ${product.activationUrl}`,
     );
   }
+  return { baseUrl, apiKey, product };
+}
+
+function publicBaseUrl() {
+  const baseUrl = (
+    process.env.ICS_AUDIT_API_URL ||
+    process.env.ESG_AUDIT_API_URL ||
+    "https://esg-commitment-audit-api.franka328162810.workers.dev"
+  ).replace(/\/+$/, "");
   if (
     !baseUrl.startsWith("https://") &&
     !baseUrl.startsWith("http://127.0.0.1")
   ) {
     throw new Error("ICS_AUDIT_API_URL must use HTTPS or loopback HTTP");
   }
-  return { baseUrl, apiKey, product };
+  return baseUrl;
+}
+
+async function publicRequest(requestPath) {
+  const baseUrl = publicBaseUrl();
+  let lastError;
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    try {
+      const response = await fetch(`${baseUrl}${requestPath}`, {
+        headers: {
+          Accept: "application/json",
+          "User-Agent": `ics-audit-plugin/${SERVER_VERSION}`,
+        },
+        signal: AbortSignal.timeout(30_000),
+      });
+      if (!response.ok) {
+        throw new Error(`Offer service returned HTTP ${response.status}`);
+      }
+      return response.json();
+    } catch (error) {
+      lastError = error;
+      if (attempt < 3) {
+        await new Promise((resolve) => setTimeout(resolve, 500 * attempt));
+      }
+    }
+  }
+  throw lastError;
 }
 
 function recoveryMessage(status, payload, product) {
@@ -338,6 +380,27 @@ function accountCompatibility(account, product) {
 async function getAccount(product) {
   const account = await cloudRequest("GET", "/v1/account");
   return { ...account, ...accountCompatibility(account, product) };
+}
+
+async function getPurchaseOptions(product) {
+  const payload = await publicRequest("/v1/offers");
+  const offer = (payload.offers || []).find(
+    (candidate) => candidate.product === product.id,
+  );
+  if (!offer) {
+    throw new Error(`No current offer is published for ${product.displayName}`);
+  }
+  return {
+    ...offer,
+    plugin_product: product.id,
+    purchase_steps: [
+      "Open checkout_url and complete the monthly subscription.",
+      "Keep the Gumroad license key from the receipt.",
+      "Open activation_url and activate the license once.",
+      "Store the returned API key privately and set ICS_AUDIT_API_KEY.",
+      "Call get_account, then retry the audit.",
+    ],
+  };
 }
 
 async function ensureProductAccess(product, requiredMode) {
@@ -469,6 +532,7 @@ async function submitEvidencePack(args, product) {
 
 export async function callTool(name, args = {}) {
   const product = currentProduct();
+  if (name === "get_purchase_options") return getPurchaseOptions(product);
   if (name === "audit_document") return submitDocument(args, product);
   if (name === "audit_text") return submitText(args, product);
   if (name === "audit_evidence_pack") return submitEvidencePack(args, product);

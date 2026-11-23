@@ -113,7 +113,7 @@ class BenchmarkCaseResult(BaseModel):
 
 
 class BenchmarkReport(BaseModel):
-    report_version: str = "0.5.0.dev1"
+    report_version: str = "0.6.0"
     report_type: Literal["ai-revisability-benchmark"] = "ai-revisability-benchmark"
     generated_at: datetime
     benchmark_id: str

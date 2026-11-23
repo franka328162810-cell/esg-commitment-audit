@@ -27,7 +27,7 @@ test.afterEach(() => {
   delete process.env.ICS_AUDIT_API_URL;
 });
 
-test("core initializes at version 0.5.0", async () => {
+test("core initializes at version 0.6.0", async () => {
   setProduct("esg");
   const response = await handleMessage({
     jsonrpc: "2.0",
@@ -36,7 +36,7 @@ test("core initializes at version 0.5.0", async () => {
     params: { protocolVersion: "2025-06-18" },
   });
   assert.equal(response.result.serverInfo.name, "esg-commitment-audit");
-  assert.equal(response.result.serverInfo.version, "0.5.0");
+  assert.equal(response.result.serverInfo.version, "0.6.0");
 });
 
 test("ESG and AI products expose distinct tool schemas", async () => {
@@ -50,6 +50,7 @@ test("ESG and AI products expose distinct tool schemas", async () => {
     esgResponse.result.tools.map((tool) => tool.name),
   );
   assert.equal(esgNames.has("audit_evidence_pack"), false);
+  assert.equal(esgNames.has("get_purchase_options"), true);
 
   setProduct("ai");
   const aiResponse = await handleMessage({
@@ -59,6 +60,7 @@ test("ESG and AI products expose distinct tool schemas", async () => {
   });
   const aiNames = new Set(aiResponse.result.tools.map((tool) => tool.name));
   assert.equal(aiNames.has("audit_evidence_pack"), true);
+  assert.equal(aiNames.has("get_purchase_options"), true);
   const documentTool = aiResponse.result.tools.find(
     (tool) => tool.name === "audit_document",
   );
@@ -81,6 +83,25 @@ test("missing API key produces activation guidance", async () => {
   assert.equal(response.result.isError, true);
   assert.match(response.result.content[0].text, /Gumroad/);
   assert.match(response.result.content[0].text, /activate/);
+});
+
+test("purchase options are public and return activation steps", async () => {
+  process.env.ICS_PRODUCT = "ai";
+  delete process.env.ICS_AUDIT_API_KEY;
+  globalThis.fetch = async () =>
+    jsonResponse({
+      offers: [
+        {
+          product: "ai",
+          price_monthly: 99,
+          checkout_url: "https://example.com/checkout",
+          activation_url: "https://example.com/activate",
+        },
+      ],
+    });
+  const options = await callTool("get_purchase_options");
+  assert.equal(options.price_monthly, 99);
+  assert.equal(options.purchase_steps.length, 5);
 });
 
 test("account response identifies plugin compatibility", async () => {

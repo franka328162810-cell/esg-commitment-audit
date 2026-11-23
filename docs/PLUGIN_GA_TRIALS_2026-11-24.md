@@ -2,7 +2,7 @@
 
 Date: 2026-11-24
 
-Plugin version: `0.5.0`
+Plugin version: `0.6.0`
 
 ## Test basis
 
@@ -29,7 +29,7 @@ not independent external human customers.
 
 | Check | Result |
 |---|---|
-| Marketplace lists two independent `0.5.0` plugins | Passed |
+| Marketplace lists two independent `0.6.0` plugins | Passed |
 | Install ESG and AI plugins separately | Passed |
 | Both installed packages remain enabled simultaneously | Passed |
 | Bundled `server.mjs` files share one SHA-256 hash | Passed |
@@ -37,20 +37,21 @@ not independent external human customers.
 | Missing API key returns activation guidance | Passed |
 | Uninstall each plugin | Passed |
 | Reinstall each plugin | Passed |
-| Upgrade from the public `0.4.0-dev.2` ESG package | Passed; installed entry refreshed to `0.5.0` |
+| Upgrade from `0.5.0` to `0.6.0` | Passed |
 | Install AI entry from Git-backed Marketplace | Passed |
 
 ## Required final gate
 
 Technical release gate:
 
-1. Push the two-plugin Marketplace definition to GitHub: passed.
+1. Push the 0.6.0 two-plugin Marketplace definition to GitHub: pending.
 2. Upgrade the isolated old installation with
-   `codex plugin marketplace upgrade`: passed.
-3. Verify the old ESG entry becomes `0.5.0` and the AI entry becomes
-   available: passed.
-4. Install and use the AI entry from the Git-backed Marketplace: passed.
-5. Publish the `v0.5.0` plugin release: performed after this record.
+   `codex plugin marketplace upgrade`: 0.5.0 to 0.6.0 passed locally; Git-backed
+   refresh pending.
+3. Verify both installed ESG and AI entries become `0.6.0`: local upgrade
+   passed; Git-backed refresh pending.
+4. Install and use both entries from the Git-backed Marketplace: pending.
+5. Publish the `v0.6.0` release: pending.
 6. Obtain three to five external human pilot accounts before claiming
    market-validated GA: still required.
 

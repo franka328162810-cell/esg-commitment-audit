@@ -75,7 +75,7 @@ class UnresolvedControl(BaseModel):
 
 
 class EvidencePackReport(BaseModel):
-    report_version: str = "0.5.0.dev1"
+    report_version: str = "0.6.0"
     report_type: Literal["ai-revisability-evidence-pack"] = (
         "ai-revisability-evidence-pack"
     )
