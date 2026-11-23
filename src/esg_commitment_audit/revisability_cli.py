@@ -8,6 +8,14 @@ from pathlib import Path
 
 from . import __version__
 from .api import audit_revisability_bytes, audit_revisability_version_bytes
+from .benchmark import audit_revisability_benchmark
+from .benchmark_report import render_benchmark_json, render_benchmark_markdown
+from .evidence_pack import audit_evidence_pack_bundle, seal_evidence_pack_manifest
+from .evidence_pack_report import (
+    render_evidence_pack_html,
+    render_evidence_pack_json,
+    render_evidence_pack_markdown,
+)
 from .revisability_report import (
     render_revisability_html,
     render_revisability_json,
@@ -64,6 +72,49 @@ def _build_parser() -> argparse.ArgumentParser:
         dest="output_format",
     )
     compare_parser.add_argument("--output", type=Path)
+
+    evidence_parser = subparsers.add_parser(
+        "evidence-pack",
+        help="Validate a manifest or ZIP evidence pack and propose grade upgrades",
+    )
+    evidence_parser.add_argument("manifest_or_zip", type=Path)
+    evidence_parser.add_argument(
+        "--format",
+        choices=("markdown", "json", "html"),
+        default="markdown",
+        dest="output_format",
+    )
+    evidence_parser.add_argument("--output", type=Path)
+
+    evidence_seal_parser = subparsers.add_parser(
+        "evidence-pack-seal",
+        help="Compute and pin SHA-256 hashes in a new sealed manifest",
+    )
+    evidence_seal_parser.add_argument("manifest", type=Path)
+    evidence_seal_parser.add_argument("--output", type=Path)
+
+    benchmark_parser = subparsers.add_parser(
+        "benchmark",
+        help="Score the frozen real-policy benchmark and evaluate release gates",
+    )
+    benchmark_parser.add_argument("dataset", type=Path)
+    benchmark_parser.add_argument(
+        "--sources",
+        type=Path,
+        help="Directory containing source snapshots; defaults to dataset directory",
+    )
+    benchmark_parser.add_argument(
+        "--format",
+        choices=("markdown", "json"),
+        default="markdown",
+        dest="output_format",
+    )
+    benchmark_parser.add_argument("--output", type=Path)
+    benchmark_parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="Exit with status 1 when a benchmark gate fails",
+    )
 
     serve_parser = subparsers.add_parser(
         "serve",
@@ -145,6 +196,55 @@ def _run_compare(args: argparse.Namespace) -> int:
     return _emit(rendered, args.output, extension)
 
 
+def _run_evidence_pack(args: argparse.Namespace) -> int:
+    try:
+        report = audit_evidence_pack_bundle(args.manifest_or_zip)
+    except Exception as exc:  # noqa: BLE001
+        print(f"Evidence-pack assessment failed: {exc}", file=sys.stderr)
+        return 2
+    if args.output_format == "json":
+        rendered = render_evidence_pack_json(report)
+        extension = ".json"
+    elif args.output_format == "html":
+        rendered = render_evidence_pack_html(report)
+        extension = ".html"
+    else:
+        rendered = render_evidence_pack_markdown(report)
+        extension = ".md"
+    return _emit(rendered, args.output, extension)
+
+
+def _run_evidence_pack_seal(args: argparse.Namespace) -> int:
+    try:
+        output = seal_evidence_pack_manifest(args.manifest, args.output)
+    except Exception as exc:  # noqa: BLE001
+        print(f"Evidence-pack sealing failed: {exc}", file=sys.stderr)
+        return 2
+    print(output)
+    return 0
+
+
+def _run_benchmark(args: argparse.Namespace) -> int:
+    sources = args.sources or args.dataset.resolve().parent / "sources"
+    try:
+        report = audit_revisability_benchmark(args.dataset, sources)
+    except Exception as exc:  # noqa: BLE001
+        print(f"Benchmark evaluation failed: {exc}", file=sys.stderr)
+        return 2
+    if args.output_format == "json":
+        rendered = render_benchmark_json(report)
+        extension = ".json"
+    else:
+        rendered = render_benchmark_markdown(report)
+        extension = ".md"
+    exit_code = _emit(rendered, args.output, extension)
+    if exit_code != 0:
+        return exit_code
+    if args.strict and not report.gate.passed:
+        return 1
+    return 0
+
+
 def _run_server(args: argparse.Namespace) -> int:
     import uvicorn
 
@@ -168,6 +268,12 @@ def main(argv: list[str] | None = None) -> int:
         return _run_audit(args)
     if args.command == "compare":
         return _run_compare(args)
+    if args.command == "evidence-pack":
+        return _run_evidence_pack(args)
+    if args.command == "evidence-pack-seal":
+        return _run_evidence_pack_seal(args)
+    if args.command == "benchmark":
+        return _run_benchmark(args)
     if args.command == "serve":
         return _run_server(args)
     return 2

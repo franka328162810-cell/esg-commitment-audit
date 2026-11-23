@@ -1,0 +1,44 @@
+manifest_version: "1.0"
+organization: Example AI Company
+reviewed_at: 2026-11-23
+profile: general
+base_document: policy.md
+
+artifacts:
+  - path: approval-record.txt
+    artifact_type: approval_record
+    issued_at: 2026-11-20
+    issuer: AI Governance Board
+    supports:
+      - accountable_owner
+      - revision_authority
+      - version_identifier
+    expected_sha256: 99dbfc09ef2ad7c135ebdf494faba53efb5b1e8790e0fd41b90371f57f2a97cc
+
+  - path: rollback-drill.txt
+    artifact_type: rollback_drill
+    issued_at: 2026-11-18
+    issuer: Incident Response Team
+    supports:
+      - rollback_condition
+      - rollback_authority
+      - rollback_evidence
+    expected_sha256: 6e4fdc3b347485592885a9aa0941d2acb0dbe29f5593f8f7d837dfe96c736d42
+
+  - path: monitoring-snapshot.json
+    artifact_type: monitoring_snapshot
+    issued_at: 2026-11-19
+    issuer: AI Operations
+    supports:
+      - monitoring_metrics
+      - audit_logs
+    expected_sha256: d432707e4dde48e4f11743d64efc8bd8229e1c748201ed987dca4ebb8a8edb0c
+
+  - path: independent-review.txt
+    artifact_type: independent_review
+    issued_at: 2026-11-21
+    issuer: External AI Review Panel
+    independent: true
+    supports:
+      - independent_oversight
+    expected_sha256: 2b7253b5d8776682f27c007a46e39b64417f1d3f33ff43b7469812cd45d39160

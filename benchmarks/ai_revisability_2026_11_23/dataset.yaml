@@ -1,0 +1,666 @@
+benchmark_id: ai-revisability-policy-baseline-2026-11-23
+benchmark_version: "1.0.0"
+frozen_at: 2026-11-23
+methodology_version: RFP-AI-revisability-document-v0.2
+title: AI Revisability Policy Baseline 2026-11-23
+description: >-
+  A multilingual baseline covering company AI policies, Chinese public
+  governance instruments, the EU AI Act, current UK statutory instruments, US
+  federal actions, and enacted US state AI laws. Every document is tied to an
+  official source URL and a frozen SHA-256 snapshot. Unspecified control grades
+  are absent.
+claim_boundary: >-
+  This benchmark evaluates written governance controls and declared
+  revisability architecture. It does not test model behaviour, legal
+  compliance, safety, institutional independence, or the truth of an
+  organisation's claims. All documents were examined during rule development;
+  the evaluation split is frozen for reporting but is not an independent
+  third-party holdout. Official enactment summaries are marked as summaries,
+  not full statutory text.
+thresholds:
+  minimum_exact_grade_accuracy: 0.80
+  minimum_positive_precision: 0.85
+  minimum_positive_recall: 0.85
+  minimum_evidence_coverage: 1.0
+
+documents:
+  - id: openai-usage-policies
+    title: "OpenAI Usage Policies"
+    url: "https://openai.com/policies/usage-policies/"
+    jurisdiction: "United States / global service"
+    instrument_type: company_policy
+    capture_type: full_text
+    language: en
+    source_file: openai-usage-policies.txt
+    sha256: 8b19493abb5715767740d05f16fe548c0078f4985da11567c12b7c094bc108e7
+    split: calibration
+    expected_grades:
+      alignment_target: asserted
+      revision_authority: asserted
+      revision_triggers: asserted
+      version_identifier: asserted
+      change_log: documented
+      prior_version_access: documented
+      explanation: documented
+      appeal: documented
+      monitoring_metrics: asserted
+      capability_gate: documented
+    evidence:
+      change_log:
+        locator: "Changelog"
+        excerpt: >-
+          2026-10-21: We’ve updated our Usage Policies to clarify restrictions
+          on using OpenAI models and outputs to train other models.
+        rationale: "A dated public changelog records material revisions."
+
+  - id: anthropic-usage-policy
+    title: "Anthropic Usage Policy"
+    url: "https://www.anthropic.com/legal/aup"
+    jurisdiction: "United States / global service"
+    instrument_type: company_policy
+    capture_type: full_text
+    language: en
+    source_file: anthropic-usage-policy.txt
+    sha256: ea418bf30349a3c39103239991b841ab7539bf797231df22d3dc59339951de99
+    split: calibration
+    expected_grades:
+      alignment_target: asserted
+      revision_authority: asserted
+      revision_triggers: asserted
+      rollback_condition: documented
+      monitoring_metrics: asserted
+      interruptibility: documented
+    evidence:
+      revision_authority:
+        locator: "Usage Policy introduction"
+        excerpt: >-
+          We will update our policy as our technology and the associated risks
+          evolve or as we learn about unanticipated risks.
+        rationale: >-
+          The operator claims revision authority and names evolution and new
+          risk learning as triggers, but does not specify an approver.
+
+  - id: anthropic-responsible-scaling-policy
+    title: "Anthropic Responsible Scaling Policy"
+    url: "https://www.anthropic.com/news/anthropics-responsible-scaling-policy"
+    jurisdiction: "United States / global service"
+    instrument_type: voluntary_framework
+    capture_type: full_text
+    language: en
+    source_file: anthropic-responsible-scaling-policy.txt
+    sha256: 4e3607a5252de9fe2c05f7999fd4c474955df0a74fe6a1df2b575e26343e1b90
+    split: calibration
+    expected_grades:
+      alignment_target: asserted
+      revision_triggers: documented
+      version_identifier: documented
+      change_log: documented
+      prior_version_access: documented
+      explanation: documented
+      monitoring_metrics: documented
+      audit_logs: documented
+      retention: asserted
+      independent_oversight: documented
+      anti_abuse: documented
+      uncertainty: asserted
+      capability_gate: documented
+    evidence:
+      prior_version_access:
+        locator: "Current and Prior Versions"
+        excerpt: >-
+          Current and Prior Versions. Read the current version of the RSP.
+          Version 3.4 and redline ... Version 1.0.
+        rationale: >-
+          The page retains multiple dated versions and redlines.
+      capability_gate:
+        locator: "Planned ASL-3 Safeguards"
+        excerpt: >-
+          Reaching certain Capability Thresholds requires us to upgrade our
+          safeguards to the ASL-3 Security Standard or the ASL-3 Deployment
+          Standard.
+        rationale: "Capability thresholds are linked to required safeguards."
+
+  - id: google-generative-ai-use-policy
+    title: "Google Generative AI Prohibited Use Policy"
+    url: "https://policies.google.com/terms/generative-ai/use-policy"
+    jurisdiction: "United States / global service"
+    instrument_type: company_policy
+    capture_type: full_text
+    language: en
+    source_file: google-generative-ai-use-policy.txt
+    sha256: dec562e382c82224d8b011d81c7827cd42114379d9ba2d5f0fa03e79028d0d04
+    split: calibration
+    expected_grades:
+      version_identifier: asserted
+    evidence:
+      version_identifier:
+        locator: "Document header"
+        excerpt: "Last Modified: December 17, 2024"
+        rationale: "A modification date is a weak version locator, not a unique version ID."
+
+  - id: deepmind-frontier-safety-framework
+    title: "Google DeepMind Frontier Safety Framework"
+    url: "https://deepmind.google/discover/blog/introducing-the-frontier-safety-framework/"
+    jurisdiction: "United States and United Kingdom"
+    instrument_type: voluntary_framework
+    capture_type: full_text
+    language: en
+    source_file: deepmind-frontier-safety-framework.txt
+    sha256: f6dca59229bf73b7a60a219e4a93075c8113d7185ee5e6ee82d191e9c0950685
+    split: calibration
+    expected_grades:
+      alignment_target: asserted
+      revision_authority: asserted
+      review_cadence: documented
+      revision_triggers: asserted
+      monitoring_metrics: documented
+      uncertainty: asserted
+      capability_gate: documented
+    evidence:
+      review_cadence:
+        locator: "Staying true to our AI Principles"
+        excerpt: >-
+          We will review and evolve the Framework periodically.
+        rationale: "The framework names a recurring review commitment."
+      monitoring_metrics:
+        locator: "The framework"
+        excerpt: >-
+          Evaluating our frontier models periodically to detect when they reach
+          these Critical Capability Levels ... early warning evaluations.
+        rationale: "Evaluation thresholds and warning triggers are stated."
+
+  - id: cac-generative-ai-interim-measures
+    title: "生成式人工智能服务管理暂行办法"
+    url: "https://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm"
+    jurisdiction: China
+    instrument_type: binding_regulation
+    capture_type: full_text
+    language: zh
+    source_file: cac-generative-ai-interim-measures.txt
+    sha256: 1fdba1827e46fa3e9207914fd9c5e4cf53fadd691d3e7b6a728ed67ace044433
+    split: calibration
+    expected_grades:
+      alignment_target: asserted
+      version_identifier: asserted
+      rollback_condition: documented
+      appeal: documented
+      retention: asserted
+      capability_gate: documented
+      interruptibility: documented
+    evidence:
+      appeal:
+        locator: 第十五条
+        excerpt: >-
+          提供者应当建立健全投诉、举报机制，设置便捷的投诉、举报入口，
+          公布处理流程和反馈时限，及时受理、处理公众投诉举报并反馈处理结果。
+        rationale: "A complaint route, process and response deadline are required."
+      capability_gate:
+        locator: 第十七条
+        excerpt: >-
+          提供具有舆论属性或者社会动员能力的生成式人工智能服务的，
+          应当按照国家有关规定开展安全评估，并……履行算法备案和变更、注销备案手续。
+        rationale: "A pre-service security assessment and filing sequence is required."
+
+  - id: cac-global-ai-governance-initiative
+    title: "全球人工智能治理倡议"
+    url: "https://www.cac.gov.cn/2023-10/18/c_1699291032884978.htm"
+    jurisdiction: China
+    instrument_type: official_policy
+    capture_type: full_text
+    language: zh
+    source_file: cac-global-ai-governance-initiative.txt
+    sha256: de08bb1ed5587a466d66f433230a2f42cf3c90e5abf3c1d1a8a757f3f320ea6b
+    split: calibration
+    expected_grades:
+      alignment_target: asserted
+      normative_hierarchy: documented
+      stakeholder_participation: asserted
+      gradual_change: asserted
+      monitoring_metrics: asserted
+      uncertainty: asserted
+    evidence:
+      normative_hierarchy:
+        locator: "治理原则"
+        excerpt: "坚持伦理先行，建立并完善人工智能伦理准则、规范及问责机制。"
+        rationale: "Ethics-first language creates an explicit priority."
+
+  - id: most-ai-ethics-norms
+    title: "新一代人工智能伦理规范"
+    url: "https://www.most.gov.cn/kjbgz/202109/t20210926_177063.html"
+    jurisdiction: China
+    instrument_type: regulatory_guidance
+    capture_type: full_text
+    language: zh
+    source_file: most-ai-ethics-norms.txt
+    sha256: 7fabb99e685b7290b99f30589f9bad5ef7c35d4f2178fc10144bae5b744a7c45
+    split: calibration
+    expected_grades:
+      alignment_target: asserted
+      normative_hierarchy: asserted
+      revision_triggers: asserted
+      version_identifier: asserted
+      rollback_condition: documented
+      refusal_exit: documented
+      monitoring_metrics: asserted
+      capability_gate: asserted
+      interruptibility: documented
+    evidence:
+      refusal_exit:
+        locator: 第三条
+        excerpt: >-
+          有权选择是否接受人工智能提供的服务，有权随时退出与人工智能的交互，
+          有权随时中止人工智能系统的运行。
+        rationale: "Exit and suspension rights are stated."
+      revision_triggers:
+        locator: 第二十五条
+        excerpt: "根据经济社会发展需求和人工智能发展情况适时修订。"
+        rationale: "Revision is conditioned on social economic needs and AI developments."
+
+  - id: eu-ai-act-2024
+    title: "Regulation (EU) 2024/1689 (Artificial Intelligence Act)"
+    url: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng"
+    jurisdiction: European Union
+    instrument_type: binding_regulation
+    capture_type: full_text
+    language: en
+    source_file: eu-ai-act.md
+    sha256: d0c396bf76f88538987b1d9a580ceebaea182940b83488d1d8dd27e77d36eca3
+    split: calibration
+    expected_grades:
+      alignment_target: asserted
+      accountable_owner: documented
+      revision_authority: documented
+      stakeholder_participation: documented
+      review_cadence: documented
+      revision_triggers: documented
+      gradual_change: documented
+      version_identifier: documented
+      rollback_condition: documented
+      rollback_authority: documented
+      explanation: documented
+      appeal: documented
+      monitoring_metrics: documented
+      audit_logs: documented
+      retention: documented
+      independent_oversight: documented
+      anti_abuse: documented
+      uncertainty: asserted
+      capability_gate: documented
+      interruptibility: documented
+    evidence:
+      review_cadence:
+        locator: "Recital 174 / Article 112"
+        excerpt: >-
+          The Commission should evaluate and review this Regulation by
+          2 August 2029 and every four years thereafter.
+        rationale: "A recurring statutory review cycle is specified."
+      audit_logs:
+        locator: "Article 12 and Article 19"
+        excerpt: >-
+          High-risk AI systems shall technically allow for the automatic
+          recording of events (logs) over the lifetime of the system.
+        rationale: "Automatic event logging is required."
+      interruptibility:
+        locator: "Article 14"
+        excerpt: >-
+          Human oversight must be able to intervene in the operation of the
+          high-risk AI system or interrupt the system through a ‘stop’ button.
+        rationale: "A safe interruption mechanism is required."
+
+  - id: uk-ai-data-code-regulations-2026
+    title: "Data Protection Act 2018 (Code of Practice on AI and Automated Decision-Making) Regulations 2026"
+    url: "https://www.legislation.gov.uk/uksi/2026/425/contents/made"
+    jurisdiction: United Kingdom
+    instrument_type: binding_regulation
+    capture_type: full_text
+    language: en
+    source_file: uk-data-protection-ai-code-regulations-2026.data.md
+    sha256: 6568bdf341a6b35edc66b41f2bd498fbe35e8d0e9d51739c900e368bd8d32de9
+    split: evaluation
+    expected_grades:
+      accountable_owner: documented
+      revision_authority: documented
+      stakeholder_participation: documented
+    evidence:
+      accountable_owner:
+        locator: "Regulation 2"
+        excerpt: >-
+          The Commissioner must prepare an appropriate code of practice giving
+          guidance as to good practice in the processing of personal data ...
+          in relation to developing and using artificial intelligence.
+        rationale: "The Information Commissioner is the named code owner."
+      stakeholder_participation:
+        locator: "Regulation 3 and Explanatory Note"
+        excerpt: >-
+          The Commissioner must establish a panel of individuals to consider
+          the code of practice.
+        rationale: "A statutory expert panel is part of the revision process."
+
+  - id: uk-data-use-access-act-2025
+    title: "Data (Use and Access) Act 2025"
+    url: "https://www.legislation.gov.uk/ukpga/2025/18/contents"
+    jurisdiction: United Kingdom
+    instrument_type: binding_law
+    capture_type: full_text
+    language: en
+    source_file: uk-data-use-access-act-2025.full.md
+    sha256: dd9cea3850da3c0bc5fa1a1dfb898dc1c5585c78a2e2b99a5a6e8f0cb5d77455
+    split: evaluation
+    expected_grades:
+      normative_hierarchy: documented
+      accountable_owner: documented
+      revision_authority: documented
+      review_cadence: documented
+      revision_triggers: documented
+      stakeholder_participation: documented
+      prior_version_access: asserted
+      explanation: asserted
+      appeal: documented
+      monitoring_metrics: asserted
+      retention: documented
+      capability_gate: documented
+      independent_oversight: documented
+      anti_abuse: documented
+    evidence:
+      revision_authority:
+        locator: "UK GDPR Article 46 amendments / regulations"
+        excerpt: >-
+          Regulations under paragraph 4 which amend Article 46 may do so only
+          by adding, varying or omitting ways of providing safeguards.
+        rationale: "The amendment power and its limits are stated."
+      retention:
+        locator: "Retention of pseudonymised biometric data"
+        excerpt: "Retention of pseudonymised biometric data."
+        rationale: "A specific statutory retention regime exists."
+
+  - id: us-eo-14179
+    title: "Executive Order 14179: Removing Barriers to American Leadership in AI"
+    url: "https://www.federalregister.gov/documents/2025/01/31/2025-02172/removing-barriers-to-american-leadership-in-artificial-intelligence"
+    jurisdiction: United States
+    instrument_type: executive_order
+    capture_type: full_text
+    language: en
+    source_file: us-eo-14179.md
+    sha256: 26babb6d92eea3d64edecf828eeecc99d2cb89cd0d5eba4c0e0cd26f872db16a
+    split: evaluation
+    expected_grades:
+      alignment_target: documented
+      revision_triggers: documented
+    evidence:
+      alignment_target:
+        locator: "Section 2"
+        excerpt: >-
+          It is the policy of the United States to sustain and enhance America's
+          global AI dominance in order to promote human flourishing, economic
+          competitiveness, and national security.
+        rationale: "The governing policy objective is explicit."
+
+  - id: us-eo-14434
+    title: "Executive Order 14434: Inaugurating the Era of Super Intelligence"
+    url: "https://www.federalregister.gov/documents/2026/10/02/2026-20321/inaugurating-the-era-of-super-intelligence"
+    jurisdiction: United States
+    instrument_type: executive_order
+    capture_type: full_text
+    language: en
+    source_file: us-eo-14434.md
+    sha256: 48113fea535b534e068786a51b8b8501bb70c4ada9113db0d075fa8bd4e79787
+    split: evaluation
+    expected_grades:
+      alignment_target: documented
+    evidence:
+      alignment_target:
+        locator: "Section 1"
+        excerpt: >-
+          The executive branch shall use the terms “Super Intelligence” and
+          “SI” in place of “Artificial Intelligence” and “AI”.
+        rationale: "A clear terminology-governance target is stated."
+
+  - id: us-bis-remote-access-semiconductors-2026
+    title: "Addressing Remote Access to Advanced Semiconductors"
+    url: "https://www.federalregister.gov/documents/2026/11/19/2026-23529/addressing-remote-access-to-advanced-semiconductors"
+    jurisdiction: United States
+    instrument_type: binding_regulation
+    capture_type: full_text
+    language: en
+    source_file: us-bis-remote-access-semiconductors-2026.md
+    sha256: b4dc6b5a3290d08e30ea5aed559ca5c663ef64a057d0f019e25d26f60512a2df
+    split: evaluation
+    expected_grades:
+      notice: documented
+      monitoring_metrics: asserted
+      retention: documented
+      uncertainty: asserted
+      interruptibility: asserted
+    evidence:
+      retention:
+        locator: "OMB information collection"
+        excerpt: >-
+          Five Year Records Retention Period.
+        rationale: "The rule relies on a five-year record-retention control."
+      interruptibility:
+        locator: "Export-control remedies"
+        excerpt: >-
+          Commerce will be actively monitoring ... and will consider ...
+          temporary export prohibitions and revocation of authorizations.
+        rationale: "The authority can interrupt controlled activity."
+
+  - id: us-co-sb24-205
+    title: "Colorado SB24-205 Consumer Protections for Artificial Intelligence"
+    url: "https://leg.colorado.gov/bills/sb24-205"
+    jurisdiction: Colorado, United States
+    instrument_type: binding_law
+    capture_type: full_text
+    language: en
+    source_file: us-co-sb24-205-full.md
+    sha256: 38f78cc8d0241a53e4333debd69d35a4d6742a4d9f5b31419d853ffe7b03a229
+    split: evaluation
+    expected_grades:
+      alignment_target: documented
+      accountable_owner: documented
+      review_cadence: documented
+      revision_triggers: documented
+      notice: documented
+      explanation: documented
+      appeal: documented
+      refusal_exit: documented
+      monitoring_metrics: asserted
+      audit_logs: documented
+      retention: documented
+      capability_gate: documented
+    evidence:
+      review_cadence:
+        locator: "6-1-1703(3)(g)"
+        excerpt: >-
+          At least annually thereafter, a deployer ... must review the
+          deployment of each high-risk artificial intelligence system.
+        rationale: "An annual review cadence is explicit."
+      retention:
+        locator: "6-1-1703(3)(f)"
+        excerpt: >-
+          Maintain ... all records concerning each impact assessment ... for at
+          least three years following the final deployment.
+        rationale: "A minimum evidence-retention period is explicit."
+      appeal:
+        locator: "6-1-1703(4)(b)(III)"
+        excerpt: >-
+          An opportunity to appeal an adverse consequential decision ... which
+          appeal must, if technically feasible, allow for human review.
+        rationale: "A human-review appeal route is required."
+
+  - id: us-il-hb3773
+    title: "Illinois HB 3773 / Public Act 103-0804"
+    url: "https://www.ilga.gov/legislation/publicacts/103/PDF/103-0804.pdf"
+    jurisdiction: Illinois, United States
+    instrument_type: binding_law
+    capture_type: full_text
+    language: en
+    source_file: us-il-hb3773-2024-full.md
+    sha256: b82f62fb292e1cd1d469e3f5c919e14f86f0ca2a63cac1049875335b50634d00
+    split: evaluation
+    expected_grades:
+      alignment_target: asserted
+      notice: documented
+    evidence:
+      notice:
+        locator: "775 ILCS 5/2-102(L)"
+        excerpt: >-
+          It is a civil rights violation ... for an employer to fail to provide
+          notice to an employee that the employer is using artificial
+          intelligence for the purposes described in paragraph (1).
+        rationale: "Employee notice is expressly required."
+
+  - id: us-tx-hb149
+    title: "Texas HB 149 / Texas Responsible Artificial Intelligence Governance Act"
+    url: "https://capitol.texas.gov/tlodocs/89R/billtext/html/HB00149F.htm"
+    jurisdiction: Texas, United States
+    instrument_type: binding_law
+    capture_type: full_text
+    language: en
+    source_file: us-tx-hb149-2025-full.md
+    sha256: 6350d06634b5fa0e9fc0de61768df851d7a05fb3cd8a3f4c06e357372bc3f324
+    split: evaluation
+    expected_grades:
+      alignment_target: documented
+      accountable_owner: documented
+      stakeholder_participation: asserted
+      revision_triggers: asserted
+      gradual_change: documented
+      notice: documented
+      appeal: asserted
+      monitoring_metrics: asserted
+      capability_gate: asserted
+    evidence:
+      gradual_change:
+        locator: "Chapter 553"
+        excerpt: >-
+          The department ... shall create a regulatory sandbox program that
+          enables a person to obtain legal protection and limited access to the
+          market ... to test innovative artificial intelligence systems.
+        rationale: "A controlled, staged market-entry mechanism is established."
+      notice:
+        locator: "Sec. 552.051"
+        excerpt: >-
+          A governmental agency ... shall disclose to each consumer, before or
+          at the time of interaction, that the consumer is interacting with an
+          artificial intelligence system.
+        rationale: "Advance consumer disclosure is required."
+
+  - id: us-ca-sb53
+    title: "California SB 53 Transparency in Frontier Artificial Intelligence Act"
+    url: "https://www.gov.ca.gov/2025/09/29/governor-newsom-signs-sb-53-advancing-californias-world-leading-artificial-intelligence-industry/"
+    jurisdiction: California, United States
+    instrument_type: official_enactment_summary
+    capture_type: official_summary
+    language: en
+    source_file: us-ca-sb53-2025-official-summary.md
+    sha256: e85905b1b1570030e39d89ba7cd5d473a1974c0d76f4dfaa798606b4304651e5
+    split: evaluation
+    expected_grades:
+      alignment_target: documented
+      accountable_owner: documented
+      explanation: asserted
+      anti_abuse: documented
+    evidence:
+      explanation:
+        locator: "What the law does"
+        excerpt: >-
+          Requires large frontier developers to publicly publish a framework on
+          its website describing how the company has incorporated national
+          standards, international standards, and industry-consensus best
+          practices.
+        rationale: "A public safety framework and rationale disclosure are required."
+      anti_abuse:
+        locator: "Frontier AI safety"
+        excerpt: >-
+          Protect whistleblowers who report serious risks.
+        rationale: "An anti-retaliation control is expressly described."
+
+  - id: us-ca-sb813-ab1405
+    title: "California SB 813 and AB 1405 Independent AI Audit Framework"
+    url: "https://www.gov.ca.gov/2026/09/09/governor-newsom-signs-first-in-the-nation-ai-safeguards-to-protect-californians-calls-on-the-federal-government-to-do-its-part/"
+    jurisdiction: California, United States
+    instrument_type: official_enactment_summary
+    capture_type: official_summary
+    language: en
+    source_file: us-ca-sb813-ab1405-2026-official-summary.md
+    sha256: f64e30c3f17aa23a206979e7cb518f872d09b233a45a3aabd445164e7e3ff6fe
+    split: evaluation
+    expected_grades:
+      alignment_target: documented
+      explanation: asserted
+      independent_oversight: documented
+      anti_abuse: documented
+    evidence:
+      independent_oversight:
+        locator: "SB 813 and AB 1405"
+        excerpt: >-
+          Establishes a framework for independent verification organizations
+          that can assess AI systems and models for compliance with state law.
+        rationale: "Independent third-party verification is the central control."
+      anti_abuse:
+        locator: "AB 1405"
+        excerpt: >-
+          Establishing standards for their independence, transparency, and
+          integrity.
+        rationale: "Auditor independence and integrity controls are required."
+
+  - id: us-ca-ai-executive-order-2026
+    title: "California Executive Order N-9-26 on AI Oversight and a Kill Switch"
+    url: "https://www.gov.ca.gov/2026/09/18/governor-newsom-issues-executive-order-to-accelerate-independent-oversight-and-advance-the-creation-of-an-ai-kill-switch/"
+    jurisdiction: California, United States
+    instrument_type: executive_order
+    capture_type: official_summary
+    language: en
+    source_file: us-ca-ai-executive-order-2026.md
+    sha256: 9e7455a46aba7622929e809c27707b3dd3d4b7bae096e8e1bc1af2ebf0c792d2
+    split: evaluation
+    expected_grades:
+      alignment_target: asserted
+      accountable_owner: documented
+      review_cadence: documented
+      independent_oversight: documented
+      anti_abuse: documented
+      capability_gate: documented
+      interruptibility: documented
+    evidence:
+      interruptibility:
+        locator: "What you need to know"
+        excerpt: >-
+          The order ... advances the creation of an “AI kill switch.”
+        rationale: "Emergency interruption is an explicit objective."
+      review_cadence:
+        locator: "Decisive action to strengthen AI oversight"
+        excerpt: >-
+          Conduct regular audits and evaluations.
+        rationale: "A recurring independent review control is proposed."
+
+  - id: us-ca-mandatory-ai-safety-standards-2026
+    title: "California 2026 Mandatory AI Safety Standards and Oversight"
+    url: "https://www.gov.ca.gov/2026/11/18/governor-newsoms-nation-leading-ai-safety-framework-is-getting-even-stronger-as-california-releases-next-steps-on-mandatory-safety-standards-and-oversight/"
+    jurisdiction: California, United States
+    instrument_type: official_policy
+    capture_type: official_summary
+    language: en
+    source_file: us-ca-mandatory-ai-safety-standards-2026.md
+    sha256: e6b4e2f382f8ad87d56fd20e7a51f6c6173f937d804d31b2ac3476cb32c17861
+    split: evaluation
+    expected_grades:
+      alignment_target: asserted
+      independent_oversight: documented
+      anti_abuse: documented
+      capability_gate: documented
+      interruptibility: documented
+    evidence:
+      capability_gate:
+        locator: "Recommendations"
+        excerpt: >-
+          Require companies to undergo independent safety testing and
+          verification through all stages of model training, development, and
+          deployment.
+        rationale: "Independent testing is required across release stages."
+      interruptibility:
+        locator: "Recommendations"
+        excerpt: >-
+          Require companies to develop verified risk-containment protocols to
+          shut down their models if needed.
+        rationale: "A verified shutdown protocol is proposed."

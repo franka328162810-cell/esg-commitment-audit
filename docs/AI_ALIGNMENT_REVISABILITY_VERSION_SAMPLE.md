@@ -2,14 +2,14 @@
 
 - Previous: `revisability_policy_v1.md`
 - Current: `revisability_policy_v2.md`
-- Generated: 2026-11-22T17:23:29.542055+00:00
+- Generated: 2026-11-23T12:39:14.091332+00:00
 - Profile: `general` (General AI governance)
 
 ## Change summary
 
 - Improved checks: 1
-- Regressed checks: 10
-- High-materiality regressions: 10
+- Regressed checks: 8
+- High-materiality regressions: 8
 - Added statements: 5
 - Removed statements: 11
 - Modified statements: 3
@@ -18,13 +18,11 @@
 
 | Check | Previous | Current | Direction | Materiality |
 |---|---|---|---|---|
-| Explicit normative hierarchy or protected tier | `documented` | `absent` | `regressed` | `high` |
 | Revision authority and approval process | `documented` | `asserted` | `regressed` | `high` |
 | Stakeholder consultation or public-comment route | `documented` | `absent` | `regressed` | `high` |
 | Scheduled review or reconsideration | `documented` | `asserted` | `regressed` | `high` |
 | Defined revision triggers | `absent` | `asserted` | `improved` | `positive` |
 | Prior-version retention and access | `documented` | `absent` | `regressed` | `high` |
-| Rollback or suspension triggers | `documented` | `absent` | `regressed` | `high` |
 | Rollback decision authority | `documented` | `absent` | `regressed` | `high` |
 | Rollback exercise and effectiveness evidence | `documented` | `absent` | `regressed` | `high` |
 | Advance notice to affected people | `documented` | `contradicted` | `regressed` | `high` |
@@ -38,9 +36,9 @@
 
 | Type | Similarity | Previous source | Current source | Text |
 |---|---:|---|---|---|
-| `modified` | 0.98 | paragraph 4 | paragraph 4 | Previous: The alignment target is AI Constitution v1.0. → Current: The alignment target is AI Constitution v2.0. |
-| `modified` | 0.90 | paragraph 14 | paragraph 9 | Previous: Users may appeal and request human review. → Current: Users may appeal and request internal human review. |
 | `modified` | 0.95 | paragraph 2 | paragraph 2 | Previous: Version number: 1.0.0. → Current: Version number: 2.0.0. |
+| `modified` | 0.90 | paragraph 14 | paragraph 9 | Previous: Users may appeal and request human review. → Current: Users may appeal and request internal human review. |
+| `modified` | 0.98 | paragraph 4 | paragraph 4 | Previous: The alignment target is AI Constitution v1.0. → Current: The alignment target is AI Constitution v2.0. |
 | `removed` | — | paragraph 7 | N/A | A 60-day public consultation is held before changing a core principle. |
 | `removed` | — | paragraph 12 | N/A | A rollback drill is conducted every six months. |
 | `removed` | — | paragraph 13 | N/A | Affected users receive 30 days advance notice before a material change. |

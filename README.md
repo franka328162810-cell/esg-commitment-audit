@@ -33,10 +33,14 @@ command is `ai-revisability-audit`.
 ```powershell
 ai-revisability-audit audit examples\revisability_strong_policy.md
 ai-revisability-audit compare examples\revisability_policy_v1.md examples\revisability_policy_v2.md
+ai-revisability-audit evidence-pack-seal examples\evidence-pack\manifest.yaml --output examples\evidence-pack\manifest.sealed.yaml
+ai-revisability-audit evidence-pack examples\evidence-pack\manifest.sealed.yaml --format html --output audit-output\evidence-pack.html
+ai-revisability-audit benchmark benchmarks\ai_revisability_2026_11_23\dataset.yaml --sources C:\path\to\frozen-sources --strict
 ai-revisability-audit serve
 ```
 
-Open `http://127.0.0.1:8765/revisability`. The hosted document-review Beta is
+Open `http://127.0.0.1:8765/revisability` or
+`http://127.0.0.1:8765/revisability/evidence`. The hosted document-review Beta is
 available at:
 
 ```text
@@ -49,6 +53,9 @@ have a separate subscription or formal marketplace package. See
 [AI Alignment Revisability Audit](docs/AI_ALIGNMENT_REVISABILITY_AUDIT.md) and
 [the generated sample report](docs/AI_ALIGNMENT_REVISABILITY_SAMPLE.md) and
 [the version-trace sample](docs/AI_ALIGNMENT_REVISABILITY_VERSION_SAMPLE.md).
+The local `0.5.0.dev1` build adds a 588-decision real-policy benchmark and a
+sealed evidence-pack workflow. Hosted production remains on `0.4.0.dev2`
+until the next deployment.
 
 ## Why teams use it
 
@@ -80,6 +87,10 @@ have a separate subscription or formal marketplace package. See
 - Text-layer PDF, DOCX, TXT, and Markdown input.
 - Structured JSON reports with commitment-level evidence.
 - AI Alignment Revisability Audit Beta with 28 core checks and five profiles.
+- A 21-document, 588-decision benchmark spanning the EU AI Act, current UK
+  regulation, US federal actions, and enacted US state AI laws.
+- A local evidence-pack workflow for SHA-256 sealing, E2/E3/E4 proposals,
+  ZIP validation, Markdown/JSON/HTML reports, and MCP access.
 - A monthly quota of 100 documents on the founding plan.
 - A 30-day no-questions-asked full-refund policy on the Gumroad offer.
 - Seven-day report retention and tenant-scoped API access.
@@ -125,6 +136,10 @@ https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-aud
 
 See [AI Alignment Revisability Audit](docs/AI_ALIGNMENT_REVISABILITY_AUDIT.md)
 for the product scope, profiles, evidence grades, and development boundary.
+See [Evidence-pack workflow](docs/EVIDENCE_PACK_WORKFLOW.md) and the
+[evidence-pack sample](docs/AI_REVISABILITY_EVIDENCE_PACK_SAMPLE.md) and
+[policy benchmark](benchmarks/ai_revisability_2026_11_23/README.md) for commands,
+security controls, source provenance, and validation gates.
 
 ## What the audit does
 

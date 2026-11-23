@@ -8,6 +8,9 @@ from pydantic import BaseModel, Field
 
 from .models import DocumentSummary, EvidenceSpan
 
+REVISABILITY_REPORT_VERSION = "0.5.0.dev1"
+REVISABILITY_METHODOLOGY_VERSION = "RFP-AI-revisability-document-v0.2"
+
 ReviewProfile = Literal[
     "general",
     "news_media",
@@ -56,9 +59,9 @@ class RevisabilitySummary(BaseModel):
 
 
 class RevisabilityReport(BaseModel):
-    report_version: str = "0.4.0.dev2"
+    report_version: str = REVISABILITY_REPORT_VERSION
     report_type: Literal["ai-alignment-revisability"] = "ai-alignment-revisability"
-    methodology_version: str = "RFP-AI-revisability-document-v0.1"
+    methodology_version: str = REVISABILITY_METHODOLOGY_VERSION
     generated_at: datetime
     profile: ReviewProfile
     profile_label: str

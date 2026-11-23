@@ -1,0 +1,92 @@
+registry_version: "1.0"
+verified_at: 2026-11-23
+scoring_dataset: dataset.yaml
+description: >-
+  Additional official AI-related instruments retained for the next benchmark
+  calibration cycle. Registered sources are not included in the current score
+  until their control labels and evidence notes pass manual adjudication.
+
+additional_sources:
+  - id: uk-online-safety-act-2023
+    title: "Online Safety Act 2023"
+    url: "https://www.legislation.gov.uk/ukpga/2023/50/contents"
+    jurisdiction: United Kingdom
+    instrument_type: binding_law
+    capture_type: full_text
+    source_file: uk-online-safety-act-2023.full.md
+    sha256: b05a1e68c25692d204f1c27a62bdeb63e9a19c824a27387f80a809b7930c24f8
+    rationale: >-
+      Covers synthetic and manipulated content, platform risk assessment,
+      transparency and regulator oversight.
+
+  - id: uk-automated-vehicles-act-2024
+    title: "Automated Vehicles Act 2024"
+    url: "https://www.legislation.gov.uk/ukpga/2024/10/contents"
+    jurisdiction: United Kingdom
+    instrument_type: binding_law
+    capture_type: full_text
+    source_file: uk-automated-vehicles-act-2024.full.md
+    sha256: 6bb4cba1a59ab5a677e7bfaf8bdd7a779f180f49dcd5f476937386835795aa5e
+    rationale: >-
+      Regulates automated driving systems, authorisation, incident reporting,
+      liability and regulator oversight.
+
+  - id: us-fda-ai-device-rule-2026
+    title: "FDA Classification Rule for an AI Cervical Cytology Device"
+    url: "https://www.federalregister.gov/documents/2026/11/05/2026-22593/medical-devices-hematology-and-pathology-devices-classification-of-the-digital-cervical-cytology"
+    jurisdiction: United States
+    instrument_type: binding_regulation
+    capture_type: full_text
+    source_file: us-fda-ai-device-rule-2026.md
+    sha256: ce063b666086c3e83093aee161d70b2eb093b4393a808569c592334501918afc
+    rationale: >-
+      Shows how AI medical-device controls are expressed through special
+      controls and premarket regulation.
+
+  - id: us-ut-sb149-2024
+    title: "Utah SB 149 Artificial Intelligence Amendments"
+    url: "https://le.utah.gov/~2024/bills/static/SB0149.html"
+    jurisdiction: Utah, United States
+    instrument_type: binding_law
+    capture_type: full_text
+    source_file: us-ut-sb149-2024.md
+    sha256: 99ccf56d928badad8c5af28810456d94a529783297468c255b3c896b4e77075b
+    rationale: >-
+      Adds disclosure and consumer-protection obligations linked to generative
+      AI and automated decision-making.
+
+  - id: us-nyc-ll144
+    title: "New York City Local Law 144 Automated Employment Decision Tools"
+    url: "https://www.nyc.gov/site/dca/about/automated-employment-decision-tools.page"
+    jurisdiction: New York City, United States
+    instrument_type: binding_regulation
+    capture_type: official_summary
+    source_file: us-nyc-ll144.md
+    sha256: 78f28cc051111482a69734d2ba058b05042e6eb8fa6ad020442e5f94bb0795de
+    rationale: >-
+      Provides a municipal bias-audit, notice and public-disclosure model for
+      automated employment decisions.
+
+  - id: us-ca-sb942-2024
+    title: "California SB 942 AI Transparency Act"
+    url: "https://www.gov.ca.gov/2024/09/19/governor-newsom-signs-bills-to-crack-down-on-sexually-explicit-deepfakes-require-ai-watermarking/"
+    jurisdiction: California, United States
+    instrument_type: official_enactment_summary
+    capture_type: official_summary
+    source_file: us-ca-sb942-2024-official-summary.md
+    sha256: 08ea2a909fbfa40125d5e4c8648c3ba279931530d86cf9596ba2c48c80b35c4b
+    rationale: >-
+      Requires provenance disclosures and detection tools for covered
+      generative AI systems.
+
+  - id: us-ca-ab2013-2024
+    title: "California AB 2013 Generative AI Training Data Transparency"
+    url: "https://www.gov.ca.gov/2024/09/29/governor-newsom-announces-new-initiatives-to-advance-safe-and-responsible-ai-protect-californians/"
+    jurisdiction: California, United States
+    instrument_type: official_enactment_summary
+    capture_type: official_summary
+    source_file: us-ca-ab2013-2024-official-summary.md
+    sha256: eae66193e2ff2670c5a3127f9b7eb8b2ec66427b6c0f634b55c882d002339574
+    rationale: >-
+      Requires public disclosure of training-data information for covered
+      generative AI systems.

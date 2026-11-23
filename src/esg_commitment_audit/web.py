@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import tempfile
 from importlib.resources import files
+from pathlib import Path
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse, JSONResponse
@@ -15,6 +17,11 @@ from .api import (
     audit_revisability_version_bytes,
     audit_text,
 )
+from .evidence_pack import audit_evidence_pack_bundle
+from .evidence_pack_report import (
+    render_evidence_pack_html,
+    render_evidence_pack_markdown,
+)
 from .report import render_html, render_markdown, report_to_dict
 from .revisability_report import (
     render_revisability_html,
@@ -28,6 +35,7 @@ from .revisability_version_report import (
 )
 
 MAX_UPLOAD_BYTES = 20 * 1024 * 1024
+MAX_EVIDENCE_PACK_UPLOAD_BYTES = 200 * 1024 * 1024
 
 
 class TextAuditRequest(BaseModel):
@@ -79,6 +87,10 @@ def create_app() -> FastAPI:
     def revisability_versions_index() -> FileResponse:
         return FileResponse(str(template_root.joinpath("revisability_versions.html")))
 
+    @app.get("/revisability/evidence", include_in_schema=False)
+    def revisability_evidence_index() -> FileResponse:
+        return FileResponse(str(template_root.joinpath("evidence_pack.html")))
+
     @app.get("/health")
     def health() -> dict[str, str]:
         return {"status": "ok", "version": __version__}
@@ -107,6 +119,15 @@ def create_app() -> FastAPI:
                 "report": version_trace_report_to_dict(report),
                 "markdown": render_version_trace_markdown(report),
                 "html": render_version_trace_html(report),
+            }
+        )
+
+    def evidence_pack_response_payload(report) -> JSONResponse:
+        return JSONResponse(
+            {
+                "report": report.model_dump(mode="json"),
+                "markdown": render_evidence_pack_markdown(report),
+                "html": render_evidence_pack_html(report),
             }
         )
 
@@ -202,6 +223,43 @@ def create_app() -> FastAPI:
         except ValueError as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
         return version_trace_response_payload(report)
+
+    @app.post("/api/evidence-pack")
+    async def evidence_pack_upload(
+        file: UploadFile = File(...),  # noqa: B008 - standard FastAPI signature.
+    ) -> JSONResponse:
+        if not (file.filename or "").lower().endswith(".zip"):
+            raise HTTPException(
+                status_code=400,
+                detail="Evidence packs must be uploaded as a ZIP archive.",
+            )
+
+        temporary_path: Path | None = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                prefix="ics-evidence-upload-",
+                suffix=".zip",
+                delete=False,
+            ) as temporary:
+                temporary_path = Path(temporary.name)
+                total = 0
+                while chunk := await file.read(1024 * 1024):
+                    total += len(chunk)
+                    if total > MAX_EVIDENCE_PACK_UPLOAD_BYTES:
+                        raise HTTPException(
+                            status_code=413,
+                            detail="Evidence-pack ZIP exceeds the 200 MB limit.",
+                        )
+                    temporary.write(chunk)
+            report = audit_evidence_pack_bundle(temporary_path)
+        except HTTPException:
+            raise
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        finally:
+            if temporary_path is not None:
+                temporary_path.unlink(missing_ok=True)
+        return evidence_pack_response_payload(report)
 
     return app
 

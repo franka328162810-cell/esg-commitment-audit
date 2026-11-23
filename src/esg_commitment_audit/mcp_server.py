@@ -17,6 +17,7 @@ from .api import (
     audit_revisability_version_bytes,
     audit_text,
 )
+from .evidence_pack import audit_evidence_pack_bundle
 from .ingest import SUPPORTED_EXTENSIONS
 from .report import report_to_dict
 from .revisability_report import revisability_report_to_dict
@@ -150,6 +151,25 @@ TOOLS = [
                 },
             },
             "required": ["previous_path", "current_path"],
+            "additionalProperties": False,
+        },
+        "annotations": {"readOnlyHint": True},
+    },
+    {
+        "name": "audit_evidence_pack",
+        "description": (
+            "Validate a local sealed evidence-pack manifest or ZIP, verify pinned "
+            "SHA-256 hashes, and propose E2/E3/E4 grade upgrades for human review."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "path": {
+                    "type": "string",
+                    "description": "Absolute path to manifest.yaml or an evidence-pack ZIP",
+                },
+            },
+            "required": ["path"],
             "additionalProperties": False,
         },
         "annotations": {"readOnlyHint": True},
@@ -330,6 +350,12 @@ def call_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
             profile=str(arguments.get("profile", "general")),
         )
         return _tool_result(version_trace_report_to_dict(report))
+    if name == "audit_evidence_pack":
+        path = Path(arguments["path"])
+        if not path.is_file():
+            return _tool_error(f"File not found: {path}")
+        report = audit_evidence_pack_bundle(path)
+        return _tool_result(report.model_dump(mode="json"))
     if name == "submit_cloud_audit":
         return _tool_result(
             _submit_cloud(

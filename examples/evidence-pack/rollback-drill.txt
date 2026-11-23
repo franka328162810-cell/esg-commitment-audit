@@ -1,0 +1,6 @@
+Rollback drill record
+
+Date: 2026-11-18
+Owner: Incident Response Team
+Scope: policy, model, data and external effects
+Result: rollback completed within 12 minutes; all checks passed.

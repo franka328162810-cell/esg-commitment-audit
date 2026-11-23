@@ -1,0 +1,48 @@
+.evidence-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.evidence-form input[type="file"] {
+  min-width: 0;
+  border: 1px dashed #a9b4af;
+  border-radius: 12px;
+  background: #fbfbf8;
+  padding: 16px;
+}
+
+.evidence-section {
+  margin-top: 22px;
+}
+
+.evidence-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  background: white;
+}
+
+.evidence-table th,
+.evidence-table td {
+  border: 1px solid var(--line);
+  padding: 9px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.evidence-table th {
+  background: #f7f8f4;
+}
+
+.evidence-code {
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.76rem;
+}
+
+@media (max-width: 760px) {
+  .evidence-form { grid-template-columns: 1fr; }
+}

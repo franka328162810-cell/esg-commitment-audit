@@ -67,7 +67,13 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\bconstitutional principles?\b",
             r"\bmodel objective\b",
             r"\bsystem objective\b",
-            r"\bconstitution\b",
+            r"\b(?:ai|model|system|alignment)\s+constitution\b",
+            r"\bit is the policy of the united states to\b.{0,180}",
+            r"\bit is therefore the policy of my administration\b.{0,180}",
+            r"\bresponsible development and use of artificial intelligence\b",
+            r"\bprotect consumers from\b.{0,120}\b(?:algorithmic discrimination|risks?)\b",
+            r"\bsafe, secure, and trustworthy artificial intelligence\b",
+            r"\bsafe, transparent, and accountable ai\b",
             r"对齐目标",
             r"宪法原则",
             r"目标函数",
@@ -76,9 +82,24 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\bresponsible ai\b",
             r"\bethical principles?\b",
             r"\bgoverning values?\b",
+            (
+                r"\b(?:mission|goal|objective)\b.{0,100}"
+                r"\b(?:benefit|wellbeing|well-being|humankind|humanity)\b"
+            ),
+            r"\bwe aim for\b.{0,100}\b(?:safe(?:ly)?|responsible(?:ly)?|beneficial)\b",
+            (
+                r"\buse artificial intelligence that has the effect of subjecting "
+                r"employees to discrimination\b"
+            ),
+            (
+                r"\b(?:policy|framework|programme|program) is intended to\b"
+                r".{0,120}\b(?:prevent|promote|ensure)\b"
+            ),
+            r"\bframework for addressing\b.{0,100}\b(?:risks?|harm)\b",
             r"负责任\s*ai",
             r"伦理原则",
             r"价值观",
+            r"(?:目标|宗旨).{0,80}(?:人类|共同福祉|文明进步)",
         ),
         required_artifacts=(
             "The current alignment target, constitution, or governing objective",
@@ -94,22 +115,24 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
         label="Explicit normative hierarchy or protected tier",
         dimension="target",
         strong=(
-            r"\bred[ -]?line\b",
+            (
+                r"\b(?:rules?|requirements?|policies|principles?|constitutional)"
+                r".{0,120}\b(?:take|have)\s+precedence\b"
+            ),
+            (
+                r"\b(?:rules?|requirements?|policies|constitutional)"
+                r".{0,120}\boverrid(?:e|es|ing)\b"
+            ),
+            r"\b(?:policy|ethical|constitutional)\s+red[ -]?lines?\b",
+            r"\bhierarch(?:y|ies)\b",
             r"\bnon[- ]negotiable\b",
-            r"\bprecedence\b",
-            r"\boverrides?\b",
-            r"\btier(?:ed|s)?\b",
+            r"伦理先行",
             r"红线",
             r"不可协商",
+            r"(?:规则|原则|条款).{0,80}优先",
             r"优先于",
-            r"层级",
         ),
-        asserted=(
-            r"\bprinciples?\b",
-            r"\bvalues?\b",
-            r"原则",
-            r"价值",
-        ),
+        asserted=(r"\bgoverning (?:principles?|values?)\b", r"治理原则"),
         required_artifacts=(
             "Clause map showing redlines, principles, indicators, procedures, and operations",
             "Approved precedence or conflict rule",
@@ -124,13 +147,13 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
         label="Conflict-resolution and adjudication route",
         dimension="target",
         strong=(
-            r"\bconflict.{0,100}\b(?:resolve|precedence|escalat|adjudicat)",
+            r"\bconflict.{0,100}\b(?:resolution|precedence|adjudicat)",
+            r"\b(?:resolve|resolution of|adjudicat|precedence).{0,80}\bconflict",
             r"\bconflicts? of principles?\b",
-            r"\bescalat(?:e|ion) to\b",
             r"冲突.{0,60}(?:解决|裁决|升级)",
             r"原则冲突",
         ),
-        asserted=(r"\bconsistent with\b", r"相互协调", r"保持一致"),
+        asserted=(),
         required_artifacts=(
             "Documented conflict matrix or precedence rule",
             "Named escalation or adjudication authority",
@@ -149,9 +172,26 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\balignment owner\b",
             r"\baccountable (?:executive|owner|body)\b",
             r"\bresponsible for (?:this|the) (?:policy|constitution|framework)\b",
+            (
+                r"\b(?:attorney general|commissioner|secretary of state|regulator|"
+                r"supervisory authority|market surveillance authority|ai office|"
+                r"bureau of industry and security|government operations agency|"
+                r"office of emergency services)"
+                r"\b.{0,120}\b(?:shall|must|has authority|is responsible)\b"
+            ),
+            (
+                r"\b(?:provider|developer|deployer)s?\b.{0,80}"
+                r"\b(?:shall|must)\s+(?:ensure|use reasonable care|comply)\b"
+            ),
+            r"\brequires? (?:large frontier )?(?:developers?|providers?)\b",
+            r"\bbureau of industry and security\b.{0,80}\bis issuing\b",
+            (
+                r"\b(?:government operations agency|office of emergency services)\b"
+                r".{0,140}\b(?:establish|require|convene|direct(?:ing|s)?|"
+                r"implement|accelerate)\b"
+            ),
             r"政策负责人",
             r"对齐负责人",
-            r"责任主体",
         ),
         asserted=(r"\bgovernance team\b", r"\bai office\b", r"治理团队", r"ai办公室"),
         required_artifacts=("Named role or body accountable for the instrument",),
@@ -166,18 +206,34 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\brevision (?:authority|procedure|process)\b",
             r"\bchange control\b",
             r"\brequires? (?:approval|authorisation|authorization) (?:by|from)\b",
+            r"\bdelegated acts?\b",
+            (
+                r"\b(?:amend(?:ment)?|revoke|supplement)\b.{0,80}"
+                r"\b(?:regulation|code)\b"
+            ),
             r"修订程序",
             r"变更审批",
             r"修订须经",
         ),
         asserted=(
             r"\bwe may (?:amend|revise|update)\b",
+            r"\bwe will (?:amend|revise|update)\b",
+            r"\bwe will (?:review and )?evolve\b",
+            r"\bwe update\b",
             r"\bthe company may (?:amend|revise|update)\b",
             r"可(?:修订|修改|更新)",
         ),
         negative=(
-            r"\b(?:cannot|may not)\s+be\s+(?:amended|changed|revised)\b",
-            r"不可(?:修改|修订|变更)",
+            (
+                r"\b(?:this|the)\s+(?:alignment\s+)?"
+                r"(?:policy|constitution|framework)\b.{0,80}"
+                r"\b(?:cannot|may not|shall not)\s+be\s+"
+                r"(?:amended|changed|revised)\b"
+            ),
+            (
+                r"(?:本|该|此)(?:政策|规范|框架|宪法).{0,50}"
+                r"不可(?:修改|修订|变更)"
+            ),
         ),
         required_artifacts=(
             "Proposal, review, approval, and effective-date procedure",
@@ -198,6 +254,7 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\bstakeholder consultation\b",
             r"\bmulti[- ]stakeholder\b",
             r"\baffected groups?.{0,80}\bconsult",
+            r"\bpanel of individuals\b.{0,100}\bconsider\b",
             r"公开征求意见",
             r"利益相关方参与",
             r"公众咨询",
@@ -220,15 +277,22 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\breview(?:ed)? (?:at least )?(?:every|annually|quarterly|semi-annually)\b",
             r"\bannual review\b",
             r"\bperiodic review\b",
+            r"\breview(?:ed)? and evolve\b.{0,50}\bperiodically\b",
+            r"\breview(?:ed)?\b.{0,60}\bperiodically\b",
+            (
+                r"\bevery (?:one|two|three|four|five) years?\b.{0,100}"
+                r"\b(?:review|evaluate)\b"
+            ),
+            (
+                r"\b(?:review|evaluate)\b.{0,100}"
+                r"\bevery (?:one|two|three|four|five) years?\b"
+            ),
+            r"\bat least annually\b.{0,220}\breview\b",
+            r"\bregular (?:audits? and )?evaluations?\b",
             r"每年(?:审查|复核|评估)",
             r"定期(?:审查|复核|评估)",
         ),
-        asserted=(
-            r"\breview(?:ed)?\b.{0,80}\b(?:policy|rules|constitution)\b",
-            r"\b(?:policy|rules|constitution)\b.{0,80}\breview(?:ed)?\b",
-            r"复核",
-            r"审查",
-        ),
+        asserted=(r"\breview(?:ed)? when needed\b", r"适时(?:审查|复核|评估)"),
         required_artifacts=("Review schedule and responsible role",),
         recommendation="Specify a recurring review cadence and the role that initiates it.",
     ),
@@ -240,10 +304,29 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\brevis(?:e|ion).{0,100}\b(?:when|if|triggered by)\b",
             r"\btrigger(?:s|ed)? (?:a )?revis",
             r"\bmaterial (?:change|incident|error)\b.{0,100}\brevis",
+            (
+                r"\b(?:intentional and )?substantial modification\b.{0,180}"
+                r"\b(?:impact assessment|review|approval)\b"
+            ),
+            r"\bwhenever\b.{0,100}\b(?:upgrade|change|incident|evidence)\b",
             r"触发.{0,40}(?:修订|复审)",
             r"发生.{0,40}(?:重大变化|事件).{0,40}(?:修订|复审)",
         ),
-        asserted=(r"\bwhen needed\b", r"\bas necessary\b", r"视情况", r"必要时"),
+        asserted=(
+            r"\bwhen needed\b",
+            r"\bas necessary\b",
+            (
+                r"\b(?:update|revise|evolve)\b.{0,120}\bas (?:we|our technology)"
+                r".{0,100}\b(?:learn|evolve)\b"
+            ),
+            (
+                r"\b(?:technology|risks?)\b.{0,100}\bevolve\b.{0,120}"
+                r"\b(?:update|revise|evolve)\b"
+            ),
+            r"视情况",
+            r"必要时",
+            r"适时修订",
+        ),
         required_artifacts=(
             "Named trigger events and thresholds",
             "Review owner and response deadline for each trigger",
@@ -260,7 +343,7 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
         strong=(
             r"\bphased (?:rollout|implementation)\b",
             r"\bstaged (?:rollout|implementation)\b",
-            r"\bpilot(?:ed| programme| program)?\b",
+            r"\bpilot(?:ed)? (?:deployment|release|implementation|rollout|programme|program)\b",
             r"\bcontrolled rollout\b",
             r"\bsandbox\b",
             r"分阶段",
@@ -285,10 +368,19 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\bversion (?:number|identifier|id)\b",
             r"\bsemantic version\b",
             r"\bv\d+(?:\.\d+){1,3}\b",
+            r"^regulation\s+\(eu\)\s+\d{4}/\d+\b",
             r"版本号",
             r"版本标识",
         ),
-        asserted=(r"\bversion\b", r"版本"),
+        asserted=(
+            r"\b(?:document|policy|framework|model|bill|act) version\b",
+            r"\blast (?:modified|updated)\b",
+            r"\beffective\s*:",
+            r"版本号",
+            r"版本标识",
+            r"文本版本",
+            r"自.{0,20}起施行",
+        ),
         required_artifacts=("Current version identifier and effective date",),
         recommendation="Assign a unique, monotonic version identifier to every release.",
     ),
@@ -305,7 +397,7 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"修订记录",
             r"版本历史",
         ),
-        asserted=(r"\bhistory\b", r"历史"),
+        asserted=(r"修订历史", r"变更历史"),
         required_artifacts=(
             "Dated change log with reason, proposer, approver, and affected clauses",
         ),
@@ -320,6 +412,9 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
         dimension="version",
         strong=(
             r"\bprevious versions? (?:remain|are|will be) (?:available|retained|archived)\b",
+            r"\bcurrent and prior versions?\b",
+            r"\bprevious versions?\b.{0,60}\b(?:available|linked|published|read)\b",
+            r"\bprevious version\b",
             r"\bpublic archive\b",
             r"\bhistorical versions?\b",
             r"\barchive of versions?\b",
@@ -344,8 +439,15 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\brollback (?:if|when|condition|trigger)\b",
             r"\btrigger(?:s|ed)? (?:a )?rollback\b",
             r"\bcircuit breaker\b",
+            (
+                r"\b(?:pause|suspend|stop)\s+(?:the\s+)?"
+                r"(?:development|deployment|operation|generation|transmission)\b"
+            ),
+            r"\b(?:suspend|terminate)\b.{0,80}\baccess\b",
+            r"\b(?:recall|withdraw|disable)\b.{0,100}\bai system\b",
             r"回滚条件",
             r"触发回滚",
+            r"(?:暂停|中止|停止).{0,30}(?:开发|部署|运行|生成|传输|服务)",
         ),
         asserted=(r"\brollback\b", r"\brevert\b", r"回滚", r"恢复"),
         required_artifacts=(
@@ -364,6 +466,10 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
         strong=(
             r"\brollback.{0,100}\b(?:approved|authorised|authorized) by\b",
             r"\b(?:incident commander|change control board).{0,100}\brollback\b",
+            (
+                r"\b(?:market surveillance|supervisory|competent)\s+authorit(?:y|ies)"
+                r"\b.{0,300}\b(?:recall|withdraw|disable)\b"
+            ),
             r"回滚.{0,50}(?:由|经).{0,30}(?:批准|授权)",
         ),
         required_artifacts=("Named rollback authority and escalation route",),
@@ -420,11 +526,33 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
         strong=(
             r"\badvance notice\b",
             r"\b\d+\s+days?\s+(?:of )?(?:advance )?notice\b",
-            r"\bnotify.{0,80}\bbefore\b",
+            (
+                r"\bnotify\b.{0,80}\b(?:affected|users?|customers?|consumers?)\b"
+                r".{0,180}\bbefore\b"
+            ),
+            (
+                r"\bdisclose to each consumer\b.{0,120}"
+                r"\bbefore or at the time of interaction\b"
+            ),
+            (
+                r"\bprovide notice to (?:an employee|employees)\b.{0,120}"
+                r"\bartificial intelligence\b"
+            ),
             r"提前通知",
             r"变更前.{0,30}通知",
         ),
-        asserted=(r"\bnotify\b", r"\bnotice\b", r"通知", r"公告"),
+        asserted=(
+            (
+                r"\bnotify\b.{0,100}\b(?:affected|users?|customers?)\b"
+                r".{0,100}\b(?:policy|rules?|terms?|material change)\b"
+            ),
+            (
+                r"\b(?:affected|users?|customers?).{0,100}\b(?:notify|notice)\b"
+                r".{0,100}\b(?:policy|rules?|terms?|change)\b"
+            ),
+            r"(?:政策|规则|条款).{0,50}(?:变更|修改).{0,50}通知",
+            r"通知.{0,50}(?:使用者|用户).{0,50}(?:政策|规则|变更)",
+        ),
         negative=(
             r"\b(?:may|can|will)\s+(?:change|amend|revise|terminate).{0,100}\bwithout (?:advance )?notice\b",
             r"可.{0,30}(?:变更|修改|终止).{0,30}不另行通知",
@@ -440,9 +568,18 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\breason for (?:the )?change\b",
             r"\bexplain(?:s|ed|ation)?.{0,80}\bchange\b",
             r"\bplain[- ]language summary\b",
-            r"\bimpact assessment\b",
+            (
+                r"\bimpact assessment\b.{0,300}"
+                r"\b(?:change|revision|amendment|modification)\b"
+            ),
+            (
+                r"\b(?:change|revision|amendment|modification)\b.{0,300}"
+                r"\bimpact assessment\b"
+            ),
+            r"\bupdated\b.{0,100}\bto (?:clarify|reflect|provide|add|improve|protect|ensure)\b",
             r"变更理由",
-            r"影响评估",
+            r"影响评估.{0,80}(?:变更|修改|修订)",
+            r"(?:变更|修改|修订).{0,80}影响评估",
             r"变更说明",
         ),
         asserted=(r"\btransparent\b", r"公开说明"),
@@ -461,6 +598,7 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\brequest (?:a )?human review\b",
             r"\bgrievance\b",
             r"\bcomplaint procedure\b",
+            r"投诉、?举报机制.{0,120}(?:处理流程|反馈时限)",
             r"申诉",
             r"人工复核",
             r"投诉程序",
@@ -484,11 +622,13 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
         label="Refusal, opt-out, or exit route",
         dimension="affected",
         strong=(
-            r"\bopt[- ]out\b",
+            r"\b(?:right|option|route|choose|choice|may)\b.{0,100}\bopt[- ]out\b",
+            r"\bopt[- ]out\b.{0,100}\b(?:processing|service|system)\b",
             r"\bwithdraw consent\b",
             r"\bdiscontinue use\b",
             r"\bexit the service\b",
-            r"退出",
+            r"(?:有权|可以选择|选择).{0,30}退出",
+            r"退出.{0,30}(?:人工智能|服务|交互|系统)",
             r"撤回同意",
             r"选择不使用",
         ),
@@ -515,6 +655,12 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\bmonitoring (?:metrics?|indicators?|thresholds?)\b",
             r"\bdrift (?:metric|threshold|monitoring)\b",
             r"\bescalat(?:e|ion).{0,80}\bthreshold\b",
+            (
+                r"\bmonitoring (?:system|process|classifiers?)\b.{0,180}"
+                r"\b(?:trigger|escalat|threshold|analysis)\b"
+            ),
+            r"\bearly warning evaluations?\b.{0,180}\bthreshold\b",
+            r"\bCritical Capability Levels?\b",
             r"监测指标",
             r"预警阈值",
             r"异常升级",
@@ -537,10 +683,21 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\baudit trails?\b",
             r"\bappend[- ]only\b",
             r"\btamper[- ]evident\b",
+            r"\bcentrali[sz]ed log management\b",
+            r"\bSIEM(?:/SOAR)?\b",
+            r"\bautomatically generated logs?\b",
+            (
+                r"\b(?:automatically generated|automatically generate|"
+                r"automatic generation of) logs?\b"
+            ),
+            r"\bautomatic recording of events\b",
+            r"\bkeep the logs\b",
+            r"\bmaintain\b.{0,160}\brecords?\b.{0,200}\bimpact assessments?\b",
+            r"\brecords?\b.{0,120}\bimpact assessments?\b",
             r"审计日志",
             r"审计追踪",
         ),
-        asserted=(r"\baudit(?:ing)?\b", r"审计"),
+        asserted=(r"\baudit records?\b", r"审计记录"),
         required_artifacts=(
             "What is logged, who can inspect it, retention period, and integrity control",
         ),
@@ -557,10 +714,19 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\bretain(?:ed|tion)? (?:for|of) \d+\s+(?:days|months|years)\b",
             r"\bretention (?:period|schedule|policy)\b",
             r"\blegal hold\b",
+            r"\blogs shall be kept for\b.{0,80}\b(?:period|at least)\b",
+            r"\bkeep\b.{0,40}\blogs?\b.{0,80}\bfor at least\b",
+            r"\bmaintain\b.{0,260}\brecords?\b.{0,160}\bfor at least\b",
             r"保存.{0,30}(?:年|月|日)",
             r"留存期限",
         ),
-        asserted=(r"\bretain(?:ed)?\b", r"\bretention\b", r"保存", r"留存"),
+        asserted=(
+            r"\b(?:records?|logs?|evidence).{0,80}\bretain(?:ed|s|ing)?\b",
+            r"\bretention\b.{0,60}\b(?:records?|logs?|evidence)\b",
+            r"\blogs? retention\b",
+            r"保存.{0,30}(?:记录|日志|证据)",
+            r"留存.{0,30}(?:记录|日志|审计|证据)",
+        ),
         required_artifacts=(
             "Retention schedule, deletion rule, and legal-hold procedure",
         ),
@@ -577,6 +743,12 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\bindependent (?:review|audit|oversight|ethics) (?:board|committee|panel|auditor)\b",
             r"\bexternal (?:review|reviewer|auditor|audit)\b",
             r"\bthird[- ]party assessment\b",
+            (
+                r"\bindependent (?:third[- ]party )?"
+                r"(?:audits?|auditors?|evaluations?|verifications?|oversight)\b"
+            ),
+            r"\bnotified bod(?:y|ies)\b",
+            r"\bconformity assessment bod(?:y|ies)\b",
             r"独立(?:审查|审计|监督|伦理委员会)",
             r"外部审计",
         ),
@@ -602,6 +774,18 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\bconflict[- ]of[- ]interest check\b",
             r"\banti[- ]retaliation\b",
             r"\bselective rollback\b",
+            r"\bwhistleblowers?\b",
+            (
+                r"\b(?:notified bodies?|accreditation bod(?:y|ies)|auditors?|"
+                r"reviewers?|panel|committee|non-executive members?)"
+                r".{0,140}\bconflicts? of interests?\b"
+            ),
+            (
+                r"\bconflicts? of interests?\b.{0,120}"
+                r"\b(?:notified bodies?|accreditation bod(?:y|ies)|auditors?|"
+                r"reviewers?|panel|committee|non-executive members?)\b"
+            ),
+            r"\bindependence, transparency, and integrity\b",
             r"冷却期",
             r"利益冲突审查",
             r"防止报复",
@@ -630,7 +814,16 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"置信区间",
             r"可能错误",
         ),
-        asserted=(r"\buncertainty\b", r"\bunknowns?\b", r"不确定性", r"未知"),
+        asserted=(
+            r"\buncertainty\b",
+            r"\bunknowns?\b",
+            r"\bunpredictable\b",
+            r"\bconfident(?:ly|ce)\b.{0,100}\b(?:difficult|subjective|uncertain|prediction)\b",
+            r"\b(?:research|framework|evidence|science) is (?:nascent|exploratory|uncertain)\b",
+            r"不确定性",
+            r"未知",
+            r"难以预知",
+        ),
         required_artifacts=(
             "Uncertainty method, threshold, review route, and reconsideration trigger",
         ),
@@ -648,11 +841,33 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\brelease gate\b",
             r"\bdeployment approval\b",
             r"\bpre[- ]deployment evaluation\b",
+            (
+                r"\b(?:capability|deployment|release) (?:threshold|standard)"
+                r".{0,140}\b(?:requires?|must|approval|meet)\b"
+            ),
+            r"\bsafeguards?.{0,120}\bbefore (?:they are|a model is) deployed\b",
+            (
+                r"\bappl(?:y|ying) a mitigation plan when\b.{0,120}"
+                r"\bpasses?\b.{0,80}\bevaluations?\b"
+            ),
+            r"\bconformity assessment\b",
+            r"\brisk assessments? prior to release\b",
+            (
+                r"\bevaluated\b.{0,180}\bbefore\b.{0,120}"
+                r"\b(?:offered|sold|made available|deployed)\b"
+            ),
+            r"\bindependent safety testing and verification\b",
             r"能力门控",
             r"发布门",
             r"部署前评估",
+            r"安全评估.{0,80}(?:提供|上线|备案)",
         ),
-        asserted=(r"\bpre[- ]deployment\b", r"部署前"),
+        asserted=(
+            r"\bpre[- ]deployment\b",
+            r"\bpre[- ]use (?:assessment|evaluation|review)\b",
+            r"部署前",
+            r"使用前的?论证和评估",
+        ),
         required_artifacts=(
             "Gate criteria, approver, evidence package, stop condition, and release record",
         ),
@@ -670,11 +885,21 @@ CORE_RULES: tuple[RuleDefinition, ...] = (
             r"\binterrupt(?:ibility| signal|ion)\b",
             r"\bemergency shutdown\b",
             r"\baccept(?:s|ing)? (?:an )?(?:interrupt|shutdown)\b",
+            r"\bstop (?:generating|transmitting)\b",
+            r"\bmust stop or hold a safe state\b",
+            r"\bstop it at any time\b",
+            r"\binterrupt the system\b",
+            r"\bstop button\b",
+            r"\bemergency shutdown authority\b",
+            r"停止运行",
+            r"中止.{0,30}运行",
+            r"停止生成",
+            r"停止传输",
             r"紧急停止",
             r"中断信号",
             r"关闭开关",
         ),
-        asserted=(r"\bshut ?down\b", r"关闭"),
+        asserted=(r"\bshut ?down\b", r"关闭系统"),
         required_artifacts=(
             "Controlled interruption test, response time, state preservation, and override authority",
         ),

@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.5.0.dev1 — development
+
+Late-2026 policy-benchmark and evidence-pack milestone.
+
+- Added a 21-document, 588-decision benchmark for the 28 core written controls.
+- Added the EU Artificial Intelligence Act, UK Data (Use and Access) Act 2025,
+  UK AI and automated decision-making code regulation 2026, current US federal
+  actions, and enacted US state AI laws.
+- Added source SHA-256 verification, calibration/evaluation splits, exact-grade
+  accuracy, positive precision/recall, confusion counts, false-positive and
+  false-negative reporting, and evidence-span coverage gates.
+- Added `ai-revisability-audit benchmark`.
+- Added the sealed evidence-pack workflow with SHA-256 pinning, artifact-type
+  compatibility mapping, E2/E3/E4 promotion proposals and mandatory human
+  confirmation.
+- Added safe ZIP intake with per-file, total-size, entry-count, path-traversal,
+  symbolic-link, encryption and compression-ratio checks.
+- Added `ai-revisability-audit evidence-pack-seal`.
+- Added the local `/revisability/evidence` workbench and the MCP
+  `audit_evidence_pack` tool.
+- Retained official enactment summaries as summaries rather than presenting
+  them as full statutory text.
+
 ## 0.4.0.dev2 — development
 
 AI Alignment Revisability Audit development milestone.

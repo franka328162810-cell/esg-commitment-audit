@@ -66,6 +66,11 @@ When the user supplies a previous and current version, use
 materiality regressions, new warnings, and clause additions, removals, or
 modifications.
 
+When the user supplies a sealed evidence pack, use `audit_evidence_pack` on the
+manifest or ZIP. Verify that any E3/E4 proposal remains explicitly marked for
+human confirmation. Do not treat a matching SHA-256 hash as proof that an event
+occurred or that the issuer had authority.
+
 Choose the closest review profile:
 
 - `general`;
@@ -87,5 +92,7 @@ If MCP tools are unavailable, the product-specific local commands are:
 ```text
 ai-revisability-audit audit <file> --profile general --format json
 ai-revisability-audit compare <previous-file> <current-file> --profile general
+ai-revisability-audit evidence-pack <manifest-or-zip> --format json
+ai-revisability-audit benchmark <dataset.yaml> --sources <frozen-sources-dir>
 ai-revisability-audit serve
 ```

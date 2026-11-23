@@ -39,6 +39,8 @@ The command waits for newline-delimited MCP JSON-RPC messages on standard input.
 - `audit_revisability_text`: review pasted AI governance text.
 - `audit_revisability_version`: compare previous and current AI governance
   document versions locally.
+- `audit_evidence_pack`: verify a sealed local evidence-pack manifest or ZIP,
+  validate pinned hashes and propose human-confirmed E2/E3/E4 grade upgrades.
 
 ## Hosted tools
 

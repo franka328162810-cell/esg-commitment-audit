@@ -2,9 +2,9 @@
 
 - Source: `revisability_strong_policy.md`
 - SHA-256: `a072ad9db169b28bf3bd7af2508e2c8f9fab1ba5db08e548554eb756f17a62cd`
-- Generated: 2026-11-22T17:03:02.966067+00:00
+- Generated: 2026-11-23T12:39:13.447319+00:00
 - Profile: `general` (General AI governance)
-- Methodology: `RFP-AI-revisability-document-v0.1`
+- Methodology: `RFP-AI-revisability-document-v0.2`
 
 ## Evidence summary
 
@@ -24,7 +24,7 @@ This document-only mode can establish E0-E2 text evidence. E3 requires operation
 | Check | Grade | Finding | Evidence |
 |---|---|---|---|
 | Identifiable alignment target, constitution, or governing objective | `documented` | The examined text contains a specific written control. This is E2 evidence only; it does not prove that the control operated. | organisation. The alignment target is the AI Constitution v2.3.0. (paragraph 5) |
-| Explicit normative hierarchy or protected tier | `documented` | The examined text contains a specific written control. This is E2 evidence only; it does not prove that the control operated. | Redline principles have precedence over procedures and operational guidance. Conflicts of principles are escalated to the Independent AI Ethics Panel for adjudication. (paragraph 6) |
+| Explicit normative hierarchy or protected tier | `documented` | The examined text contains a specific written control. This is E2 evidence only; it does not prove that the control operated. | ## Scope and hierarchy (paragraph 3) |
 | Conflict-resolution and adjudication route | `documented` | The examined text contains a specific written control. This is E2 evidence only; it does not prove that the control operated. | Redline principles have precedence over procedures and operational guidance. Conflicts of principles are escalated to the Independent AI Ethics Panel for adjudication. (paragraph 6) |
 
 ## Authority and participation

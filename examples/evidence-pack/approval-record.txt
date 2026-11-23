@@ -1,0 +1,8 @@
+AI Governance Board approval record
+
+Version: 2.1
+Decision date: 2026-11-20
+Approver: AI Governance Board
+Affected checks: revision_authority, version_identifier
+
+The board approved the documented revision after reviewing the impact assessment.

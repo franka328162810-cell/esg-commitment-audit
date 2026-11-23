@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Revisability Evidence Pack</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/revisability.css">
+  <link rel="stylesheet" href="/static/evidence_pack.css">
+</head>
+<body>
+  <header class="masthead">
+    <div>
+      <p class="eyebrow">ICS-TEC · LOCAL EVIDENCE-PACK WORKBENCH</p>
+      <h1>AI Revisability<br>Evidence Pack</h1>
+      <p class="subtitle">
+        校验证据包中的 SHA-256、签发人、日期和控制项映射，并给出 E2、E3、E4
+        升级建议。所有升级都只能由人工确认。
+      </p>
+    </div>
+    <span class="local-badge">本机运行 · ZIP 不保留</span>
+  </header>
+
+  <main>
+    <section class="panel">
+      <p class="step-label">01 · SEALED ZIP INPUT</p>
+      <h2>上传证据包</h2>
+      <p class="subtitle">
+        ZIP 根目录或任一子目录中只能有一个 <code>manifest.yaml</code>。
+        单文件上限 50 MB，解压总量 200 MB；拒绝路径穿越、符号链接和加密条目。
+      </p>
+      <form id="evidence-form" class="evidence-form">
+        <input id="evidence-file" type="file" name="file" accept=".zip" required>
+        <button type="submit" class="primary-button">校验证据包</button>
+      </form>
+      <p id="status-line" class="status-line" role="status"></p>
+    </section>
+
+    <section id="error-panel" class="error-panel" hidden></section>
+
+    <section id="results" class="results" hidden>
+      <div class="results-bar">
+        <div>
+          <p class="step-label">02 · EVIDENCE-PACK REPORT</p>
+          <h2>证据等级建议</h2>
+        </div>
+        <div class="download-group" aria-label="下载报告">
+          <button id="download-html" type="button">HTML</button>
+          <button id="download-markdown" type="button">Markdown</button>
+          <button id="download-json" type="button">JSON</button>
+        </div>
+      </div>
+      <section id="summary" class="summary-grid"></section>
+      <section id="inventory-section" class="evidence-section"></section>
+      <section id="promotions-section" class="evidence-section"></section>
+      <section id="gaps-section" class="evidence-section"></section>
+      <section id="warnings-section" class="notice-list"></section>
+      <section class="disclaimer-box">
+        <h3>解释边界</h3>
+        <p id="disclaimer"></p>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <p>v0.5 development · Apache 2.0 · Copyright 2026 Xue Zhi Xin (ICS-TEC)</p>
+    <p>文件哈希只能证明文件未变，不能证明事件真实发生或签发人具有权威。</p>
+    <p><a href="/revisability">返回可修正性审查工作台</a></p>
+  </footer>
+
+  <script src="/static/evidence_pack.js"></script>
+</body>
+</html>

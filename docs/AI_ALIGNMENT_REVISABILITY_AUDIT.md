@@ -1,6 +1,8 @@
 # AI Alignment Revisability Audit
 
-Development preview: `0.4.0.dev2`
+Local development preview: `0.5.0.dev1`
+
+Hosted production remains on `0.4.0.dev2` until the next deployment.
 
 The installable Python distribution is `esg-commitment-audit`. The user-facing
 command for this product is `ai-revisability-audit`.
@@ -19,6 +21,9 @@ cannot establish that a control operated or that a model followed it.
 ai-revisability-audit audit examples\revisability_strong_policy.md
 ai-revisability-audit audit examples\revisability_strong_policy.md --format html --output audit-output\revisability.html
 ai-revisability-audit compare examples\revisability_policy_v1.md examples\revisability_policy_v2.md
+ai-revisability-audit evidence-pack-seal examples\evidence-pack\manifest.yaml --output examples\evidence-pack\manifest.sealed.yaml
+ai-revisability-audit evidence-pack examples\evidence-pack\manifest.sealed.yaml --format html --output audit-output\evidence-pack.html
+ai-revisability-audit benchmark benchmarks\ai_revisability_2026_11_23\dataset.yaml --sources C:\path\to\frozen-sources --strict
 ai-revisability-audit serve
 ```
 
@@ -27,6 +32,7 @@ Open the local workbench at:
 ```text
 http://127.0.0.1:8765/revisability
 http://127.0.0.1:8765/revisability/versions
+http://127.0.0.1:8765/revisability/evidence
 ```
 
 The local page does not upload documents to a hosted service.
@@ -59,6 +65,39 @@ The version-trace mode compares a previous and current document and reports:
 
 The comparison uses written evidence only. It cannot determine why a change was
 made, who approved it, or whether the revised control operated.
+
+## Evidence-pack workflow
+
+The local evidence workbench accepts a ZIP containing one manifest and its
+policy, approval, rollback, monitoring, appeal and independent-review files.
+It verifies SHA-256 pins, dates, issuers, file limits, ZIP path safety and
+artifact/control compatibility before proposing an E2, E3 or E4 grade.
+
+```powershell
+ai-revisability-audit evidence-pack-seal evidence\manifest.yaml --output evidence\manifest.sealed.yaml
+ai-revisability-audit evidence-pack evidence-pack.zip --format json --output evidence\report.json
+```
+
+Every E3/E4 proposal requires human confirmation. The workflow is documented in
+[EVIDENCE_PACK_WORKFLOW.md](EVIDENCE_PACK_WORKFLOW.md). See the
+[generated evidence-pack sample](AI_REVISABILITY_EVIDENCE_PACK_SAMPLE.md).
+
+## Real-policy benchmark
+
+The frozen 2026-11-23 benchmark covers 21 documents and 588 control decisions.
+It includes the EU AI Act, the UK Data (Use and Access) Act 2025 and 2026 AI code
+regulation, US federal actions, and enacted US state AI laws. Official
+enactment summaries are explicitly marked and are not presented as full
+statutory text.
+
+The runnable dataset, source hashes, split assignment and claim boundary are in
+[the benchmark directory](../benchmarks/ai_revisability_2026_11_23/README.md).
+The generated machine-readable result is
+[`validation/ai_revisability_benchmark_2026-11-23.json`](../validation/ai_revisability_benchmark_2026-11-23.json).
+
+Frozen result: 588/588 exact control grades, 100% positive precision, 100%
+positive recall, and 100% evidence coverage for predicted positives. This is a
+single-reviewer written adjudication, not a blinded independent holdout.
 
 ## Review profiles
 
@@ -111,8 +150,12 @@ artifacts and human review.
 
 ## Current limitation
 
-This is a rule-based development preview. The hosted TXT/Markdown/DOCX/PDF path
-is operational, but the product has not completed a held-out benchmark,
+This remains a rule-based development preview. The 2026-11-23 benchmark has a
+calibration/evaluation split, but all documents were visible to the developer
+while rules were refined. It is not an independent third-party holdout,
 external methodological review, or organization-level operational-evidence
-test. The next milestone is evidence-pack intake and a persistent source-change
-registry.
+test.
+
+The local evidence-pack intake is implemented. Hosted evidence-pack processing,
+customer-confirmed operational promotion and a persistent cross-organisation
+source-change registry are not yet deployed.

@@ -1,0 +1,8 @@
+{
+  "issued_at": "2026-11-19",
+  "issuer": "AI Operations",
+  "metric": "policy drift and incident monitoring",
+  "threshold": 0.1,
+  "status": "within threshold",
+  "audit_log_integrity": "verified"
+}
