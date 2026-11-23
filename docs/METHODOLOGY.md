@@ -81,9 +81,9 @@ plausible assumptions.
 
 These labels describe the written commitment only.
 
-## Recursive Freedom Audit for AI Beta
+## Recursive Freedom Audit for AI
 
-The Beta applies a separate, non-scoring structural checklist to AI policies,
+The review applies a separate, non-scoring structural checklist to AI policies,
 model cards, governance procedures, and similar written controls:
 
 | Check | What the analyzer looks for |
@@ -104,14 +104,14 @@ matching source excerpt. Presence means only that the examined text contains a
 recognisable written control. It does not establish implementation quality,
 legal compliance, or actual system behaviour.
 
-The Beta is informed by the revision-oriented framing in Xue, Z. (2026), *On
+The review is informed by the revision-oriented framing in Xue, Z. (2026), *On
 Recursive Freedom: A Theory of the Freedom to Revise*, DOI
 [10.5281/zenodo.24217876](https://doi.org/10.5281/zenodo.24217876). The
 implementation is an engineering interpretation for document review. The
 publication is not evidence that the rule engine has been independently
 validated.
 
-The Beta must not be used to score an individual's personality, mental state,
+The review must not be used to score an individual's personality, mental state,
 political views, employability, creditworthiness, insurance risk, educational
 outcomes, immigration status, or legal culpability.
 

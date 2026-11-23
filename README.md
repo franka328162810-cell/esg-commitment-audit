@@ -20,9 +20,9 @@ Team plan, with a maximum of 100 pages and 50 MB per document.
 > legal advice, compliance certification, investment advice, or a finding of
 > greenwashing.
 
-## AI Alignment Revisability Audit — development preview
+## AI Alignment Revisability Audit — founding release
 
-The local package now includes a separate AI-revisability review mode for news
+The local package includes a separate AI-revisability review mode for news
 media, advertising, insurance, and industrial-design governance documents. It
 checks written authority, revision routes, version history, rollback, affected
 party safeguards, monitoring, oversight, and technical-control evidence.
@@ -40,7 +40,7 @@ ai-revisability-audit serve
 ```
 
 Open `http://127.0.0.1:8765/revisability` or
-`http://127.0.0.1:8765/revisability/evidence`. The hosted document-review Beta is
+`http://127.0.0.1:8765/revisability/evidence`. The hosted product is
 available at:
 
 ```text
@@ -48,14 +48,22 @@ https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-aud
 https://esg-commitment-audit-api.franka328162810.workers.dev/workspace
 ```
 
-It is included in the existing founding platform allowance and does not yet
-have a separate subscription or formal marketplace package. See
+It is sold separately at **US$99/month** to the first 20 customer
+organizations, with 100 policy or evidence-pack jobs per month, one shared API
+key, and a 30-day no-questions-asked full refund:
+
+```text
+https://icsstudies.gumroad.com/l/ai-alignment-revisability-audit
+https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit/activate
+```
+
+See
 [AI Alignment Revisability Audit](docs/AI_ALIGNMENT_REVISABILITY_AUDIT.md) and
 [the generated sample report](docs/AI_ALIGNMENT_REVISABILITY_SAMPLE.md) and
 [the version-trace sample](docs/AI_ALIGNMENT_REVISABILITY_VERSION_SAMPLE.md).
-The local `0.5.0.dev1` build adds a 588-decision real-policy benchmark and a
-sealed evidence-pack workflow. Hosted production remains on `0.4.0.dev2`
-until the next deployment.
+The local and hosted `0.5.0.dev1` build adds a 588-decision real-policy
+benchmark, sealed evidence-pack intake, an independent `ai-founding-team` plan,
+a server-enforced 20-customer organization cap, and `ai_live_` API keys.
 
 ## Why teams use it
 
@@ -86,12 +94,12 @@ until the next deployment.
 - A hosted HTTPS audit API running on Cloudflare.
 - Text-layer PDF, DOCX, TXT, and Markdown input.
 - Structured JSON reports with commitment-level evidence.
-- AI Alignment Revisability Audit Beta with 28 core checks and five profiles.
+- AI Alignment Revisability Audit with 28 core checks and five profiles.
 - A 21-document, 588-decision benchmark spanning the EU AI Act, current UK
   regulation, US federal actions, and enacted US state AI laws.
 - A local evidence-pack workflow for SHA-256 sealing, E2/E3/E4 proposals,
   ZIP validation, Markdown/JSON/HTML reports, and MCP access.
-- A monthly quota of 100 documents on the founding plan.
+- Separate ESG and AI founding plans, each with a monthly quota of 100 jobs.
 - A 30-day no-questions-asked full-refund policy on the Gumroad offer.
 - Seven-day report retention and tenant-scoped API access.
 - A Codex plugin manifest, skill, and local/cloud MCP tools.
@@ -107,7 +115,7 @@ action is absent.
 The current rules are strongest for English and Chinese reports. Scanned PDFs
 require OCR, which is not included in the current version.
 
-### AI Alignment Revisability Audit Beta
+### AI Alignment Revisability Audit
 
 The same workbench now accepts `X-ESG-Mode: ai-revisability` and
 `X-ESG-Profile: general|news_media|advertising|insurance|industrial_design`.
@@ -179,6 +187,8 @@ review into independent validation.
 
 - Founding plan: https://icsstudies.gumroad.com/l/esg-commitment-audit
 - API-key activation: https://esg-commitment-audit-api.franka328162810.workers.dev/activate
+- AI founding plan: https://icsstudies.gumroad.com/l/ai-alignment-revisability-audit
+- AI API-key activation: https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit/activate
 - Evidence workbench: https://esg-commitment-audit-api.franka328162810.workers.dev/workspace
 - AI Alignment Revisability Audit: https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit
 - AI Revisability public sample: https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit/sample
@@ -187,12 +197,15 @@ review into independent validation.
 - Privacy draft: https://esg-commitment-audit-api.franka328162810.workers.dev/privacy
 - Terms draft: https://esg-commitment-audit-api.franka328162810.workers.dev/terms
 
-The hosted API and Gumroad founding offer are live. Stripe checkout code is
+The hosted API and both Gumroad founding offers are live. Stripe checkout code is
 deployed but is not the current production checkout route. A verified and
 unused Gumroad license key can be exchanged once at `/activate` for a
-founding-team organization and API key. Gumroad membership status is rechecked
-every 15 minutes. The legal pages state the service boundary but have not
-received professional legal review.
+`founding-team` organization and `esg_live_` API key. The AI product uses
+`/ai-revisability-audit/activate`, creates an `ai-founding-team` organization,
+and issues an `ai_live_` key. A background scheduler runs every 15 minutes and
+rotates through at least the 20 oldest-checked Gumroad memberships. The legal
+pages state the service boundary but have not received professional legal
+review.
 
 Reproduce the calculation:
 
@@ -248,20 +261,25 @@ Raw uploads are deleted after success or final failure. Reports expire after
 seven days, job metadata after 180 days, and an R2 lifecycle rule deletes any
 remaining `orgs/` objects after 30 days.
 
-The founding plan permits one organization, one shared API key, 100 audited
-documents per month, and at most 100 pages and 50 MB per document. The Gumroad
-listing is capped at 20 active founding supporters. Scanned PDFs without a text
-layer are rejected because OCR is not included.
+Each founding plan permits one organization and one shared API key. The ESG
+plan costs US$29/month for 100 audited documents. The AI plan costs US$99/month
+for 100 policy or evidence-pack jobs. Policy documents may contain at most 100
+pages and 50 MB. The AI evidence-pack intake accepts a 100 MB ZIP containing at
+most 200 MB of uncompressed content. Each public offer is limited to 20 customer
+organizations. Scanned PDFs without a text layer are rejected because OCR is
+not included.
 
 `POST /v1/audits` accepts `X-ESG-Mode: commitment`,
-`recursive-freedom`, or `ai-revisability`. All modes use the same monthly
-allowance and the same page and file-size limits. The AI mode also accepts
-`X-ESG-Profile`, stored with the job so later reviews remain reproducible.
+`recursive-freedom`, `ai-revisability`, or `evidence-pack`. ESG plans can use
+the ESG modes. AI plans can use `ai-revisability` and `evidence-pack`. The AI
+document mode also accepts `X-ESG-Profile`, stored with the job so later reviews
+remain reproducible.
 
-An owner-only Gumroad test purchase passed on 2026-11-22 without a charge. Its
-license authenticated, activated a `founding-team` organization, and produced a
-100-document quota. The test organization is recorded with `active` Gumroad
-billing status.
+Owner-only Gumroad test purchases passed without a charge on 2026-11-22 for ESG
+and 2026-11-24 for AI. The AI test verified the complete path from a generated
+Gumroad license to an `ai-founding-team` organization, an `ai_live_` API key,
+and a completed 28-check production audit. Temporary test organizations, keys,
+reports and reserved seats were then removed.
 
 Deployment, backup, monitoring, cost, and recovery notes are in
 [`docs/COMMERCIAL_DEPLOYMENT.md`](docs/COMMERCIAL_DEPLOYMENT.md).
@@ -363,6 +381,6 @@ python -m esg_commitment_audit audit examples\vague_statement.txt
 
 Code and rules are licensed under Apache License 2.0. Future formalizations under
 `formalizations/` are intended to be licensed separately under CC BY-SA 4.0; no
-formal proof is included in v0.3.1.
+formal proof is included in v0.5.0.dev1.
 
 Copyright 2026 Xue Zhi Xin (ICS-TEC).

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071822"/>
+      <stop offset="1" stop-color="#102b32"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#bg)"/>
+  <circle cx="535" cy="58" r="170" fill="#0e5960" opacity=".7"/>
+  <circle cx="55" cy="585" r="160" fill="#0a4650" opacity=".7"/>
+  <text x="42" y="66" fill="#65e0d0" font-family="Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="1.6">ICS-TEC · AI GOVERNANCE</text>
+  <text x="42" y="156" fill="#ffffff" font-family="Arial, sans-serif" font-size="47" font-weight="700">AI Alignment</text>
+  <text x="42" y="205" fill="#ffffff" font-family="Arial, sans-serif" font-size="47" font-weight="700">Revisability</text>
+  <text x="42" y="252" fill="#ffffff" font-family="Arial, sans-serif" font-size="47" font-weight="700">Audit</text>
+  <text x="44" y="303" fill="#dce7e9" font-family="Arial, sans-serif" font-size="23">Policy. Evidence. Revision.</text>
+  <g transform="translate(300 412)">
+    <circle cx="0" cy="0" r="92" fill="#0b2029" stroke="#52d7c7" stroke-width="4"/>
+    <path d="M0 -62 46 -42V3c0 36-19 59-46 76-27-17-46-40-46-76v-45Z" fill="#123943" stroke="#72eadb" stroke-width="4"/>
+    <path d="M-34 -38h68M-34 -18h53M-34 2h62" stroke="#dce7e9" stroke-width="5" stroke-linecap="round"/>
+    <path d="M-24 25 2 44l44-50" fill="none" stroke="#ffb21c" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <rect x="42" y="530" width="294" height="43" rx="12" fill="#0d8f83"/>
+  <text x="61" y="558" fill="#ffffff" font-family="Arial, sans-serif" font-size="17" font-weight="700">Founding Team · US$99/month</text>
+</svg>

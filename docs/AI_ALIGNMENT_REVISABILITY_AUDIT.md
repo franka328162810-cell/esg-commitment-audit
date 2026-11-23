@@ -1,8 +1,8 @@
 # AI Alignment Revisability Audit
 
-Local development preview: `0.5.0.dev1`
+Local release: `0.5.0.dev1`
 
-Hosted production remains on `0.4.0.dev2` until the next deployment.
+Hosted founding release: `0.5.0.dev1`.
 
 The installable Python distribution is `esg-commitment-audit`. The user-facing
 command for this product is `ai-revisability-audit`.
@@ -37,21 +37,33 @@ http://127.0.0.1:8765/revisability/evidence
 
 The local page does not upload documents to a hosted service.
 
-## Hosted Beta
+## Hosted founding release
 
 The hosted workbench includes `ai-revisability` as a document mode and supports
-the five review profiles above:
+the five review profiles above. It also accepts a sealed `evidence-pack` ZIP:
 
 ```text
 https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit
+https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit/activate
 https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit/sample
 https://esg-commitment-audit-api.franka328162810.workers.dev/workspace
 ```
 
-The hosted mode uses the same API key, monthly document allowance, 100-page
-limit, 50 MB limit, asynchronous queue, tenant isolation, and seven-day report
-retention as the existing workbench. Hosted version-to-version comparison is
-not yet available.
+The product is a separate **US$99/month** Gumroad subscription for the first 20
+customer organizations. Each organization receives one `ai_live_` API key and
+up to 100 policy or evidence-pack jobs per month. Policy documents are limited
+to 100 pages and 50 MB. Evidence-pack ZIPs are limited to 100 MB compressed and
+200 MB uncompressed. Reports remain available for seven days, and the public
+offer includes a 30-day no-questions-asked full refund.
+
+The Gumroad purchase page and receipt contain a generated license key. Enter
+that key once at `/ai-revisability-audit/activate`; the API key is displayed only
+once and should be stored in a password manager.
+
+The hosted mode uses the same asynchronous queue, tenant isolation, and report
+retention as the ESG workbench. ESG keys cannot invoke AI modes, and AI keys
+cannot invoke ESG commitment or recursive-freedom modes. Hosted
+version-to-version comparison is not yet available.
 
 ## Version trace
 
@@ -150,12 +162,12 @@ artifacts and human review.
 
 ## Current limitation
 
-This remains a rule-based development preview. The 2026-11-23 benchmark has a
+This remains a rule-based product. The 2026-11-23 benchmark has a
 calibration/evaluation split, but all documents were visible to the developer
 while rules were refined. It is not an independent third-party holdout,
 external methodological review, or organization-level operational-evidence
 test.
 
-The local evidence-pack intake is implemented. Hosted evidence-pack processing,
-customer-confirmed operational promotion and a persistent cross-organisation
-source-change registry are not yet deployed.
+Hosted evidence-pack intake is implemented. Customer-confirmed operational
+promotion and a persistent cross-organisation source-change registry are not yet
+deployed.

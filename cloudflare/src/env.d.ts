@@ -7,4 +7,10 @@ interface Env {
   STRIPE_PRICE_STARTER?: string;
   STRIPE_PRICE_PRO?: string;
   ESG_GUMROAD_ENCRYPTION_KEY?: string;
+  GUMROAD_PRODUCT_ID?: string;
+  GUMROAD_AI_PRODUCT_ID?: string;
+  GUMROAD_API_URL: string;
+  MAX_UPLOAD_BYTES: string;
+  MAX_EVIDENCE_PACK_BYTES: string;
+  AI_FOUNDING_SEAT_LIMIT: string;
 }

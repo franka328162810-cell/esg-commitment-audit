@@ -13,6 +13,7 @@ import {
 const CONTAINER_PORT = 8080;
 const INACTIVITY_TIMEOUT_MS = 60 * 1000;
 const MAX_JSON_BODY_BYTES = 64 * 1024;
+const SERVICE_VERSION = "0.5.0.dev1";
 const BILLING_SYNC_CRON = "*/15 * * * *";
 const RETENTION_CRON = "17 3 * * *";
 const NON_RETRYABLE_CONTAINER_STATUSES = new Set([400, 413, 415, 422]);
@@ -20,6 +21,7 @@ const AUDIT_MODES = [
   "commitment",
   "recursive-freedom",
   "ai-revisability",
+  "evidence-pack",
 ] as const;
 type AuditMode = (typeof AUDIT_MODES)[number];
 const REVIEW_PROFILES = [
@@ -34,10 +36,12 @@ const PLAN_LIMITS = {
   trial: 5,
   starter: 25,
   "founding-team": 100,
+  "ai-founding-team": 100,
   pro: 150,
   enterprise: 10_000,
 } as const;
 type Plan = keyof typeof PLAN_LIMITS;
+type ProductKey = "esg" | "ai";
 
 interface Organization {
   id: string;
@@ -102,7 +106,7 @@ function currentPeriod(): string {
   return new Date().toISOString().slice(0, 7);
 }
 
-function cleanFilename(raw: string | null): string | null {
+function cleanFilename(raw: string | null, allowZip = false): string | null {
   if (!raw) return null;
   let decoded: string;
   try {
@@ -115,7 +119,9 @@ function cleanFilename(raw: string | null): string | null {
     !filename ||
     filename.length > 180 ||
     /[\u0000-\u001f\u007f]/.test(filename) ||
-    !/\.(pdf|docx|txt|md|markdown)$/i.test(filename)
+    !(allowZip
+      ? /\.zip$/i.test(filename)
+      : /\.(pdf|docx|txt|md|markdown)$/i.test(filename))
   ) {
     return null;
   }
@@ -132,6 +138,36 @@ function cleanReviewProfile(raw: string | null): ReviewProfile | null {
   return REVIEW_PROFILES.includes(value as ReviewProfile)
     ? (value as ReviewProfile)
     : null;
+}
+
+function cleanProductKey(raw: unknown): ProductKey | null {
+  if (raw == null || raw === "") return "esg";
+  return raw === "ai" || raw === "esg" ? raw : null;
+}
+
+function productPlan(product: ProductKey): Plan {
+  return product === "ai" ? "ai-founding-team" : "founding-team";
+}
+
+function productApiPrefix(product: ProductKey): string {
+  return product === "ai" ? "ai_live_" : "esg_live_";
+}
+
+function productGumroadId(env: Env, product: ProductKey): string {
+  return (
+    (product === "ai" ? env.GUMROAD_AI_PRODUCT_ID : env.GUMROAD_PRODUCT_ID) ?? ""
+  );
+}
+
+function planAllowsMode(plan: Plan, mode: AuditMode): boolean {
+  if (plan === "ai-founding-team") {
+    return mode === "ai-revisability" || mode === "evidence-pack";
+  }
+  return mode === "commitment" || mode === "recursive-freedom";
+}
+
+function allowedModesForPlan(plan: Plan): AuditMode[] {
+  return AUDIT_MODES.filter((mode) => planAllowsMode(plan, mode));
 }
 
 function bytesToHex(bytes: Uint8Array): string {
@@ -254,12 +290,13 @@ function gumroadTimestampEnded(value: unknown): boolean {
 async function verifyGumroadLicense(
   env: Env,
   licenseKey: string,
+  productId: string,
 ): Promise<GumroadLicenseResult> {
-  if (!env.GUMROAD_PRODUCT_ID) {
+  if (!productId) {
     return { state: "unknown", status: "not_configured" };
   }
   const form = new URLSearchParams({
-    product_id: env.GUMROAD_PRODUCT_ID,
+    product_id: productId,
     license_key: licenseKey,
     increment_uses_count: "false",
   });
@@ -271,7 +308,7 @@ async function verifyGumroadLicense(
         method: "POST",
         headers: {
           "content-type": "application/x-www-form-urlencoded",
-          "user-agent": "esg-commitment-audit/0.4.0.dev2",
+          "user-agent": `esg-commitment-audit/${SERVICE_VERSION}`,
         },
         body: form,
         signal: AbortSignal.timeout(20_000),
@@ -327,7 +364,8 @@ async function syncGumroadBilling(env: Env): Promise<void> {
   const secret = env.ESG_GUMROAD_ENCRYPTION_KEY;
   if (!secret) return;
   const rows = await env.DB.prepare(
-    `SELECT id, active, gumroad_license_ciphertext, gumroad_license_iv
+    `SELECT id, plan, active, billing_product_id,
+            gumroad_license_ciphertext, gumroad_license_iv
        FROM organizations
       WHERE billing_provider = 'gumroad'
         AND gumroad_license_ciphertext IS NOT NULL
@@ -336,7 +374,9 @@ async function syncGumroadBilling(env: Env): Promise<void> {
       LIMIT 20`,
   ).all<{
     id: string;
+    plan: Plan;
     active: number;
+    billing_product_id: string | null;
     gumroad_license_ciphertext: string;
     gumroad_license_iv: string;
   }>();
@@ -348,7 +388,14 @@ async function syncGumroadBilling(env: Env): Promise<void> {
         row.gumroad_license_iv,
         secret,
       );
-      const verification = await verifyGumroadLicense(env, licenseKey);
+      const product: ProductKey =
+        row.plan === "ai-founding-team" ? "ai" : "esg";
+      const productId = row.billing_product_id || productGumroadId(env, product);
+      const verification = await verifyGumroadLicense(
+        env,
+        licenseKey,
+        productId,
+      );
       const checkedAt = nowIso();
       if (verification.state === "unknown") {
         await env.DB.prepare(
@@ -500,8 +547,10 @@ async function callContainer(
   body: ReadableStream,
 ): Promise<Response> {
   const container = env.AUDIT_CONTAINER.getByName(job.id);
+  const endpoint =
+    job.audit_mode === "evidence-pack" ? "/evidence-pack" : "/audit";
   return container.fetch(
-    new Request("http://container/audit", {
+    new Request(`http://container${endpoint}`, {
       method: "POST",
       headers: {
         "content-type": job.content_type,
@@ -739,6 +788,12 @@ export default {
     if (request.method === "GET" && path === "/activate") {
       return htmlResponse(activationPage, 200, { allowInlineScript: true });
     }
+    if (
+      request.method === "GET" &&
+      path === "/ai-revisability-audit/activate"
+    ) {
+      return htmlResponse(activationPage, 200, { allowInlineScript: true });
+    }
     if (request.method === "GET" && path === "/workspace") {
       return htmlResponse(workspacePage, 200, { allowInlineScript: true });
     }
@@ -762,7 +817,12 @@ export default {
     }
     if (path === "/v1/health" && request.method === "GET") {
       await env.DB.prepare("SELECT 1").first();
-      return json({ status: "ok", service: env.SERVICE_NAME, region: request.cf?.colo });
+      return json({
+        status: "ok",
+        service: env.SERVICE_NAME,
+        version: SERVICE_VERSION,
+        region: request.cf?.colo,
+      });
     }
 
     if (path === "/v1/admin/organizations" && request.method === "POST") {
@@ -787,7 +847,10 @@ export default {
       const organizationId = `org_${crypto.randomUUID().replaceAll("-", "")}`;
       const keyId = `key_${crypto.randomUUID().replaceAll("-", "")}`;
       const tokenBytes = crypto.getRandomValues(new Uint8Array(32));
-      const apiKey = `esg_live_${bytesToBase64Url(tokenBytes)}`;
+      const apiKey =
+        plan === "ai-founding-team"
+          ? `ai_live_${bytesToBase64Url(tokenBytes)}`
+          : `esg_live_${bytesToBase64Url(tokenBytes)}`;
       const keyHash = await sha256Hex(apiKey);
       const createdAt = nowIso();
       await env.DB.batch([
@@ -853,22 +916,56 @@ export default {
               .replace(/[\u0000-\u001f\u007f]/g, " ")
               .trim()
           : "";
+      const product = cleanProductKey(payload.product);
       if (licenseKey.length < 8 || licenseKey.length > 200) {
         return json({ error: "A valid Gumroad license key is required" }, 400);
       }
+      if (!product) {
+        return json({ error: "Unknown Gumroad product" }, 400);
+      }
       if (!organizationName || organizationName.length > 160) {
         return json({ error: "Organization name is required" }, 400);
+      }
+      const productId = productGumroadId(env, product);
+      if (!productId) {
+        return json({ error: "Gumroad product is not configured" }, 503);
       }
       const encryptionSecret = env.ESG_GUMROAD_ENCRYPTION_KEY;
       if (!encryptionSecret) {
         return json({ error: "Gumroad activation is not configured" }, 503);
       }
-      const verification = await verifyGumroadLicense(env, licenseKey);
+      const verification = await verifyGumroadLicense(env, licenseKey, productId);
       if (verification.state === "unknown") {
         return json({ error: "Could not verify Gumroad license; retry later" }, 503);
       }
       if (verification.state !== "active") {
         return json({ error: "Gumroad license is not active", status: verification.status }, 403);
+      }
+
+      const seatLimit = Math.max(
+        1,
+        Number.parseInt(env.AI_FOUNDING_SEAT_LIMIT || "20", 10) || 20,
+      );
+      let foundingSeat: number | null = null;
+      if (product === "ai") {
+        const seatRow = await env.DB.prepare(
+          `SELECT MAX(seat_number) AS max_seat
+             FROM founding_seats
+            WHERE product_id = ?`,
+        )
+          .bind(productId)
+          .first<{ max_seat: number | null }>();
+        const nextSeat = Number(seatRow?.max_seat ?? 0) + 1;
+        if (nextSeat > seatLimit) {
+          return json(
+            {
+              error:
+                `The ${seatLimit}-customer founding plan is sold out. Contact support for the next plan.`,
+            },
+            409,
+          );
+        }
+        foundingSeat = nextSeat;
       }
 
       const licenseHash = await sha256Hex(licenseKey);
@@ -900,11 +997,13 @@ export default {
       const organizationId = `org_${crypto.randomUUID().replaceAll("-", "")}`;
       const keyId = `key_${crypto.randomUUID().replaceAll("-", "")}`;
       const tokenBytes = crypto.getRandomValues(new Uint8Array(32));
-      const apiKey = `esg_live_${bytesToBase64Url(tokenBytes)}`;
+      const plan = productPlan(product);
+      const apiKey = `${productApiPrefix(product)}${bytesToBase64Url(tokenBytes)}`;
       const keyHash = await sha256Hex(apiKey);
       const createdAt = nowIso();
+      const keyName = product === "ai" ? "gumroad-ai-founding" : "gumroad-founding";
       try {
-        await env.DB.batch([
+        const statements = [
           env.DB.prepare(
             `INSERT INTO organizations
               (id, name, plan, monthly_document_limit, documents_used,
@@ -912,16 +1011,17 @@ export default {
                billing_external_id, billing_product_id, billing_status,
                billing_last_checked_at, gumroad_license_hash,
                gumroad_license_ciphertext, gumroad_license_iv)
-             VALUES (?, ?, 'founding-team', ?, 0, ?, 1, ?, 'gumroad',
+             VALUES (?, ?, ?, ?, 0, ?, 1, ?, 'gumroad',
                      ?, ?, 'active', ?, ?, ?, ?)`,
           ).bind(
             organizationId,
             organizationName,
-            PLAN_LIMITS["founding-team"],
+            plan,
+            PLAN_LIMITS[plan],
             currentPeriod(),
             createdAt,
             verification.saleId ?? licenseHash,
-            env.GUMROAD_PRODUCT_ID,
+            productId,
             createdAt,
             licenseHash,
             encryptedLicense.ciphertext,
@@ -930,9 +1030,32 @@ export default {
           env.DB.prepare(
             `INSERT INTO api_keys
               (id, organization_id, name, key_hash, prefix, created_at)
-             VALUES (?, ?, 'gumroad-founding', ?, ?, ?)`,
-          ).bind(keyId, organizationId, keyHash, apiKey.slice(0, 16), createdAt),
-        ]);
+             VALUES (?, ?, ?, ?, ?, ?)`,
+          ).bind(
+            keyId,
+            organizationId,
+            keyName,
+            keyHash,
+            apiKey.slice(0, 16),
+            createdAt,
+          ),
+        ];
+        if (foundingSeat !== null) {
+          statements.push(
+            env.DB.prepare(
+              `INSERT INTO founding_seats
+                (product_id, seat_number, organization_id, license_hash, created_at)
+               VALUES (?, ?, ?, ?, ?)`,
+            ).bind(
+              productId,
+              foundingSeat,
+              organizationId,
+              licenseHash,
+              createdAt,
+            ),
+          );
+        }
+        await env.DB.batch(statements);
       } catch (error) {
         console.error("gumroad_activation_failed", {
           error: error instanceof Error ? error.message : String(error),
@@ -945,8 +1068,15 @@ export default {
       return json(
         {
           organization_id: organizationId,
-          plan: "founding-team",
-          monthly_document_limit: PLAN_LIMITS["founding-team"],
+          product,
+          plan,
+          monthly_document_limit: PLAN_LIMITS[plan],
+          ...(foundingSeat === null
+            ? {}
+            : {
+                founding_seat_number: foundingSeat,
+                founding_seat_limit: seatLimit,
+              }),
           api_key_id: keyId,
           api_key: apiKey,
         },
@@ -1057,6 +1187,7 @@ export default {
         id: organization.id,
         name: organization.name,
         plan: organization.plan,
+        allowed_audit_modes: allowedModesForPlan(organization.plan),
         active: Boolean(organization.active),
         billing_provider: organization.billing_provider ?? null,
         billing_status: organization.billing_status ?? null,
@@ -1137,24 +1268,37 @@ export default {
     }
 
     if (path === "/v1/audits" && request.method === "POST") {
-      const contentLength = Number(request.headers.get("content-length") ?? "0");
-      const maxUpload = Number(env.MAX_UPLOAD_BYTES);
-      if (!contentLength) return json({ error: "Content-Length is required" }, 411);
-      if (contentLength > maxUpload) return json({ error: "Upload is too large" }, 413);
-      if (!request.body) return json({ error: "Upload body is required" }, 400);
-      const filename = cleanFilename(request.headers.get("x-esg-filename"));
-      if (!filename) {
-        return json(
-          { error: "X-ESG-Filename must be PDF, DOCX, TXT, or Markdown" },
-          400,
-        );
-      }
       const auditMode = cleanAuditMode(request.headers.get("x-esg-mode"));
       if (!auditMode) {
         return json(
           {
             error:
-              "X-ESG-Mode must be commitment, recursive-freedom, or ai-revisability",
+              "X-ESG-Mode must be commitment, recursive-freedom, ai-revisability, or evidence-pack",
+          },
+          400,
+        );
+      }
+      if (!planAllowsMode(organization.plan, auditMode)) {
+        return json({ error: "This product does not include that audit mode" }, 403);
+      }
+      const evidencePack = auditMode === "evidence-pack";
+      const contentLength = Number(request.headers.get("content-length") ?? "0");
+      const maxUpload = Number(
+        evidencePack ? env.MAX_EVIDENCE_PACK_BYTES : env.MAX_UPLOAD_BYTES,
+      );
+      if (!contentLength) return json({ error: "Content-Length is required" }, 411);
+      if (contentLength > maxUpload) return json({ error: "Upload is too large" }, 413);
+      if (!request.body) return json({ error: "Upload body is required" }, 400);
+      const filename = cleanFilename(
+        request.headers.get("x-esg-filename"),
+        evidencePack,
+      );
+      if (!filename) {
+        return json(
+          {
+            error: evidencePack
+              ? "X-ESG-Filename must be a ZIP archive for evidence-pack mode"
+              : "X-ESG-Filename must be PDF, DOCX, TXT, or Markdown",
           },
           400,
         );

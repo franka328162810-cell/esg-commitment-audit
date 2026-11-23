@@ -1,8 +1,8 @@
 # Changelog
 
-## 0.5.0.dev1 — development
+## 0.5.0.dev1 — hosted founding release
 
-Late-2026 policy-benchmark and evidence-pack milestone.
+Late-2026 commercial release for AI Alignment Revisability Audit.
 
 - Added a 21-document, 588-decision benchmark for the 28 core written controls.
 - Added the EU Artificial Intelligence Act, UK Data (Use and Access) Act 2025,
@@ -22,6 +22,14 @@ Late-2026 policy-benchmark and evidence-pack milestone.
   `audit_evidence_pack` tool.
 - Retained official enactment summaries as summaries rather than presenting
   them as full statutory text.
+- Added hosted `evidence-pack` intake with a 100 MB compressed request limit and
+  a 200 MB uncompressed artifact limit.
+- Added the separate US$99/month `ai-founding-team` plan, `ai_live_` API keys,
+  mode isolation, and a D1-enforced 20-customer founding-seat cap.
+- Added the Gumroad AI product ID and dedicated activation route.
+- Added production tests covering Gumroad license generation, activation,
+  `ai_live_` access, a completed 28-check audit, evidence-pack processing, and
+  ESG-to-AI mode denial.
 
 ## 0.4.0.dev2 — development
 

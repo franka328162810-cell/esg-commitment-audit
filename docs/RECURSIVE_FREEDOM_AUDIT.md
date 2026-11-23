@@ -98,8 +98,8 @@ name because it overlaps with both names above.
 
 ## Commercial status
 
-The audit is currently included in the US$29/month Founding plan as a Beta
-mode. It has no separate subscription and no formal Codex plugin package yet.
-Before a separate paid launch, the product needs a larger benchmark, at least
-one independent review, representative Chinese-language documents, and
-version-to-version comparison testing.
+The current paid product is **AI Alignment Revisability Audit** at US$99/month
+for the first 20 customer organizations. It includes 100 policy or evidence-pack
+jobs per month and a 30-day no-questions-asked full refund. Use
+`/ai-revisability-audit/activate` for the AI product. A formal Codex plugin
+package is still a later release step.

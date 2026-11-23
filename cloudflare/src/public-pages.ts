@@ -76,7 +76,8 @@ export const landingPage = page(
     <h1>Audit the wording before you rely on the promise.</h1>
     <p>ESG Commitment Audit turns long sustainability and climate reports into traceable commitment evidence. AI Alignment Revisability Audit applies the same evidence discipline to AI rules, constitutions, model cards, and revision paths.</p>
     <div class="actions">
-      <a class="button" href="https://icsstudies.gumroad.com/l/esg-commitment-audit" rel="noopener">Subscribe on Gumroad — US$29/month</a>
+      <a class="button" href="https://icsstudies.gumroad.com/l/esg-commitment-audit" rel="noopener">Subscribe to ESG Audit — US$29/month</a>
+      <a class="button" href="https://icsstudies.gumroad.com/l/ai-alignment-revisability-audit" rel="noopener">Subscribe to AI Audit — US$99/month</a>
       <a class="button secondary" href="/workspace">Open the workbench</a>
     </div>
     <p class="notice"><strong>Evidence, not certification.</strong> This service analyses document structure. It is not audit assurance, legal advice, compliance certification, investment advice, or proof of greenwashing.</p>
@@ -87,28 +88,30 @@ export const landingPage = page(
         <p>Extract commitments with page or paragraph evidence, then test observability, enforceability, and revisability.</p>
       </div>
       <div class="card">
-        <h3>AI Alignment Revisability Audit · Beta</h3>
+        <h3>AI Alignment Revisability Audit</h3>
         <p>Review 28 written controls for alignment targets, revision authority, version history, rollback, affected-party safeguards, oversight, and technical-control evidence.</p>
-        <p><a href="/ai-revisability-audit">Read the product scope and claim boundary</a></p>
+        <p><a href="/ai-revisability-audit">Read the product scope, price, and claim boundary</a></p>
       </div>
     </div>
-    <h2>Founding plan</h2>
-    <ul>
-      <li>US$29 per month, capped at 100 audited documents per month.</li>
-      <li>Up to 100 pages and 50 MB per document.</li>
-      <li>Both products are included in the founding Beta and each completed job uses one document from the same monthly quota.</li>
-      <li>TXT, Markdown, DOCX, and text-layer PDF input.</li>
-      <li>Raw uploads are deleted after success or final failure; reports are retained for seven days by default.</li>
-      <li>The public offer is limited to 20 Founding customers.</li>
-      <li>30-day no-questions-asked full refund.</li>
-    </ul>
+    <h2>Separate founding plans</h2>
+    <div class="grid">
+      <div class="card">
+        <strong>ESG Commitment Audit</strong>
+        <p>US$29/month · 100 audited documents · first 20 customer organizations.</p>
+      </div>
+      <div class="card">
+        <strong>AI Alignment Revisability Audit</strong>
+        <p>US$99/month · 100 policy or evidence-pack jobs · first 20 customer organizations.</p>
+      </div>
+    </div>
+    <p>Each plan provides one organization and one shared API key. Policy documents may be up to 100 pages and 50 MB. Evidence-pack ZIPs may be up to 100 MB with at most 200 MB of uncompressed content. Raw uploads are deleted after success or final failure; hosted reports are retained for seven days. Both public offers include a 30-day no-questions-asked full refund.</p>
     <h2>How to start</h2>
     <ol>
-      <li>Subscribe on Gumroad and keep the license key from the receipt.</li>
-      <li><a href="/activate">Activate the license</a> to receive a one-time API key.</li>
+      <li>Choose the ESG or AI product on Gumroad and keep the license key from the receipt.</li>
+      <li><a href="/activate">Activate the ESG license</a> or <a href="/ai-revisability-audit/activate">activate the AI license</a> to receive a one-time API key.</li>
       <li>Paste the API key into the <a href="/workspace">workbench</a>, choose a mode, and upload a document.</li>
     </ol>
-    <p class="notice"><strong>Beta boundary.</strong> The AI policy mode audits written governance structure only. It does not assess the personality or rights of an individual and must not be used for employment, education, credit, immigration, insurance, political, or judicial decisions.</p>
+    <p class="notice"><strong>Product boundary.</strong> The AI policy mode audits written governance structure and submitted evidence only. It does not assess the personality or rights of an individual and must not be used for employment, education, credit, immigration, insurance, political, or judicial decisions.</p>
     <p class="muted">Theory source for the revision-oriented framing:
       <a href="https://doi.org/10.5281/zenodo.24217876" rel="noopener">Xue, Z. (2026), <em>On Recursive Freedom: A Theory of the Freedom to Revise</em>, DOI 10.5281/zenodo.24217876</a>.
       The software applies this idea only to documented policy structure, not to the freedom or conduct of any individual.</p>
@@ -121,7 +124,7 @@ export const landingPage = page(
       <a href="/terms">Terms draft</a>
       <a href="mailto:franka328162810@gmail.com">Support</a>
     </nav>
-    <p class="muted">Operator: Xue Zhi Xin (ICS-TEC). Last updated: 2026-11-22.</p>
+    <p class="muted">Operator: Xue Zhi Xin (ICS-TEC). Last updated: 2026-11-23.</p>
   </article>`,
   "en",
 );
@@ -188,10 +191,10 @@ export const recursiveFreedomPage = page(
     </div>
 
     <h2>Commercial status</h2>
-    <p>The audit is currently included as a Beta mode in the existing US$29/month Founding plan. It shares the plan's 100-document monthly allowance and 100-page, 50 MB per-document limits. It does not yet have a separate subscription, public commitment database, or formal Codex plugin package.</p>
+    <p>AI Alignment Revisability Audit is a separate US$99/month founding subscription for the first 20 customer organizations. It includes 100 policy or evidence-pack jobs per month, one organization, one shared API key, and a 30-day no-questions-asked full refund. Policy documents may be up to 100 pages and 50 MB; evidence-pack ZIPs may be up to 100 MB with at most 200 MB of uncompressed content.</p>
     <p>Planned layers are separate products rather than duplicate names:</p>
     <ul>
-      <li><strong>Recursive Freedom Audit for AI:</strong> the policy-text audit described on this page.</li>
+      <li><strong>AI Alignment Revisability Audit:</strong> the current document and evidence-pack review described on this page.</li>
       <li><strong>AI Public Commitment & Revision Monitor:</strong> a future independent data product that tracks public policy changes over time.</li>
       <li><strong>Organizational Revisability Audit:</strong> a future professional service that tests actual governance, appeals, exit paths, and continuity, not only text.</li>
     </ul>
@@ -298,7 +301,9 @@ export const aiRevisabilityPage = page(
     <h1>Can an AI system's rules be changed, challenged, and reversed?</h1>
     <p>AI Alignment Revisability Audit reviews the written authorities, revision routes, version history, rollback controls, oversight, and affected-party safeguards around an AI policy, constitution, model card, or governance framework.</p>
     <div class="actions">
-      <a class="button" href="/workspace">Run a hosted Beta audit</a>
+      <a class="button" href="https://icsstudies.gumroad.com/l/ai-alignment-revisability-audit" rel="noopener">View the founding plan on Gumroad</a>
+      <a class="button secondary" href="/ai-revisability-audit/activate">Activate a purchased license</a>
+      <a class="button secondary" href="/workspace?mode=ai-revisability">Open the hosted workbench</a>
       <a class="button secondary" href="/ai-revisability-audit/sample">Open a public sample</a>
       <a class="button secondary" href="https://github.com/franka328162810-cell/esg-commitment-audit/blob/main/docs/AI_ALIGNMENT_REVISABILITY_AUDIT.md" rel="noopener">Read the method</a>
     </div>
@@ -329,10 +334,14 @@ export const aiRevisabilityPage = page(
     <p>The review distinguishes <strong>absent</strong>, <strong>asserted only</strong>, <strong>documented</strong>, <strong>contradicted</strong>, <strong>operationally evidenced</strong>, and <strong>independently verified</strong> controls. The hosted text engine currently establishes text evidence; operation records and independent verification require separate artifacts and human review.</p>
 
     <h2>Continuous review</h2>
-    <p>Single documents can be compared with a previous version on the local workbench. The hosted workbench currently starts with single-document review; persistent source monitoring and evidence-pack intake are the next product milestone.</p>
+    <p>Single documents can be compared with a previous version and a sealed evidence pack can be uploaded to verify dates, issuers, hashes, artifact compatibility, and proposed E2/E3/E4 grade upgrades. Every operational or independent grade proposal requires human confirmation.</p>
 
-    <h2>Beta status</h2>
-    <p>This product is a development Beta included in the existing founding platform allowance while its benchmark and evidence-pack workflow are completed. It does not yet have a separate subscription or formal Codex marketplace package.</p>
+    <h2>Commercial plan</h2>
+    <p>The AI Alignment Revisability Audit is a separate <strong>US$99/month</strong> founding subscription supplied through Gumroad. It includes one organization, one shared API key, up to 100 audited policy or evidence-pack jobs per month, 100 pages and 50 MB per policy document, a 100 MB evidence-pack ZIP containing at most 200 MB of uncompressed content, and seven-day hosted report retention. The founding price is limited to the first 20 customer organizations. A full refund is available within 30 days of the initial purchase.</p>
+    <p>The local CLI, benchmark and evidence-pack implementation remain open source under the repository licences.</p>
+
+    <h2>Validation</h2>
+    <p>The frozen 2026-11-23 multi-jurisdiction benchmark covers 21 documents and 588 control decisions, including the EU AI Act, current UK regulations, US federal actions and enacted US state AI laws. It is a single-reviewer written adjudication, not an independent blinded validation.</p>
 
     <nav>
       <a href="/">Home</a>
@@ -351,7 +360,7 @@ export const aiRevisabilitySamplePage = page(
     <p class="eyebrow">ICS-TEC / SYNTHETIC PUBLIC SAMPLE</p>
     <h1>AI Alignment Revisability Audit sample</h1>
     <p><strong>Source:</strong> a synthetic AI governance policy created to demonstrate a complete written control structure. <a href="https://github.com/franka328162810-cell/esg-commitment-audit/blob/main/examples/revisability_strong_policy.md" rel="noopener">Open the sample source</a>.</p>
-    <p><strong>Method:</strong> RFP-AI-revisability-document-v0.1. <strong>Profile:</strong> General AI governance.</p>
+    <p><strong>Method:</strong> RFP-AI-revisability-document-v0.2. <strong>Profile:</strong> General AI governance.</p>
     <p class="notice"><strong>Read this correctly.</strong> This is not a real organisation, an independent validation, or evidence that any control operates in practice. The sample deliberately contains supporting language for all 28 core checks.</p>
 
     <div class="grid">
@@ -409,7 +418,7 @@ export const workspacePage = page(
           <input id="api-key" type="password" autocomplete="off" spellcheck="false" placeholder="esg_live_..." required>
           <button id="connect-button" class="button" type="submit">Connect</button>
         </div>
-        <p class="muted">Need a key? <a href="/activate">Activate your Gumroad license</a> or subscribe on <a href="https://icsstudies.gumroad.com/l/esg-commitment-audit" rel="noopener">Gumroad</a>.</p>
+        <p class="muted">Need a key? Activate an <a href="/activate">ESG Gumroad license</a> or an <a href="/ai-revisability-audit/activate">AI Gumroad license</a>.</p>
       </form>
       <p id="account-message" class="status" aria-live="polite"></p>
     </section>
@@ -424,13 +433,18 @@ export const workspacePage = page(
         </label>
         <label class="mode-card">
           <input type="radio" name="audit-mode" value="ai-revisability">
-          <strong>AI Alignment Revisability Audit · Beta</strong>
+          <strong>AI Alignment Revisability Audit</strong>
           <span class="muted">Twenty-eight written controls for authority, revision, rollback, affected people, evidence, and oversight.</span>
+        </label>
+        <label class="mode-card">
+          <input type="radio" name="audit-mode" value="evidence-pack">
+          <strong>AI Revisability Evidence Pack</strong>
+          <span class="muted">Verify a sealed ZIP manifest and propose human-confirmed E2, E3, or E4 upgrades.</span>
         </label>
       </div>
       <p id="mode-note" class="muted"></p>
       <p class="muted"><a href="/ai-revisability-audit">Read the AI Alignment Revisability Audit scope and claim boundary</a></p>
-      <p class="muted">The Beta's revision-oriented framing is informed by
+      <p class="muted">The product's revision-oriented framing is informed by
         <a href="https://doi.org/10.5281/zenodo.24217876" rel="noopener">On Recursive Freedom (2026), DOI 10.5281/zenodo.24217876</a>.
         This is not a psychological or personal-rights assessment.</p>
       <p id="weight-field">
@@ -459,7 +473,7 @@ export const workspacePage = page(
       <h2 id="upload-heading">3. Upload a document</h2>
       <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-controls="file-input">
         <strong>Drop a file here or click to choose</strong>
-        <p class="muted">PDF with a text layer, DOCX, TXT, or Markdown · maximum 50 MB · maximum 100 pages</p>
+        <p id="file-help" class="muted">PDF with a text layer, DOCX, TXT, or Markdown · maximum 50 MB · maximum 100 pages</p>
         <p id="selected-file" class="muted">No file selected.</p>
       </div>
       <input id="file-input" type="file" accept=".pdf,.docx,.txt,.md,.markdown" hidden>
@@ -490,8 +504,10 @@ export const workspacePage = page(
   </article>
   <script>
     const STORAGE_KEY = "esg_commitment_audit_api_key";
-    const MAX_BYTES = 50 * 1024 * 1024;
-    const SUPPORTED_FILE = /\\.(pdf|docx|txt|md|markdown)$/i;
+    const MAX_DOCUMENT_BYTES = 50 * 1024 * 1024;
+    const MAX_EVIDENCE_PACK_BYTES = 100 * 1024 * 1024;
+    const SUPPORTED_DOCUMENT = /\\.(pdf|docx|txt|md|markdown)$/i;
+    const SUPPORTED_EVIDENCE_PACK = /\\.zip$/i;
     const $ = (id) => document.getElementById(id);
     const connectForm = $("connect-form");
     const apiKeyInput = $("api-key");
@@ -501,6 +517,7 @@ export const workspacePage = page(
     const accountSummary = $("account-summary");
     const selectedFileLabel = $("selected-file");
     const fileInput = $("file-input");
+    const fileHelp = $("file-help");
     const dropzone = $("dropzone");
     const runButton = $("run-button");
     const runStatus = $("run-status");
@@ -517,6 +534,7 @@ export const workspacePage = page(
     let currentJobId = null;
     let currentReport = null;
     let pollGeneration = 0;
+    let accountAllowedModes = null;
 
     function escapeHtml(value) {
       return String(value == null ? "" : value).replace(/[&<>"']/g, (character) => ({
@@ -525,7 +543,8 @@ export const workspacePage = page(
     }
 
     function selectedMode() {
-      return document.querySelector('input[name="audit-mode"]:checked').value;
+      const checked = document.querySelector('input[name="audit-mode"]:checked');
+      return checked ? checked.value : "commitment";
     }
 
     function sleep(milliseconds) {
@@ -579,6 +598,9 @@ export const workspacePage = page(
     }
 
     function renderAccount(account) {
+      accountAllowedModes = Array.isArray(account.allowed_audit_modes)
+        ? account.allowed_audit_modes
+        : null;
       accountSummary.innerHTML =
         "<strong>" + escapeHtml(account.name) + "</strong><br>" +
         "Plan: " + escapeHtml(account.plan) + " · " +
@@ -589,6 +611,22 @@ export const workspacePage = page(
       connectedRow.hidden = false;
       connectForm.hidden = true;
       apiKeyInput.value = "";
+      applyModeAvailability();
+    }
+
+    function applyModeAvailability() {
+      const inputs = Array.from(document.querySelectorAll('input[name="audit-mode"]'));
+      inputs.forEach((input) => {
+        input.disabled = Boolean(
+          accountAllowedModes && !accountAllowedModes.includes(input.value)
+        );
+      });
+      const current = document.querySelector('input[name="audit-mode"]:checked');
+      if (current && current.disabled) {
+        const firstEnabled = inputs.find((input) => !input.disabled);
+        if (firstEnabled) firstEnabled.checked = true;
+      }
+      updateMode();
     }
 
     async function loadAccount() {
@@ -609,13 +647,15 @@ export const workspacePage = page(
       currentReport = null;
       currentJobId = null;
       pollGeneration += 1;
+      accountAllowedModes = null;
+      applyModeAvailability();
       if (showMessage) setMessage(accountMessage, "API key removed from this tab.", false);
     }
 
     async function connectWithKey(candidate) {
       const key = String(candidate || "").trim();
-      if (!key.startsWith("esg_live_")) {
-        setMessage(accountMessage, "Enter a valid ICS API key beginning with esg_live_.", true);
+      if (!/^(?:esg|ai)_live_/.test(key)) {
+        setMessage(accountMessage, "Enter a valid ICS API key beginning with esg_live_ or ai_live_.", true);
         return;
       }
       connectButton.disabled = true;
@@ -636,12 +676,19 @@ export const workspacePage = page(
     function chooseFile(file) {
       clearError();
       if (!file) return;
-      if (!SUPPORTED_FILE.test(file.name)) {
-        showError("Choose a PDF, DOCX, TXT, or Markdown file.");
+      const evidencePack = selectedMode() === "evidence-pack";
+      const supported = evidencePack ? SUPPORTED_EVIDENCE_PACK : SUPPORTED_DOCUMENT;
+      const maxBytes = evidencePack ? MAX_EVIDENCE_PACK_BYTES : MAX_DOCUMENT_BYTES;
+      if (!supported.test(file.name)) {
+        showError(evidencePack
+          ? "Choose a ZIP evidence pack."
+          : "Choose a PDF, DOCX, TXT, or Markdown file.");
         return;
       }
-      if (file.size > MAX_BYTES) {
-        showError("The file exceeds the 50 MB limit.");
+      if (file.size > maxBytes) {
+        showError(
+          "The file exceeds the " + (evidencePack ? "100 MB" : "50 MB") + " limit."
+        );
         return;
       }
       selectedFile = file;
@@ -654,11 +701,21 @@ export const workspacePage = page(
 
     function updateMode() {
       const mode = selectedMode();
+      const evidencePack = mode === "evidence-pack";
       weightField.hidden = mode !== "commitment";
       profileField.hidden = mode !== "ai-revisability";
+      fileInput.accept = evidencePack ? ".zip" : ".pdf,.docx,.txt,.md,.markdown";
+      fileHelp.textContent = evidencePack
+        ? "ZIP containing one manifest.yaml plus policy and evidence files · maximum 100 MB compressed and 200 MB uncompressed"
+        : "PDF with a text layer, DOCX, TXT, or Markdown · maximum 50 MB · maximum 100 pages";
+      selectedFile = null;
+      fileInput.value = "";
+      selectedFileLabel.textContent = "No file selected.";
       modeNote.textContent = mode === "ai-revisability"
-        ? "Beta mode reviews 28 core written controls plus profile-specific safeguards. It reviews documents and evidence, not an AI system's actual behaviour."
-        : "Commitment mode extracts ESG and climate promises and scores their written structure.";
+        ? "Reviews 28 core written controls plus profile-specific safeguards. It reviews documents and evidence, not an AI system's actual behaviour."
+        : evidencePack
+          ? "Verifies declared hashes, dates, issuers, artifact compatibility, and proposes evidence-grade upgrades for human confirmation."
+          : "Commitment mode extracts ESG and climate promises and scores their written structure.";
     }
 
     function positionLabel(evidence) {
@@ -681,9 +738,9 @@ export const workspacePage = page(
 
     function reportHeader(report) {
       const reportLabel = report.report_type === "recursive-freedom"
-        ? "Recursive Freedom Audit for AI Beta"
+        ? "Recursive Freedom Audit for AI"
         : report.report_type === "ai-alignment-revisability"
-          ? "AI Alignment Revisability Audit Beta"
+          ? "AI Alignment Revisability Audit"
           : "ESG / Climate Commitment Audit";
       return '<div class="card"><p class="eyebrow">' +
         escapeHtml(reportLabel) +
@@ -768,6 +825,71 @@ export const workspacePage = page(
       return html;
     }
 
+    function renderEvidencePackReport(report) {
+      let html = '<div class="card"><p class="eyebrow">AI Revisability Evidence Pack</p>' +
+        '<h2>' + escapeHtml(report.organization) + '</h2>' +
+        '<p class="muted">Base document: ' + escapeHtml(report.base_document) +
+        ' · generated ' + escapeHtml(report.generated_at) + '</p></div>';
+      html += '<div class="grid">';
+      html += '<div class="card"><strong>' + escapeHtml(report.artifact_inventory.length) + '</strong><br>Artifacts checked</div>';
+      html += '<div class="card"><strong>' + escapeHtml(report.promotions.length) + '</strong><br>Grade proposals</div>';
+      html += '<div class="card"><strong>' + escapeHtml(report.unresolved_controls.length) + '</strong><br>Remaining gaps</div>';
+      html += '<div class="card"><strong>' + escapeHtml(report.warnings.length) + '</strong><br>Warnings</div>';
+      html += '</div>';
+
+      html += '<section><h2>Artifact inventory</h2>' +
+        report.artifact_inventory.map((item) => {
+          const hashStatus = item.hash_matches === true
+            ? "matched"
+            : item.hash_matches === false
+              ? "mismatch"
+              : "not pinned";
+          return '<div class="report-card"><h3>' + escapeHtml(item.path) + '</h3>' +
+            '<p><span class="status-pill">' + escapeHtml(item.artifact_type) +
+            '</span> · issuer ' + escapeHtml(item.issuer || "missing") +
+            ' · issued ' + escapeHtml(item.issued_at || "missing") +
+            ' · hash ' + escapeHtml(hashStatus) + '</p>' +
+            '<p class="muted">E3 eligible: ' +
+            (item.eligible_for_operational_evidence ? "yes" : "no") +
+            (item.warnings.length ? ' · ' + escapeHtml(item.warnings.join("; ")) : "") +
+            '</p></div>';
+        }).join("") + '</section>';
+
+      html += '<section><h2>Proposed grade promotions</h2>' +
+        (report.promotions.length
+          ? report.promotions.map((item) =>
+              '<div class="report-card"><h3>' + escapeHtml(item.check_key) + '</h3>' +
+              '<p><span class="status-pill">' + escapeHtml(item.baseline_grade) +
+              '</span> → <span class="status-pill">' + escapeHtml(item.proposed_grade) +
+              '</span></p><p>' + escapeHtml(item.rationale) + '</p>' +
+              '<p class="muted">Supporting artifacts: ' +
+              escapeHtml(item.supporting_artifacts.join(", ")) + '</p>' +
+              '<p class="muted"><strong>Human confirmation required:</strong> ' +
+              (item.requires_human_confirmation ? "yes" : "no") + '</p></div>'
+            ).join("")
+          : '<p class="muted">No promotion was proposed.</p>') +
+        '</section>';
+
+      html += '<section><h2>Remaining evidence gaps</h2>' +
+        (report.unresolved_controls.length
+          ? '<ul>' + report.unresolved_controls.map((item) =>
+              '<li><strong>' + escapeHtml(item.check_key) + '</strong> (' +
+              escapeHtml(item.baseline_grade) + '): needs ' +
+              escapeHtml(item.missing_artifact_types.join(", ")) + '</li>'
+            ).join("") + '</ul>'
+          : '<p class="muted">No mapped gap remains.</p>') +
+        '</section>';
+
+      if (report.warnings.length) {
+        html += '<div class="notice"><strong>Warnings</strong><ul>' +
+          report.warnings.map((item) => '<li>' + escapeHtml(item) + '</li>').join("") +
+          '</ul></div>';
+      }
+      html += '<div class="notice"><strong>Claim boundary</strong><p>' +
+        escapeHtml(report.disclaimer) + '</p></div>';
+      return html;
+    }
+
     function renderCommitmentReport(report) {
       const summary = report.summary;
       let html = reportHeader(report);
@@ -812,6 +934,8 @@ export const workspacePage = page(
         ? renderGovernanceReport(report)
         : report.report_type === "ai-alignment-revisability"
           ? renderRevisabilityReport(report)
+          : report.report_type === "ai-revisability-evidence-pack"
+            ? renderEvidencePackReport(report)
           : renderCommitmentReport(report);
       reportSection.hidden = false;
       reportSection.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -938,7 +1062,19 @@ export const workspacePage = page(
     function downloadCsv() {
       if (!currentReport || !currentJobId) return;
       const rows = [];
-      if (currentReport.report_type === "recursive-freedom") {
+      if (currentReport.report_type === "ai-revisability-evidence-pack") {
+        rows.push(["Mode", "Control", "Baseline", "Proposed", "Artifacts", "Human confirmation"]);
+        currentReport.promotions.forEach((item) => {
+          rows.push([
+            "evidence-pack",
+            item.check_key,
+            item.baseline_grade,
+            item.proposed_grade,
+            item.supporting_artifacts.join("; "),
+            item.requires_human_confirmation ? "required" : "no"
+          ]);
+        });
+      } else if (currentReport.report_type === "recursive-freedom") {
         rows.push(["Mode", "Check", "Status", "Note", "Evidence", "Page or paragraph"]);
         currentReport.checks.forEach((check) => {
           const first = check.evidence && check.evidence[0];
@@ -1020,6 +1156,13 @@ export const workspacePage = page(
     $("delete-report").addEventListener("click", deleteCurrentJob);
     $("download-json").addEventListener("click", downloadJson);
     $("download-csv").addEventListener("click", downloadCsv);
+    const requestedMode = new URLSearchParams(location.search).get("mode");
+    if (requestedMode) {
+      const requestedInput = document.querySelector(
+        'input[name="audit-mode"][value="' + CSS.escape(requestedMode) + '"]'
+      );
+      if (requestedInput) requestedInput.checked = true;
+    }
     updateMode();
     if (apiKey) {
       apiKeyInput.value = apiKey;
@@ -1041,7 +1184,7 @@ export const privacyPage = page(
     <p>运营者：Xue Zhi Xin (ICS-TEC)。隐私与删除请求：<a href="mailto:franka328162810@gmail.com">franka328162810@gmail.com</a>。</p>
     <h2>2. 处理的数据</h2>
     <ul>
-      <li>用户上传的 TXT、Markdown、DOCX、PDF，以及文件名、大小和内容类型。</li>
+      <li>用户上传的 TXT、Markdown、DOCX、PDF、证据包 ZIP，以及文件名、大小、哈希和内容类型。</li>
       <li>分析生成的承诺、分数、证据位置和报告。</li>
       <li>组织名称、套餐、用量、API Key 的不可逆哈希、前缀、任务状态和错误信息。</li>
       <li>开通付费后产生的支付平台客户、订阅和 Webhook 标识。我们不存储银行卡号或支付验证码。</li>
@@ -1057,7 +1200,7 @@ export const privacyPage = page(
       <li>删除请求可能受司法、税务、反欺诈或安全保留义务限制。</li>
     </ul>
     <h2>5. 服务商与跨境处理</h2>
-    <p>当前基础设施使用 Cloudflare（Workers、D1、R2、Queues、Containers）并在其全球网络中处理数据。启用在线支付后，将使用支付服务商处理交易与账单。正式上线时会列明服务商及必要的跨境安排。</p>
+    <p>当前基础设施使用 Cloudflare（Workers、D1、R2、Queues、Containers）并在其全球网络中处理数据。交易、税费和订阅管理由 Gumroad 及其支付与结算服务商处理；ICS-TEC 不接收或存储银行卡号。上述服务商可能依其条款进行跨境处理。</p>
     <h2>6. 安全与控制</h2>
     <p>服务采用 HTTPS、租户隔离、API Key 哈希、私有对象存储、短期报告访问和用量限制。互联网服务不存在绝对安全，用户应保护 API Key，不上传无权处理的机密或高度敏感个人信息。</p>
     <h2>7. 用户权利</h2>
@@ -1065,7 +1208,7 @@ export const privacyPage = page(
     <h2>8. 儿童与年龄</h2>
     <p>本服务面向机构和成年专业用户，不面向未成年人，也不得用于上传未成年人的敏感个人信息。</p>
     <h2>9. 更新</h2>
-    <p>重大变更将通过服务页面或账户联系渠道提示。收费正式启用前，本草案将被替换为经审查的正式版本。</p>
+    <p>重大变更将通过服务页面或账户联系渠道提示。本页说明当前付费试点，尚未经过律师独立复核。</p>
     <nav><a href="/">返回首页</a><a href="/terms">服务条款草案</a></nav>
   </article>`,
 );
@@ -1075,9 +1218,9 @@ export const termsPage = page(
   `<article>
     <p class="eyebrow">服务条款草案</p>
     <h1>使用本服务前请阅读</h1>
-    <p class="notice"><strong>草案提示：</strong>本页不构成法律意见。正式收费、订阅、退款和责任条款须在经营主体与支付方案确定后由合格律师复核。</p>
+    <p class="notice"><strong>草案提示：</strong>本页不构成法律意见，也尚未经过律师独立复核。当前付费服务由 Xue Zhi Xin (ICS-TEC) 运营，并通过 Gumroad 收款。</p>
     <h2>1. 服务范围</h2>
-    <p>ESG Commitment Audit 对用户提交的承诺文本做结构化抽取、评分和证据定位。结果可能不完整或存在误判，必须由用户结合原文复核。</p>
+    <p>ICS-TEC 提供 ESG Commitment Audit 与 AI Alignment Revisability Audit。前者对可持续与气候承诺文本做结构化抽取、评分和证据定位；后者审查 AI 政策、治理文件及用户提交的证据包。结果可能不完整或存在误判，必须由用户结合原文复核。</p>
     <h2>2. 不提供专业鉴证</h2>
     <p>本服务不是审计、鉴证、法律、税务、投资或合规认证服务，不构成对“漂绿”、违法或重大性的事实认定。用户不得把结果作为唯一决策依据，也不得对外声称获得 ICS-TEC 或第三方的认证。</p>
     <h2>3. 账户与 API Key</h2>
@@ -1087,7 +1230,7 @@ export const termsPage = page(
     <h2>5. 可接受使用</h2>
     <p>不得攻击、绕过配额、探测其他租户、传播恶意文件、自动生成误导性审计结论、侵犯知识产权或违反适用法律。我们可暂停高风险账户并保留依法报告的权利。</p>
     <h2>6. 试用与付费</h2>
-    <p>试用额度、价格、计费周期、取消和退款将在购买页面或订单中明确。当前在线支付尚未启用。订阅取消后，已产生费用和依法应退款项按订单、适用消费者保护规则及正式条款处理。</p>
+    <p>当前价格为首发价：ESG Commitment Audit 为 US$29/月，AI Alignment Revisability Audit 为 US$99/月；各计划每月最多处理 100 个任务，并分别限前 20 个客户组织。订阅按月续费，交易与税费由 Gumroad 处理。两项公开报价均包含首次购买后 30 天无理由全额退款。取消续费后，已产生费用和依法应退款项按订单及适用消费者保护规则处理。</p>
     <h2>7. 可用性与变更</h2>
     <p>除非另签书面 SLA，本服务按“现状”和“可用”基础提供。我们会采取合理措施维护安全与连续性，但不保证服务永不中断。可能为安全、法律、维护或产品改进限制或更新功能。</p>
     <h2>8. 知识产权</h2>
@@ -1101,9 +1244,9 @@ export const termsPage = page(
 );
 
 export const activationPage = page(
-  "Activate API access | ESG Commitment Audit",
+  "Activate API access | ICS-TEC",
   `<article>
-    <p class="eyebrow">ESG Commitment Audit</p>
+    <p class="eyebrow">ICS-TEC / PRODUCT ACTIVATION</p>
     <h1>Activate your API access</h1>
     <p>Enter the Gumroad license key from your purchase receipt and the organization name you want to use.</p>
     <p class="notice"><strong>Important:</strong> your ICS API key is displayed only once. Store it in a password manager and never publish it.</p>
@@ -1126,6 +1269,7 @@ export const activationPage = page(
     const form = document.getElementById("activation-form");
     const result = document.getElementById("result");
     const button = document.getElementById("activate-button");
+    const product = location.pathname === "/ai-revisability-audit/activate" ? "ai" : "esg";
     function escapeHtml(value) {
       return String(value).replace(/[&<>"']/g, (character) => ({
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -1142,7 +1286,8 @@ export const activationPage = page(
           headers: { "content-type": "application/json" },
           body: JSON.stringify({
             license_key: document.getElementById("license-key").value.trim(),
-            organization_name: document.getElementById("organization-name").value.trim()
+            organization_name: document.getElementById("organization-name").value.trim(),
+            product
           })
         });
         const payload = await response.json();

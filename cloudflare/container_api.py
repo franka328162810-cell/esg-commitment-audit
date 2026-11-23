@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import os
+import tempfile
 from io import BytesIO
+from pathlib import Path
 from urllib.parse import unquote
 
 from fastapi import FastAPI, Header, HTTPException, Request
@@ -13,8 +15,10 @@ from esg_commitment_audit.api import (
     audit_governance_bytes,
     audit_revisability_bytes,
 )
+from esg_commitment_audit.evidence_pack import audit_evidence_pack_zip
 
 MAX_UPLOAD_BYTES = 50 * 1024 * 1024
+MAX_EVIDENCE_PACK_BYTES = 100 * 1024 * 1024
 
 app = FastAPI(
     title="ESG Commitment Audit Container",
@@ -28,6 +32,29 @@ app.state.internal_token = os.environ.get("ESG_INTERNAL_TOKEN", "")
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+async def _copy_upload_to_temp(
+    request: Request,
+    max_bytes: int,
+) -> Path:
+    content_length = request.headers.get("content-length")
+    if content_length and int(content_length) > max_bytes:
+        raise HTTPException(status_code=413, detail="Upload is too large")
+    descriptor, raw_path = tempfile.mkstemp(prefix="ics-evidence-pack-", suffix=".zip")
+    path = Path(raw_path)
+    total = 0
+    try:
+        with os.fdopen(descriptor, "wb") as handle:
+            async for chunk in request.stream():
+                total += len(chunk)
+                if total > max_bytes:
+                    raise HTTPException(status_code=413, detail="Upload is too large")
+                handle.write(chunk)
+    except Exception:
+        path.unlink(missing_ok=True)
+        raise
+    return path
 
 
 @app.post("/audit")
@@ -100,4 +127,29 @@ async def audit(
             )
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+    return JSONResponse(report.model_dump(mode="json"))
+
+
+@app.post("/evidence-pack")
+async def evidence_pack(
+    request: Request,
+    x_esg_filename: str = Header("evidence-pack.zip"),
+    x_esg_internal_token: str = Header(""),
+) -> JSONResponse:
+    expected_token = request.app.state.internal_token
+    if expected_token and x_esg_internal_token != expected_token:
+        raise HTTPException(status_code=401, detail="Invalid internal token")
+    filename = unquote(x_esg_filename)
+    if not filename.lower().endswith(".zip"):
+        raise HTTPException(status_code=400, detail="Evidence pack must be a ZIP file")
+
+    upload_path: Path | None = None
+    try:
+        upload_path = await _copy_upload_to_temp(request, MAX_EVIDENCE_PACK_BYTES)
+        report = audit_evidence_pack_zip(upload_path)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    finally:
+        if upload_path is not None:
+            upload_path.unlink(missing_ok=True)
     return JSONResponse(report.model_dump(mode="json"))

@@ -36,6 +36,13 @@ The subscription renews monthly through Gumroad. Cancellation and billing are
 managed in Gumroad. Gumroad also displays the applicable taxes at checkout.
 The public offer includes a 30-day no-questions-asked full refund.
 
+The separate AI Alignment Revisability Audit is **US$99 per month** and is also
+limited to the first 20 customer organizations. It includes one organization,
+one `ai_live_` API key, and up to 100 policy or evidence-pack jobs per month.
+Policy documents may contain up to 100 pages and 50 MB. An evidence-pack ZIP may
+contain up to 100 MB compressed and 200 MB uncompressed content. The same
+30-day no-questions-asked full-refund policy applies.
+
 ## Supported files
 
 - PDF with a selectable text layer
@@ -65,10 +72,17 @@ or use the original text-based source before retrying.
    document. The key is kept in that tab's `sessionStorage` and is removed when
    the tab closes.
 
+For the AI product, subscribe on the
+[AI Gumroad page](https://icsstudies.gumroad.com/l/ai-alignment-revisability-audit),
+activate at the
+[AI activation page](https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit/activate),
+and enter the resulting `ai_live_...` key in the same workbench.
+
 The server verifies the Gumroad purchase before issuing access. A license can be
-activated once. Gumroad membership status is rechecked every 15 minutes, and
-access is deactivated when the paid membership ends or the sale is refunded,
-disputed, charged back, cancelled, or fails to renew.
+activated once. The billing scheduler runs every 15 minutes and rotates through
+the oldest-checked Gumroad memberships. Access is deactivated when the paid
+membership ends or the sale is refunded, disputed, charged back, cancelled, or
+fails to renew.
 
 ## Confirm the account
 
@@ -131,7 +145,7 @@ curl \
 
 See [Methodology](METHODOLOGY.md) for weights and interpretation bands.
 
-## AI Alignment Revisability Audit Beta
+## AI Alignment Revisability Audit
 
 Change `X-ESG-Mode` to `ai-revisability`, choose `X-ESG-Profile` as `general`,
 `news_media`, `advertising`, `insurance`, or `industrial_design`, and submit an
@@ -148,11 +162,11 @@ covers 28 written controls:
 - independent oversight, anti-abuse controls, and uncertainty;
 - capability-gate and interruption evidence.
 
-Industry profiles add two safeguards and therefore return 30 checks. The Beta
+Industry profiles add two safeguards and therefore return 30 checks. The product
 reviews written evidence only. It does not test an individual's personality,
 psychology, political views, employability, creditworthiness, insurability,
 educational eligibility, immigration status, or legal culpability. Each hosted
-job consumes one unit from the same monthly quota.
+job consumes one unit from the AI plan's monthly quota.
 
 The dedicated product page is:
 

@@ -14,7 +14,14 @@ def main() -> int:
     parser.add_argument("--name", required=True)
     parser.add_argument(
         "--plan",
-        choices=("trial", "starter", "pro", "enterprise"),
+        choices=(
+            "trial",
+            "starter",
+            "founding-team",
+            "ai-founding-team",
+            "pro",
+            "enterprise",
+        ),
         default="trial",
     )
     parser.add_argument(
@@ -52,7 +59,7 @@ def main() -> int:
         headers={
             "Content-Type": "application/json",
             "X-ESG-Admin-Token": admin_token,
-            "User-Agent": "esg-commitment-audit-provisioner/0.4.0.dev2",
+            "User-Agent": "esg-commitment-audit-provisioner/0.5.0.dev1",
         },
     )
     with urllib.request.urlopen(request, timeout=60) as response:

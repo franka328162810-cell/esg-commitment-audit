@@ -22,11 +22,11 @@ consistent with science, or legally compliant.
 - Chinese and English rule coverage is broader than other languages.
 - The rule engine is intentionally conservative and may miss paraphrases.
 - The internal benchmark is not an independent validation dataset.
-- Recursive Freedom Audit for AI is a Beta checklist of written controls. It does
+- Recursive Freedom Audit for AI is a checklist of written controls. It does
   not establish that a control exists in practice, works as described, or meets
   any legal or safety standard.
-- AI Alignment Revisability Audit is a rule-based document-review development
-  preview. Its `documented` grade is limited to text evidence and does not imply
+- AI Alignment Revisability Audit is a rule-based document-review product. Its
+  `documented` grade is limited to text evidence and does not imply
   operational evidence or independent verification.
 - The AI-revisability profiles for news media, advertising, insurance, and
   industrial design do not establish truth, legal clearance, actuarial fairness,

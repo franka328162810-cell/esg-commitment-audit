@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import zipfile
 from io import BytesIO
 from pathlib import Path
 from types import ModuleType
@@ -128,3 +129,34 @@ def test_container_rejects_pdf_over_page_limit_in_both_modes() -> None:
         )
         assert response.status_code == 413
         assert "100-page limit" in response.json()["detail"]
+
+
+def test_container_routes_evidence_pack_zip() -> None:
+    output = BytesIO()
+    with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED) as archive:
+        for path in Path("examples/evidence-pack").iterdir():
+            if path.is_file():
+                archive.write(path, path.name)
+
+    response = client.post(
+        "/evidence-pack",
+        headers={"x-esg-filename": "evidence-pack.zip"},
+        content=output.getvalue(),
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["report_type"] == "ai-revisability-evidence-pack"
+    assert payload["organization"] == "Example AI Company"
+    assert payload["promotions"]
+
+
+def test_container_rejects_invalid_evidence_pack_zip() -> None:
+    response = client.post(
+        "/evidence-pack",
+        headers={"x-esg-filename": "evidence-pack.zip"},
+        content=b"not a zip",
+    )
+
+    assert response.status_code == 400
+    assert "valid ZIP" in response.json()["detail"]

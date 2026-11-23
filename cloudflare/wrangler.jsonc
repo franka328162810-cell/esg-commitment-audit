@@ -8,7 +8,7 @@
   "containers": [
     {
       "class_name": "AuditContainer",
-      "image": "registry.cloudflare.com/aa7d0faa102dcea2d358907bbf96b7ec/esg-commitment-audit-api-auditcontainer:0.4.0.dev2-r1",
+      "image": "registry.cloudflare.com/aa7d0faa102dcea2d358907bbf96b7ec/esg-commitment-audit-api-auditcontainer:0.5.0.dev1-r1",
       "instance_type": "standard-1",
       "max_instances": 4,
       "constraints": {
@@ -65,8 +65,11 @@
     "SERVICE_NAME": "esg-commitment-audit",
     "PUBLIC_BASE_URL": "https://esg-commitment-audit-api.franka328162810.workers.dev",
     "GUMROAD_PRODUCT_ID": "F6dg2UMZ2P3xRziFH4uhfw==",
+    "GUMROAD_AI_PRODUCT_ID": "ujjRmU0PfrT-Gxq4UMN7Hw==",
     "GUMROAD_API_URL": "https://api.gumroad.com",
+    "AI_FOUNDING_SEAT_LIMIT": "20",
     "MAX_UPLOAD_BYTES": "52428800",
+    "MAX_EVIDENCE_PACK_BYTES": "104857600",
     "MAX_DOCUMENT_PAGES": "100",
     "REPORT_RETENTION_DAYS": "7",
     "JOB_METADATA_RETENTION_DAYS": "180"

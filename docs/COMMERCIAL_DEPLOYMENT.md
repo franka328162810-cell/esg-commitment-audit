@@ -1,10 +1,10 @@
 # Commercial deployment
 
-Status updated: 2026-11-23
+Status updated: 2026-11-24
 
 ## Current state
 
-The renamed ESG Commitment Audit development preview is deployed on Cloudflare:
+The renamed ESG Commitment Audit service is deployed on Cloudflare:
 
 - Worker and HTTPS API:
   `https://esg-commitment-audit-api.franka328162810.workers.dev`
@@ -14,7 +14,7 @@ The renamed ESG Commitment Audit development preview is deployed on Cloudflare:
 - Dead-letter queue: `esg-commitment-audit-jobs-dlq`
 - Private R2 bucket: `esg-commitment-audit-reports`
 - Container application: `esg-commitment-audit-api-auditcontainer`
-- Runtime image: `0.4.0.dev2-r1`
+- Runtime image: `0.5.0.dev1-r1`
 
 The previous Worker name remains as a 308 redirect to the new Worker. Previous
 D1, R2 and queue resources are retained temporarily as a rollback path and are
@@ -24,10 +24,12 @@ The new deployment passes public page and health checks plus a three-document
 TXT, DOCX and PDF end-to-end container test. The old v0.3.1 production test
 records remain historical evidence for the pre-rename service.
 
-The hosted AI Alignment Revisability Audit Beta adds `ai-revisability` as a
-third audit mode and persists its industry profile in D1. General mode returns
-28 checks; each industry profile returns 30. Both the general and insurance
-profiles passed end-to-end hosted tests on 2026-11-23.
+The hosted AI Alignment Revisability Audit adds `ai-revisability` and
+`evidence-pack` modes. The AI product has a separate `ai-founding-team` plan,
+`ai_live_` API keys, and a server-enforced cap of 20 customer organizations.
+General document review returns 28 checks; each industry profile returns 30.
+ESG plans expose only `commitment` and `recursive-freedom`; requests for either
+AI-specific mode are rejected with HTTP `403`.
 
 The Gumroad product is published at:
 
@@ -35,10 +37,22 @@ The Gumroad product is published at:
 https://icsstudies.gumroad.com/l/esg-commitment-audit
 ```
 
-Gumroad first published the product on 2026-11-22. The owner-only test purchase
-completed without a charge, its license key activated successfully, and D1
-contains a test `founding-team` organization with 100 monthly documents,
-`active=1`, `billing_provider=gumroad`, and `billing_status=active`.
+The separate AI product is:
+
+```text
+https://icsstudies.gumroad.com/l/ai-alignment-revisability-audit
+Gumroad product ID: ujjRmU0PfrT-Gxq4UMN7Hw==
+```
+
+Gumroad first published the ESG product on 2026-11-22. Its owner-only test
+purchase completed without a charge and activated successfully.
+
+The AI product was published on 2026-11-24. A Gumroad License key block was
+added to its content page, and a second owner-only test purchase verified the
+complete path without a charge: Gumroad license -> `/ai-revisability-audit/activate`
+-> `ai-founding-team` organization -> `ai_live_` key -> a completed 28-check
+production audit. The test organization, key hash, reports and reserved founding
+seat were then removed.
 
 The legal pages have not received independent counsel review. GitHub Actions
 now probes public availability every 15 minutes, but a separate external alert
@@ -49,6 +63,7 @@ destination has not been verified end to end.
 ```text
 GET    /
 GET    /activate
+GET    /ai-revisability-audit/activate
 GET    /workspace
 GET    /ai-revisability-audit
 GET    /ai-revisability-audit/sample
@@ -74,10 +89,10 @@ All tenant endpoints require `Authorization: Bearer <API key>`. Admin endpoints
 require `X-ESG-Admin-Token`.
 
 `POST /v1/audits` accepts `X-ESG-Mode: commitment`,
-`recursive-freedom`, or `ai-revisability`. AI Revisability also accepts
-`X-ESG-Profile` and stores it in the job record. All modes share the same quota
-and document limits. The two `/recursive-freedom` pages redirect to the new
-canonical product routes.
+`recursive-freedom`, `ai-revisability`, or `evidence-pack`. AI Revisability also
+accepts `X-ESG-Profile` and stores it in the job record. ESG plans can invoke the
+ESG modes; AI plans can invoke `ai-revisability` and `evidence-pack`. The two
+`/recursive-freedom` pages redirect to the new canonical product routes.
 
 ## Data handling
 
@@ -105,12 +120,16 @@ production-age deletion event has yet been observed.
 | `trial` | 5 |
 | `starter` | 25 |
 | `founding-team` | 100 |
+| `ai-founding-team` | 100 |
 | `pro` | 150 |
 | `enterprise` | 10,000 |
 
 Pricing, tax presentation, refunds, and customer support are handled by
-Gumroad for the current paid pilot. The product is `$29/month`, capped at 20
-active founding supporters. A document may contain at most 100 pages and 50 MB.
+Gumroad for the current paid pilot. ESG Commitment Audit is `$29/month`; AI
+Alignment Revisability Audit is `$99/month`. Each is capped at the first 20
+customer organizations. A policy document may contain at most 100 pages and 50
+MB. An AI evidence-pack ZIP may be at most 100 MB compressed and 200 MB
+uncompressed.
 
 ## Required secrets
 
@@ -139,25 +158,39 @@ wrangler secret put STRIPE_PRICE_PRO
 
 ## Gumroad activation
 
-The production checkout route is Gumroad, not Stripe. A successful purchase
-issues a Gumroad license key. The customer enters that key at `/activate`; the
-Worker calls Gumroad's license verification API with
+The production checkout route is Gumroad, not Stripe. The product content page
+must contain Gumroad's **License key** block and must not enable multi-seat
+licensing for the one-organization plan. A successful purchase then issues a
+Gumroad license key. The customer enters an ESG key at `/activate` or
+an AI key at `/ai-revisability-audit/activate`; the Worker calls Gumroad's
+license verification API with
 `increment_uses_count=false`, rejects refunds, disputes, chargebacks, ended
 memberships, cancellations, and failed renewals, and then creates:
 
-- one `founding-team` organization;
+- one `founding-team` or `ai-founding-team` organization;
 - one 100-document monthly quota;
-- one shared API key displayed only once.
+- one shared `esg_live_` or `ai_live_` API key displayed only once;
+- for the AI product, one immutable founding-seat number from 1 to 20.
 
 A license hash and encrypted license value are stored in D1 to prevent reuse
-and support ongoing status checks. The billing cron runs every 15 minutes and
-rechecks at most 20 organizations, matching the founding cap. Daily maintenance
-retains reports for seven days and removes terminal job metadata after 180 days.
+and support ongoing status checks. The billing scheduler runs every 15 minutes
+and rotates through the oldest-checked Gumroad memberships, at least 20 per run.
+Daily maintenance retains reports for seven days and removes terminal job
+metadata after 180 days.
 
-Before publishing the Gumroad listing, use Gumroad's logged-in test-purchase
-flow. Do not pay with a real card or attempt an actual self-purchase. Complete
-the test purchase, copy its license key, activate it through `/activate`, and
-verify the returned plan, 100-document limit, and one-time API key.
+Before publishing a Gumroad listing, use Gumroad's logged-in test-purchase flow.
+Do not enter real card data or attempt a charged self-purchase. Confirm that the
+product's public payload contains `is_licensed: true`, complete the test
+purchase, retrieve the generated license key from the purchase page, activate
+it through the matching endpoint, and verify the plan, 100-job monthly limit,
+API-key prefix and mode isolation.
+
+An owner test membership can continue to occupy one Gumroad active-supporter
+slot until its scheduled end even after cancellation. During that temporary
+period, the Gumroad maximum may be set one above the public founding cap. The
+D1 `founding_seats` guard remains authoritative and will not admit more than 20
+real AI organizations. Reduce the Gumroad maximum to 20 after the test
+membership no longer occupies a slot.
 
 ## Legacy Stripe path
 
@@ -288,7 +321,7 @@ Additional checks:
 
 ## AI Alignment Revisability Audit validation
 
-The `0.4.0.dev2` hosted Beta passed end-to-end tests for the general and
+The `0.5.0.dev1` hosted release passed end-to-end tests for the general and
 insurance profiles on 2026-11-23. General mode returned 28 checks and insurance
 mode returned 30 checks. This proves the hosted path and profile persistence,
 not rule accuracy or scientific validation.
