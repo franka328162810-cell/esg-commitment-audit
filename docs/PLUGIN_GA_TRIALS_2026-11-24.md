@@ -37,19 +37,24 @@ not independent external human customers.
 | Missing API key returns activation guidance | Passed |
 | Uninstall each plugin | Passed |
 | Reinstall each plugin | Passed |
-| Upgrade from the public `0.4.0-dev.2` ESG package | Pending final Git push and marketplace refresh |
+| Upgrade from the public `0.4.0-dev.2` ESG package | Passed; installed entry refreshed to `0.5.0` |
+| Install AI entry from Git-backed Marketplace | Passed |
 
 ## Required final gate
 
-Before public GA announcement:
+Technical release gate:
 
-1. push the two-plugin Marketplace definition to GitHub;
-2. upgrade the isolated old installation with `codex plugin marketplace upgrade`;
-3. verify the old ESG entry becomes `0.5.0` and the AI entry becomes available;
-4. install and use the AI entry from the Git-backed marketplace;
-5. publish the `v0.5.0` plugin release;
-6. obtain three to five external human pilot accounts before claiming
-   market-validated GA.
+1. Push the two-plugin Marketplace definition to GitHub: passed.
+2. Upgrade the isolated old installation with
+   `codex plugin marketplace upgrade`: passed.
+3. Verify the old ESG entry becomes `0.5.0` and the AI entry becomes
+   available: passed.
+4. Install and use the AI entry from the Git-backed Marketplace: passed.
+5. Publish the `v0.5.0` plugin release: performed after this record.
+6. Obtain three to five external human pilot accounts before claiming
+   market-validated GA: still required.
 
 The internal role trials establish technical readiness. They do not substitute
-for independent customer feedback.
+for independent customer feedback. The release can be published as a technical
+GA candidate, but market validation should not be claimed until external pilot
+accounts are completed.
