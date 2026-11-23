@@ -363,6 +363,17 @@ are approval-gated in each `.mcp.json`; read-only account and status checks are
 not. Both packages contain byte-identical copies of the canonical
 `plugins/core/server.mjs`, checked by an automated hash test.
 
+Claude Code, Hermes, WorkBuddy, generic MCP templates and remote Streamable HTTP
+endpoints are documented in
+[Cross-client distribution](docs/CROSS_CLIENT_DISTRIBUTION.md). Codex and Claude
+Code stdio adapters are verified; Hermes and WorkBuddy remain explicitly
+unverified templates. Remote MCP endpoints are:
+
+```text
+https://esg-commitment-audit-mcp.franka328162810.workers.dev/mcp/esg
+https://esg-commitment-audit-mcp.franka328162810.workers.dev/mcp/ai
+```
+
 The root development plugin remains available for local Python audit tools.
 Local audit is free and on-device when the Python package is installed.
 

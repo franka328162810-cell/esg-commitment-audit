@@ -13,6 +13,12 @@ ICS Codex plugins.
   organization cap, checkout link, product scope and 30-day refund policy.
 - API keys remain product-specific: `esg_live_` and `ai_live_`.
 - Account preflight still blocks a wrong-product key before any upload.
+- Added Claude Code stdio adapters and verified both product entries as
+  connected.
+- Added Hermes, WorkBuddy and generic MCP templates, explicitly marked
+  unverified until their client lifecycle tests pass.
+- Added a separate Cloudflare remote MCP Worker with `/mcp/esg` and `/mcp/ai`
+  Streamable HTTP endpoints backed by a private service binding.
 
 ## Codex plugins
 
@@ -43,8 +49,14 @@ Set `ICS_AUDIT_API_KEY` after purchasing and activating the matching plan.
 - Five production role trials passed: ESG analysis, general AI governance,
   insurance profile, evidence-pack review and wrong-product key rejection.
 - Public offer and product-specific activation page checks passed.
+- Remote MCP initialize, tools/list, account, policy review, evidence-pack
+  review, report retrieval, deletion and plan isolation passed direct protocol
+  tests.
 
 External human pilots remain required before claiming market-validated GA.
+Claude Code remote HTTP health remains unverified because the local Claude
+account is not logged in; only its stdio adapter is currently claimed as
+supported.
 
 ## Boundaries
 

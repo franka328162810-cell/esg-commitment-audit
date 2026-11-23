@@ -11,6 +11,8 @@ tools/
 .venv/
 .docker-config/
 .chrome-gumroad/
+.claude-plugin-*/
+.codex-mcp-*/
 .plugin-*-test-home/
 .wrangler-config/
 venv/

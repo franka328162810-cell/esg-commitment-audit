@@ -869,7 +869,6 @@ export default {
         ],
       });
     }
-
     if (path === "/v1/admin/organizations" && request.method === "POST") {
       if (!(await requireAdmin(request, env))) {
         return json({ error: "Admin authorization required" }, 401);

@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "esg-commitment-audit-mcp",
+  "main": "mcp-worker.ts",
+  "compatibility_date": "2026-11-21",
+  "account_id": "aa7d0faa102dcea2d358907bbf96b7ec",
+  "services": [
+    {
+      "binding": "AUDIT_API",
+      "service": "esg-commitment-audit-api"
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}

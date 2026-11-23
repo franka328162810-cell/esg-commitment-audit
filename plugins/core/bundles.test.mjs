@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 
@@ -86,4 +86,41 @@ test("both skills are named after their plugin entries", async () => {
     assert.match(skill, /get_account/);
     assert.match(skill, /activation/);
   }
+});
+
+test("cross-client adapters are present and secret-free", async () => {
+  const adapterPaths = [
+    "adapters/claude-code/.mcp.json",
+    "adapters/claude-code/remote-mcp.json",
+    "adapters/hermes/mcp.json",
+    "adapters/workbuddy/mcp.json",
+    "adapters/generic/mcp-stdio.json",
+  ];
+  for (const relativePath of adapterPaths) {
+    const content = await readFile(path.join(root, relativePath), "utf8");
+    assert.equal(/(?:ai|esg)_live_[A-Za-z0-9_-]{20,}/.test(content), false);
+    JSON.parse(content);
+  }
+  const claude = await json("adapters/claude-code/.mcp.json");
+  await access(
+    path.join(
+      root,
+      claude.mcpServers["ics-esg-commitment-audit"].args[0],
+    ),
+  );
+  await access(
+    path.join(
+      root,
+      claude.mcpServers["ics-ai-alignment-revisability-audit"].args[0],
+    ),
+  );
+  const remote = await json("adapters/claude-code/remote-mcp.json");
+  assert.match(
+    remote.mcpServers["ics-esg-commitment-audit-remote"].url,
+    /\/mcp\/esg$/,
+  );
+  assert.match(
+    remote.mcpServers["ics-ai-alignment-revisability-audit-remote"].url,
+    /\/mcp\/ai$/,
+  );
 });

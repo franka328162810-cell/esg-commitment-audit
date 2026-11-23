@@ -11,6 +11,11 @@
 - Upgraded both independent Codex plugins to `0.6.0` while retaining one
   byte-identical shared MCP core.
 - Added public purchase options tests and repeated all production role trials.
+- Added verified Claude Code stdio adapters and templates for Hermes,
+  WorkBuddy and generic MCP clients.
+- Added a separate Cloudflare Streamable HTTP MCP Worker with product-isolated
+  `/mcp/esg` and `/mcp/ai` endpoints and a private service binding to the audit
+  API.
 
 ## Codex plugins 0.5.0 — GA candidate
 

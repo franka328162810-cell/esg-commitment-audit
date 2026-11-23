@@ -39,6 +39,11 @@ not independent external human customers.
 | Reinstall each plugin | Passed |
 | Upgrade from `0.5.0` to `0.6.0` | Passed |
 | Install AI entry from Git-backed Marketplace | Passed |
+| Claude Code stdio adapters | Both connected |
+| Remote MCP `/mcp/esg` and `/mcp/ai` initialize/tools list | Passed |
+| Remote MCP account, audit, report, evidence pack and deletion | Passed |
+| Remote MCP wrong-product key rejection | Passed |
+| Claude Code remote HTTP health | Blocked by local Claude login state; not claimed as supported |
 
 ## Required final gate
 

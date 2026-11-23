@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "ics-esg-commitment-audit-remote": {
+      "type": "http",
+      "url": "https://esg-commitment-audit-mcp.franka328162810.workers.dev/mcp/esg",
+      "headers": {
+        "Authorization": "Bearer ${ICS_AUDIT_API_KEY}"
+      }
+    },
+    "ics-ai-alignment-revisability-audit-remote": {
+      "type": "http",
+      "url": "https://esg-commitment-audit-mcp.franka328162810.workers.dev/mcp/ai",
+      "headers": {
+        "Authorization": "Bearer ${ICS_AUDIT_API_KEY}"
+      }
+    }
+  }
+}
