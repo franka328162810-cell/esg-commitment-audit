@@ -2,8 +2,8 @@
 
 Date: 2026-11-24 (Asia/Shanghai)
 
-Status: release candidate; final tag/publication and external human pilots
-remain open.
+Status: published; external human pilots and independent legal review remain
+open.
 
 ## Versions and artifacts
 
@@ -68,7 +68,6 @@ remain open.
 - Push and test the Git-backed Codex marketplace upgrade: passed.
 - Register and test Claude Code stdio from the published repository revision:
   passed.
-- Publish the GitHub `v0.6.0` tag and release.
 - Recruit three to five external human pilot users before claiming
   market-validated GA.
 - Independently review privacy, terms and refund language.

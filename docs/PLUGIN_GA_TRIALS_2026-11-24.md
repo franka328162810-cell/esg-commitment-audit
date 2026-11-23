@@ -56,7 +56,7 @@ Technical release gate:
 3. Verify both installed ESG and AI entries become `0.6.0`: local upgrade
    and Git-backed refresh passed.
 4. Install and use both entries from the Git-backed Marketplace: passed.
-5. Publish the `v0.6.0` release: pending.
+5. Publish the `v0.6.0` release: passed.
 6. Obtain three to five external human pilot accounts before claiming
    market-validated GA: still required.
 
