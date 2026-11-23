@@ -1,6 +1,6 @@
 {
   "name": "esg-commitment-audit",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Audit ESG and climate commitments with source-linked evidence through the ICS hosted API.",
   "author": {
     "name": "Xue Zhi Xin (ICS-TEC)",

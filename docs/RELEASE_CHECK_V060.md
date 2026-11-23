@@ -1,5 +1,7 @@
 # v0.6.0 release check
 
+Historical record. Superseded by `docs/RELEASE_CHECK_V061.md`.
+
 Date: 2026-11-24 (Asia/Shanghai)
 
 Status: published; external human pilots and independent legal review remain

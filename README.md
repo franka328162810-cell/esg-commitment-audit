@@ -11,6 +11,9 @@ revisable.**
 
 ![ESG Commitment Audit cover](assets/esg-commitment-audit-cover.png)
 
+Current release: [`v0.6.1`](docs/RELEASE_CHECK_V061.md) —
+[release notes](docs/PLUGIN_RELEASE_NOTES_V061.md).
+
 Built for sustainability analysts, boutique ESG consultancies, researchers, and
 procurement teams that need a repeatable evidence trail before human review.
 The hosted API processes up to 100 documents per month on the Founding Small
@@ -61,9 +64,11 @@ See
 [AI Alignment Revisability Audit](docs/AI_ALIGNMENT_REVISABILITY_AUDIT.md) and
 [the generated sample report](docs/AI_ALIGNMENT_REVISABILITY_SAMPLE.md) and
 [the version-trace sample](docs/AI_ALIGNMENT_REVISABILITY_VERSION_SAMPLE.md).
-The local and hosted `0.6.0` build adds a 588-decision real-policy
+The local and hosted `0.6.x` line includes a 588-decision real-policy
 benchmark, sealed evidence-pack intake, an independent `ai-founding-team` plan,
 a server-enforced 20-customer organization cap, and `ai_live_` API keys.
+Version `0.6.1` corrects the Gumroad marketing assets, repairs the CI test
+path, and aligns the Python, Codex plugin and Worker release metadata.
 
 ## Why teams use it
 
@@ -395,7 +400,7 @@ See:
 
 ```powershell
 python -m pytest
-python -m ruff check src tests validation
+python -m ruff check src tests validation scripts
 python -m esg_commitment_audit audit examples\vague_statement.txt
 ```
 
@@ -403,6 +408,6 @@ python -m esg_commitment_audit audit examples\vague_statement.txt
 
 Code and rules are licensed under Apache License 2.0. Future formalizations under
 `formalizations/` are intended to be licensed separately under CC BY-SA 4.0; no
-formal proof is included in v0.6.0.
+formal proof is included in v0.6.1.
 
 Copyright 2026 Xue Zhi Xin (ICS-TEC).

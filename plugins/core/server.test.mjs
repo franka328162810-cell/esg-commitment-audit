@@ -27,7 +27,7 @@ test.afterEach(() => {
   delete process.env.ICS_AUDIT_API_URL;
 });
 
-test("core initializes at version 0.6.0", async () => {
+test("core initializes at version 0.6.1", async () => {
   setProduct("esg");
   const response = await handleMessage({
     jsonrpc: "2.0",
@@ -36,7 +36,7 @@ test("core initializes at version 0.6.0", async () => {
     params: { protocolVersion: "2025-06-18" },
   });
   assert.equal(response.result.serverInfo.name, "esg-commitment-audit");
-  assert.equal(response.result.serverInfo.version, "0.6.0");
+  assert.equal(response.result.serverInfo.version, "0.6.1");
 });
 
 test("ESG and AI products expose distinct tool schemas", async () => {

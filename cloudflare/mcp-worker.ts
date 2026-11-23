@@ -14,7 +14,7 @@ export default {
     if (request.method === "GET" && path === "/") {
       return Response.json({
         service: "esg-commitment-audit-mcp",
-        version: "0.6.0",
+        version: "0.6.1",
         endpoints: ["/mcp/esg", "/mcp/ai"],
         transport: "Streamable HTTP",
       });

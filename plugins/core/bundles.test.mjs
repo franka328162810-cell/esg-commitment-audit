@@ -26,7 +26,7 @@ test("marketplace exposes exactly two independent ICS plugins", async () => {
   );
 });
 
-test("both plugin bundles use the same 0.6.0 MCP core", async () => {
+test("both plugin bundles use the same 0.6.1 MCP core", async () => {
   const canonical = await readFile(
     path.join(root, "plugins", "core", "server.mjs"),
   );
@@ -52,8 +52,8 @@ test("plugin manifests and MCP permissions are product-specific", async () => {
   const aiManifest = await json(
     "plugins/ai-alignment-revisability-audit/.codex-plugin/plugin.json",
   );
-  assert.equal(esgManifest.version, "0.6.0");
-  assert.equal(aiManifest.version, "0.6.0");
+  assert.equal(esgManifest.version, "0.6.1");
+  assert.equal(aiManifest.version, "0.6.1");
   assert.equal(esgManifest.name, "esg-commitment-audit");
   assert.equal(aiManifest.name, "ai-alignment-revisability-audit");
   assert.deepEqual(esgManifest.interface.capabilities, ["Read", "Write"]);

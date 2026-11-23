@@ -1,5 +1,7 @@
 # Codex plugins and audit service v0.6.0
 
+Historical record. Superseded by `docs/PLUGIN_RELEASE_NOTES_V061.md`.
+
 This release completes the commercial onboarding layer for the two independent
 ICS Codex plugins.
 

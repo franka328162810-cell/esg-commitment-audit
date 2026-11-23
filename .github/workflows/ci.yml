@@ -22,9 +22,9 @@ jobs:
       - name: Install
         run: python -m pip install -e ".[dev]"
       - name: Lint
-        run: ruff check src tests validation
+        run: ruff check src tests validation scripts
       - name: Format check
-        run: ruff format --check src tests validation
+        run: ruff format --check src tests validation scripts
       - name: Test
         run: python -m pytest
       - name: CLI smoke test
@@ -42,8 +42,8 @@ jobs:
       - name: Install Cloudflare dependencies
         run: npm ci
         working-directory: cloudflare
-      - name: Validate plugin MCP server
-        run: node --test plugin/server.test.mjs
+      - name: Validate plugin core and bundles
+        run: node --test plugins/core/server.test.mjs plugins/core/bundles.test.mjs
       - name: Validate Worker types
         run: npm run check
         working-directory: cloudflare

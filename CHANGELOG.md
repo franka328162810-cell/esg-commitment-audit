@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.6.1 — release and asset correction
+
+- Replaced the remaining `ICS` product labels in the Gumroad ESG cover and
+  thumbnail with `ESG`.
+- Repaired the GitHub Actions plugin test path and expanded Ruff checks to
+  include `scripts/`.
+- Aligned the Python package, both Codex plugin manifests, shared MCP core,
+  hosted API and remote MCP Worker at version `0.6.1`.
+- Kept the audit rules and `0.6.0` JSON report schema unchanged.
+- Added a production health assertion for the active Worker version.
+- Preserved the Docker container runtime at `0.6.0-r2` because this patch does
+  not change hosted audit logic.
+
 ## 0.6.0 — commercial onboarding release
 
 - Added the public `/v1/offers` contract for current price, plan, quota,

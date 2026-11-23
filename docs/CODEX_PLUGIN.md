@@ -1,6 +1,6 @@
 # Codex plugin GA
 
-Plugin release: `0.6.0`
+Plugin release: `0.6.1`
 
 ## Product entries
 

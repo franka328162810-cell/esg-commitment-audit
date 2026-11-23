@@ -1,6 +1,6 @@
 # Cross-client distribution
 
-Version: `0.6.0`
+Version: `0.6.1`
 
 Public description: **ICS Audit Tools for MCP-compatible AI agents**
 

@@ -15,6 +15,7 @@ The renamed ESG Commitment Audit service is deployed on Cloudflare:
 - Private R2 bucket: `esg-commitment-audit-reports`
 - Container application: `esg-commitment-audit-api-auditcontainer`
 - Runtime image: `0.6.0-r2`
+- Worker and remote MCP release: `0.6.1`
 
 The previous Worker name remains as a 308 redirect to the new Worker. Previous
 D1, R2 and queue resources are retained temporarily as a rollback path and are
@@ -325,6 +326,10 @@ The `0.6.0` hosted release passed end-to-end tests for the general and
 insurance profiles on 2026-11-23. General mode returned 28 checks and insurance
 mode returned 30 checks. This proves the hosted path and profile persistence,
 not rule accuracy or scientific validation.
+
+Version `0.6.1` is a release-engineering and marketing-asset correction. It
+corrects the ESG Gumroad cover and thumbnail, repairs GitHub CI, and updates
+release metadata without changing the audit rules or container runtime.
 
 ## Legacy Recursive Freedom validation
 

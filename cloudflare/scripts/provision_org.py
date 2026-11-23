@@ -59,7 +59,7 @@ def main() -> int:
         headers={
             "Content-Type": "application/json",
             "X-ESG-Admin-Token": admin_token,
-            "User-Agent": "esg-commitment-audit-provisioner/0.6.0",
+            "User-Agent": "esg-commitment-audit-provisioner/0.6.1",
         },
     )
     with urllib.request.urlopen(request, timeout=60) as response:

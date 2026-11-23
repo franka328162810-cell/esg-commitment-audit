@@ -13,7 +13,7 @@ import {
 const CONTAINER_PORT = 8080;
 const INACTIVITY_TIMEOUT_MS = 60 * 1000;
 const MAX_JSON_BODY_BYTES = 64 * 1024;
-const SERVICE_VERSION = "0.6.0";
+const SERVICE_VERSION = "0.6.1";
 const BILLING_SYNC_CRON = "*/15 * * * *";
 const RETENTION_CRON = "17 3 * * *";
 const NON_RETRYABLE_CONTAINER_STATUSES = new Set([400, 413, 415, 422]);
