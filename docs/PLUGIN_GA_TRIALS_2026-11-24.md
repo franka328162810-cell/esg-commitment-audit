@@ -44,18 +44,18 @@ not independent external human customers.
 | Remote MCP account, audit, report, evidence pack and deletion | Passed |
 | Remote MCP wrong-product key rejection | Passed |
 | Claude Code remote HTTP health | Blocked by local Claude login state; not claimed as supported |
+| Claude Code from fresh GitHub clone | Both published stdio entries connected |
 
 ## Required final gate
 
 Technical release gate:
 
-1. Push the 0.6.0 two-plugin Marketplace definition to GitHub: pending.
+1. Push the 0.6.0 two-plugin Marketplace definition to GitHub: passed.
 2. Upgrade the isolated old installation with
-   `codex plugin marketplace upgrade`: 0.5.0 to 0.6.0 passed locally; Git-backed
-   refresh pending.
+   `codex plugin marketplace upgrade`: Git-backed 0.5.0 to 0.6.0 passed.
 3. Verify both installed ESG and AI entries become `0.6.0`: local upgrade
-   passed; Git-backed refresh pending.
-4. Install and use both entries from the Git-backed Marketplace: pending.
+   and Git-backed refresh passed.
+4. Install and use both entries from the Git-backed Marketplace: passed.
 5. Publish the `v0.6.0` release: pending.
 6. Obtain three to five external human pilot accounts before claiming
    market-validated GA: still required.

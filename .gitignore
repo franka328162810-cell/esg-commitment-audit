@@ -12,6 +12,7 @@ tools/
 .docker-config/
 .chrome-gumroad/
 .claude-plugin-*/
+.claude-dist-test/
 .codex-mcp-*/
 .plugin-*-test-home/
 .wrangler-config/

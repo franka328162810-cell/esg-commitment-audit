@@ -2,7 +2,8 @@
 
 Date: 2026-11-24 (Asia/Shanghai)
 
-Status: release candidate; external human pilots remain open.
+Status: release candidate; final tag/publication and external human pilots
+remain open.
 
 ## Versions and artifacts
 
@@ -47,6 +48,8 @@ Status: release candidate; external human pilots remain open.
 - Evidence-pack review returned four artifacts and eight proposals.
 - Wrong-product key rejection passed.
 - Claude Code registered both local stdio servers and reported `Connected`.
+- Claude Code was also checked from a fresh clone of the public GitHub
+  repository; both product entries reported `Connected`.
 - Remote MCP `/mcp/esg` and `/mcp/ai` passed initialize and tools/list.
 - Remote MCP passed account, purchase options, audit, status, report, evidence
   pack, deletion and plan-isolation tests.
@@ -62,8 +65,9 @@ Status: release candidate; external human pilots remain open.
 
 ## Remaining release gates
 
-- Push and test the Git-backed Codex marketplace upgrade.
-- Register and test Claude Code stdio from the published repository revision.
+- Push and test the Git-backed Codex marketplace upgrade: passed.
+- Register and test Claude Code stdio from the published repository revision:
+  passed.
 - Publish the GitHub `v0.6.0` tag and release.
 - Recruit three to five external human pilot users before claiming
   market-validated GA.
