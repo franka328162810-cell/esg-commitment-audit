@@ -41,6 +41,8 @@ present on the product content page. Multi-seat licensing is disabled.
 | Check | Result |
 |---|---|
 | Python tests | 126 passed |
+| Codex plugin core and bundle tests | 11 passed |
+| Codex skills | both valid |
 | Ruff lint | passed |
 | Ruff format | 55 files formatted |
 | Cloudflare TypeScript | passed |
@@ -63,6 +65,19 @@ present on the product content page. Multi-seat licensing is disabled.
   completed a 28-check production audit.
 - Temporary test organizations, API keys, jobs, R2 reports and the reserved D1
   seat were deleted after validation.
+
+## Codex plugin GA candidate
+
+- Two independent entries: `esg-commitment-audit` and
+  `ai-alignment-revisability-audit`.
+- Both plugin manifests report version `0.5.0`.
+- Both packages contain byte-identical copies of the shared MCP core.
+- Uploads and deletion are approval-gated; account and status reads are not.
+- Five scripted production role trials passed, including ESG review, 28-check
+  AI review, 30-check insurance review, evidence-pack review, and wrong-product
+  key rejection before upload.
+- Fresh install, simultaneous enablement, uninstall, and reinstall passed in an
+  isolated Codex environment.
 
 ## Remaining operational notes
 

@@ -8,7 +8,19 @@
       "name": "esg-commitment-audit",
       "source": {
         "source": "local",
-        "path": "./plugin"
+        "path": "./plugins/esg-commitment-audit"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "ai-alignment-revisability-audit",
+      "source": {
+        "source": "local",
+        "path": "./plugins/ai-alignment-revisability-audit"
       },
       "policy": {
         "installation": "AVAILABLE",

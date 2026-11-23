@@ -1,16 +1,19 @@
 {
   "mcpServers": {
-    "esg-commitment-audit": {
+    "ai-alignment-revisability-audit": {
       "cwd": ".",
       "command": "node",
       "args": [
         "server.mjs"
       ],
       "env": {
-        "ESG_AUDIT_API_URL": "https://esg-commitment-audit-api.franka328162810.workers.dev",
+        "ICS_PRODUCT": "ai",
         "NODE_NO_WARNINGS": "1"
       },
       "env_vars": [
+        "ICS_AUDIT_API_URL",
+        "ICS_AUDIT_API_KEY",
+        "ESG_AUDIT_API_URL",
         "ESG_AUDIT_API_KEY"
       ],
       "startup_timeout_sec": 20,
@@ -20,6 +23,9 @@
           "approval_mode": "prompt"
         },
         "audit_text": {
+          "approval_mode": "prompt"
+        },
+        "audit_evidence_pack": {
           "approval_mode": "prompt"
         },
         "delete_cloud_audit": {

@@ -101,5 +101,6 @@ name because it overlaps with both names above.
 The current paid product is **AI Alignment Revisability Audit** at US$99/month
 for the first 20 customer organizations. It includes 100 policy or evidence-pack
 jobs per month and a 30-day no-questions-asked full refund. Use
-`/ai-revisability-audit/activate` for the AI product. A formal Codex plugin
-package is still a later release step.
+`/ai-revisability-audit/activate` for the AI product. The free
+`ai-alignment-revisability-audit` Codex plugin is available from the repository
+marketplace and uses the same paid hosted entitlement.

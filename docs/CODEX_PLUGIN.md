@@ -1,85 +1,152 @@
-# Codex plugin
+# Codex plugin GA
 
-## Included structure
+Plugin release: `0.5.0`
+
+## Product entries
+
+The ICS marketplace publishes two independent plugin entries:
+
+| Plugin | Hosted plan | Monthly limit |
+|---|---|---:|
+| `esg-commitment-audit` | US$29 ESG plan | 100 jobs |
+| `ai-alignment-revisability-audit` | US$99 AI plan | 100 jobs |
+
+Both plugin packages are free. Only the hosted service requires a paid or
+administrative API key.
+
+## Shared core
+
+The canonical MCP implementation is:
 
 ```text
-.codex-plugin/plugin.json
-.mcp.json
-assets/icon.svg
-skills/esg-commitment-audit/SKILL.md
-skills/esg-commitment-audit/agents/openai.yaml
+plugins/core/server.mjs
 ```
 
-The plugin combines a Codex skill with a local MCP server implemented by
-`esg_commitment_audit.mcp_server`.
+`scripts/sync_plugin_core.mjs` copies that file into both self-contained plugin
+packages. This keeps marketplace installation independent while preventing the
+two products from drifting into separate implementations. An automated test
+confirms that both bundled copies have the same SHA-256 hash as the canonical
+file.
 
-## Prerequisites
+Product-specific behavior is selected by `ICS_PRODUCT=esg` or
+`ICS_PRODUCT=ai` in each `.mcp.json`.
 
-Install the Python package and its dependencies:
+## Installation
 
 ```powershell
-python -m pip install -e .
+codex plugin marketplace add franka328162810-cell/esg-commitment-audit --ref main
+codex plugin add esg-commitment-audit@ics-tec
+codex plugin add ai-alignment-revisability-audit@ics-tec
 ```
 
-Verify the MCP entry point:
+Other lifecycle commands:
 
 ```powershell
-esg-commitment-audit-mcp
+codex plugin marketplace upgrade ics-tec
+codex plugin list --available --json
+codex plugin remove esg-commitment-audit@ics-tec
+codex plugin remove ai-alignment-revisability-audit@ics-tec
+codex plugin marketplace remove ics-tec
 ```
 
-The command waits for newline-delimited MCP JSON-RPC messages on standard input.
+## API-key setup
 
-## Local tools
-
-- `audit_local_document`: audit a local PDF, DOCX, TXT, or Markdown file without
-  uploading it.
-- `audit_text`: audit pasted commitment text.
-- `audit_revisability_document`: review a local AI policy, constitution,
-  model card, or governance framework with an industry profile.
-- `audit_revisability_text`: review pasted AI governance text.
-- `audit_revisability_version`: compare previous and current AI governance
-  document versions locally.
-- `audit_evidence_pack`: verify a sealed local evidence-pack manifest or ZIP,
-  validate pinned hashes and propose human-confirmed E2/E3/E4 grade upgrades.
-
-## Hosted tools
-
-Set:
+The canonical environment variable is:
 
 ```powershell
-$env:ESG_AUDIT_API_URL = "https://audit.example.com"
-$env:ESG_AUDIT_API_KEY = "esg_live_..."
+$env:ICS_AUDIT_API_KEY = "<matching API key>"
 ```
 
-Then these tools become usable:
+`ESG_AUDIT_API_KEY` remains accepted for existing installations. Optional
+overrides:
 
-- `submit_cloud_audit`
+```powershell
+$env:ICS_AUDIT_API_URL = "https://esg-commitment-audit-api.franka328162810.workers.dev"
+```
+
+Obtain a key through the matching activation page:
+
+- ESG: `/activate`
+- AI: `/ai-revisability-audit/activate`
+
+The plugin calls `get_account` before an uploaded review. If the account does
+not expose the required mode, the plugin returns the current plan, allowed
+modes, and the correct activation page without uploading the file.
+
+## Tools
+
+Shared:
+
+- `audit_document`
+- `audit_text`
 - `get_cloud_audit`
+- `get_account`
+- `delete_cloud_audit`
 
-Cloud submission is set to `approval_mode: prompt` in `.mcp.json`. The skill also
-requires the user to explicitly request hosted processing before uploading.
+AI-only:
 
-The marketplace bridge's `audit_document` and `audit_text` tools accept
-`mode: "ai-revisability"` and a `profile` of `general`, `news_media`,
-`advertising`, `insurance`, or `industrial_design`.
+- `audit_evidence_pack`
+
+The AI policy tool accepts the `general`, `news_media`, `advertising`,
+`insurance`, and `industrial_design` profiles. Evidence-pack review accepts a
+ZIP up to 100 MB compressed; the service enforces the 200 MB uncompressed limit.
+
+## Permissions and approvals
+
+Both plugin manifests declare `Read` and `Write` capabilities.
+
+The following MCP tools use `approval_mode: prompt`:
+
+- document or text upload;
+- evidence-pack upload;
+- cloud job deletion.
+
+Read-only status and account calls do not require an extra MCP approval. The
+skill must still state the exact file, destination, source deletion and report
+retention before the first hosted upload. No plugin-level entitlement bypass
+exists; quota and plan enforcement remain server-side.
+
+## Error recovery
+
+The shared core maps the hosted API statuses to actionable guidance:
+
+| Status | Recovery |
+|---|---|
+| `401` | Issue a valid key at the matching activation page |
+| `403` | Correct product, inactive subscription, cancellation or refund |
+| `409` | Query current account or job state before retrying |
+| `413` | Reduce document, page count or ZIP size |
+| `415` | Use a supported text-layer document |
+| `429` | Wait for the next monthly period or upgrade |
+| `503` | Check recent jobs before retrying |
+
+GET requests use bounded retries. Uploads are never retried automatically
+because the first request may already have created a billable job. A failed
+upload response explicitly tells the user that the outcome is uncertain.
 
 ## Validation
 
 ```powershell
-python 'C:\Users\Administrator\.codex\skills\.system\skill-creator\scripts\quick_validate.py' skills\esg-commitment-audit
-python -m pytest tests\test_mcp.py
+node --test plugins\core\server.test.mjs plugins\core\bundles.test.mjs
+.\.venv\Scripts\python.exe "C:\Users\Administrator\.codex\skills\.system\skill-creator\scripts\quick_validate.py" plugins\esg-commitment-audit\skills\esg-commitment-audit
+.\.venv\Scripts\python.exe "C:\Users\Administrator\.codex\skills\.system\skill-creator\scripts\quick_validate.py" plugins\ai-alignment-revisability-audit\skills\ai-alignment-revisability-audit
 ```
 
-## Marketplace publication
+GA lifecycle verification must cover:
 
-Before submitting the repository to a Codex marketplace:
+1. fresh marketplace add;
+2. fresh install of both plugins;
+3. upgrade from the previous plugin version;
+4. uninstall and reinstall;
+5. missing, wrong-product and valid API keys;
+6. ESG document review;
+7. AI general and insurance-profile review;
+8. AI evidence-pack review;
+9. upload and deletion approval policy;
+10. three to five scripted user-role trials.
 
-1. add the final GitHub repository URL and support/privacy/terms URLs to
-   `.codex-plugin/plugin.json`;
-2. verify install from a clean machine using the documented Python prerequisite;
-3. confirm that the plugin icon and description render correctly;
-4. publish a tagged release;
-5. keep local-only mode functional without any paid API key.
+## Claims boundary
 
-The plugin does not embed a bypassable entitlement check. Paid quota enforcement
-belongs to the hosted service.
+The plugins are clients for document and evidence review. They do not certify
+AI safety, legal compliance, assurance, model alignment, or the truthfulness of
+an organization's ESG claims.

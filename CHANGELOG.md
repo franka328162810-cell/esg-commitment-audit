@@ -1,5 +1,20 @@
 # Changelog
 
+## Codex plugins 0.5.0 — GA candidate
+
+- Split the public Codex marketplace into independent ESG Commitment Audit and
+  AI Alignment Revisability Audit entries.
+- Added one canonical dependency-free MCP core, synchronized into both
+  self-contained plugin packages.
+- Added AI policy review, five industry profiles, and hosted evidence-pack
+  review.
+- Added account preflight, plan/mode compatibility checks, canonical
+  `ICS_AUDIT_API_KEY` support, activation guidance, and bounded error recovery.
+- Added product-specific skills, UI metadata, icons, privacy/terms links, and
+  approval-gated upload/deletion tools.
+- Added bundle hash tests, MCP behavior tests, isolated installation, uninstall,
+  reinstall, and five production role trials.
+
 ## 0.5.0.dev1 — hosted founding release
 
 Late-2026 commercial release for AI Alignment Revisability Audit.

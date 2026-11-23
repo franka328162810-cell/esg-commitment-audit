@@ -11,6 +11,7 @@ tools/
 .venv/
 .docker-config/
 .chrome-gumroad/
+.plugin-*-test-home/
 .wrangler-config/
 venv/
 __pycache__/

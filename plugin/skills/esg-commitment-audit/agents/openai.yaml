@@ -1,7 +1,0 @@
-interface:
-  display_name: "ESG Commitment Audit"
-  short_description: "Audit ESG and climate commitments with traceable evidence"
-  brand_color: "#0F766E"
-  default_prompt: "Use $esg-commitment-audit to audit this ESG or climate report and show structural evidence gaps with page-level citations."
-policy:
-  allow_implicit_invocation: true

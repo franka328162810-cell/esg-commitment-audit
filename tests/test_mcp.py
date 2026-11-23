@@ -106,25 +106,34 @@ def test_mcp_revisability_version_tool_returns_check_movement() -> None:
 
 
 def test_plugin_manifest_and_mcp_config_are_consistent() -> None:
-    plugin = json.loads(Path(".codex-plugin/plugin.json").read_text(encoding="utf-8"))
-    mcp = json.loads(Path(".mcp.json").read_text(encoding="utf-8"))
+    development_plugin = json.loads(
+        Path(".codex-plugin/plugin.json").read_text(encoding="utf-8")
+    )
+    development_mcp = json.loads(Path(".mcp.json").read_text(encoding="utf-8"))
     marketplace = json.loads(
         Path(".agents/plugins/marketplace.json").read_text(encoding="utf-8")
     )
-    bundle = json.loads(
-        Path("plugin/.codex-plugin/plugin.json").read_text(encoding="utf-8")
-    )
-    bundle_mcp = json.loads(Path("plugin/.mcp.json").read_text(encoding="utf-8"))
 
-    assert plugin["name"] == "esg-commitment-audit"
-    assert plugin["skills"] == "./skills/"
-    assert plugin["mcpServers"] == "./.mcp.json"
-    assert "esg-commitment-audit" in mcp["mcpServers"]
+    assert development_plugin["name"] == "esg-commitment-audit"
+    assert development_plugin["skills"] == "./skills/"
+    assert development_plugin["mcpServers"] == "./.mcp.json"
+    assert "esg-commitment-audit" in development_mcp["mcpServers"]
     assert marketplace["name"] == "ics-tec"
-    assert marketplace["plugins"][0]["source"]["path"] == "./plugin"
-    assert bundle["version"] == plugin["version"]
-    assert bundle_mcp["mcpServers"]["esg-commitment-audit"]["command"] == "node"
-    assert Path("plugin/server.mjs").is_file()
+    assert [plugin["name"] for plugin in marketplace["plugins"]] == [
+        "esg-commitment-audit",
+        "ai-alignment-revisability-audit",
+    ]
+
+    for entry in marketplace["plugins"]:
+        plugin_root = Path(entry["source"]["path"])
+        manifest = json.loads(
+            (plugin_root / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8")
+        )
+        mcp = json.loads((plugin_root / ".mcp.json").read_text(encoding="utf-8"))
+        assert manifest["name"] == entry["name"]
+        assert manifest["version"] == "0.5.0"
+        assert mcp["mcpServers"][entry["name"]]["command"] == "node"
+        assert (plugin_root / "server.mjs").is_file()
 
 
 def test_mcp_cloud_submission_uses_streamable_worker_contract(

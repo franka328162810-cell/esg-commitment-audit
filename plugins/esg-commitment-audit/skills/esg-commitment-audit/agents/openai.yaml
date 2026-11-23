@@ -1,0 +1,7 @@
+interface:
+  display_name: "ESG Commitment Audit"
+  short_description: "Audit ESG commitments with traceable policy evidence"
+  brand_color: "#0F766E"
+  default_prompt: "Use $esg-commitment-audit to audit this ESG report and show traceable commitment gaps."
+policy:
+  allow_implicit_invocation: true

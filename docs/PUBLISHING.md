@@ -49,6 +49,8 @@ Future formalizations under `formalizations/` are intended for CC BY-SA 4.0.
 Commercial hosted operation, support, private deployment, certifications, and
 enterprise integration remain separate paid services.
 
-The repository root is also the Codex plugin root. Confirm that
-`.codex-plugin/plugin.json`, `.mcp.json`, `skills/`, and `assets/icon.svg` are
-included in the release before marketplace submission.
+The public Codex marketplace contains two self-contained plugin packages under
+`plugins/esg-commitment-audit` and
+`plugins/ai-alignment-revisability-audit`. Confirm that both manifests, MCP
+configurations, skills, icons and the synchronized shared core are included
+before marketplace submission.

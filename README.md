@@ -102,7 +102,7 @@ a server-enforced 20-customer organization cap, and `ai_live_` API keys.
 - Separate ESG and AI founding plans, each with a monthly quota of 100 jobs.
 - A 30-day no-questions-asked full-refund policy on the Gumroad offer.
 - Seven-day report retention and tenant-scoped API access.
-- A Codex plugin manifest, skill, and local/cloud MCP tools.
+- Two independent free Codex plugin entries sharing one local/cloud MCP core.
 
 ## Claims boundary
 
@@ -321,29 +321,35 @@ tax/refund policy. See
 
 ## Codex plugin
 
-The repository includes both a development plugin at the root and a
-dependency-free marketplace bundle in `plugin/`.
+The repository publishes two independent, free Codex plugin entries that share
+one dependency-free MCP core:
 
 ```text
-.codex-plugin/plugin.json
-.mcp.json
-skills/esg-commitment-audit/SKILL.md
-plugin/.codex-plugin/plugin.json
-plugin/.mcp.json
-plugin/server.mjs
 .agents/plugins/marketplace.json
+plugins/core/server.mjs
+plugins/esg-commitment-audit/
+plugins/ai-alignment-revisability-audit/
 ```
 
-Install the hosted plugin from the repository marketplace:
+Install either or both plugins from the repository marketplace:
 
 ```powershell
 codex plugin marketplace add franka328162810-cell/esg-commitment-audit --ref main
 codex plugin add esg-commitment-audit@ics-tec
+codex plugin add ai-alignment-revisability-audit@ics-tec
 ```
 
-Configure `ESG_AUDIT_API_KEY` before using hosted tools. The marketplace bundle
-uses a dependency-free Node MCP client and requires network access to the ICS
-HTTPS API. It provides:
+The plugin packages are free. Hosted reviews require a matching ICS API key.
+Set `ICS_AUDIT_API_KEY` after activating a Gumroad license:
+
+- ESG activation: `/activate`
+- AI activation: `/ai-revisability-audit/activate`
+
+The ESG plugin checks that the account can use `commitment`; the AI plugin
+checks for `ai-revisability` and, for evidence packs, `evidence-pack`. A key
+from the wrong product is rejected before the document is uploaded.
+
+Shared tools:
 
 - `audit_document`
 - `audit_text`
@@ -351,9 +357,13 @@ HTTPS API. It provides:
 - `get_account`
 - `delete_cloud_audit`
 
-The root development plugin additionally exposes local Python audit tools. Local
-audit remains free and on-device when the Python package is installed. Hosted
-uploads and deletion are approval-gated in `.mcp.json`.
+The AI plugin additionally provides `audit_evidence_pack`. Uploads and deletion
+are approval-gated in each `.mcp.json`; read-only account and status checks are
+not. Both packages contain byte-identical copies of the canonical
+`plugins/core/server.mjs`, checked by an automated hash test.
+
+The root development plugin remains available for local Python audit tools.
+Local audit is free and on-device when the Python package is installed.
 
 ## Report interpretation
 

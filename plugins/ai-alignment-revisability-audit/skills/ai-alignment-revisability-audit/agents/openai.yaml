@@ -1,0 +1,7 @@
+interface:
+  display_name: "AI Alignment Revisability Audit"
+  short_description: "Audit AI policy revision and evidence traceability"
+  brand_color: "#16B8A6"
+  default_prompt: "Use $ai-alignment-revisability-audit to review this AI policy for authority, revision, rollback, and evidence gaps."
+policy:
+  allow_implicit_invocation: true

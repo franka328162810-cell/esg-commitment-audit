@@ -1,0 +1,43 @@
+{
+  "name": "ai-alignment-revisability-audit",
+  "version": "0.5.0",
+  "description": "Review AI policy revision authority, rollback, oversight, and sealed operating evidence through the ICS hosted API.",
+  "author": {
+    "name": "Xue Zhi Xin (ICS-TEC)",
+    "url": "https://github.com/franka328162810-cell"
+  },
+  "homepage": "https://github.com/franka328162810-cell/esg-commitment-audit",
+  "repository": "https://github.com/franka328162810-cell/esg-commitment-audit",
+  "license": "Apache-2.0",
+  "keywords": [
+    "ai",
+    "alignment",
+    "governance",
+    "revisability",
+    "rollback",
+    "evidence"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "AI Alignment Revisability Audit",
+    "shortDescription": "Audit AI policy revision and evidence traceability",
+    "longDescription": "Review whether AI policies, constitutions, model cards, and governance frameworks define authority, revision, rollback, affected-party safeguards, oversight, and operating evidence. Includes industry profiles and sealed evidence-pack review. The plugin is free; hosted audits require a matching AI API key.",
+    "developerName": "Xue Zhi Xin (ICS-TEC)",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://esg-commitment-audit-api.franka328162810.workers.dev/ai-revisability-audit",
+    "privacyPolicyURL": "https://esg-commitment-audit-api.franka328162810.workers.dev/privacy",
+    "termsOfServiceURL": "https://esg-commitment-audit-api.franka328162810.workers.dev/terms",
+    "defaultPrompt": [
+      "Use $ai-alignment-revisability-audit to review this AI policy for authority, revision, rollback, and evidence gaps."
+    ],
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg",
+    "screenshots": [],
+    "brandColor": "#16B8A6"
+  }
+}
