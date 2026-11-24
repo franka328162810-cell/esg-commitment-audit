@@ -120,8 +120,8 @@ def test_plugin_manifest_and_mcp_config_are_consistent() -> None:
     assert "esg-commitment-audit" in development_mcp["mcpServers"]
     assert marketplace["name"] == "ics-tec"
     assert [plugin["name"] for plugin in marketplace["plugins"]] == [
-        "esg-commitment-audit",
         "ai-alignment-revisability-audit",
+        "esg-commitment-audit",
     ]
 
     for entry in marketplace["plugins"]:
@@ -131,7 +131,7 @@ def test_plugin_manifest_and_mcp_config_are_consistent() -> None:
         )
         mcp = json.loads((plugin_root / ".mcp.json").read_text(encoding="utf-8"))
         assert manifest["name"] == entry["name"]
-        assert manifest["version"] == "0.6.1"
+        assert manifest["version"] == "0.6.2"
         assert mcp["mcpServers"][entry["name"]]["command"] == "node"
         assert (plugin_root / "server.mjs").is_file()
 

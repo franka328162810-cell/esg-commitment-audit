@@ -14,11 +14,11 @@ test("marketplace exposes exactly two independent ICS plugins", async () => {
   const marketplace = await json(".agents/plugins/marketplace.json");
   assert.equal(marketplace.name, "ics-tec");
   assert.deepEqual(
-    marketplace.plugins.map((plugin) => plugin.name).sort(),
+    marketplace.plugins.map((plugin) => plugin.name),
     ["ai-alignment-revisability-audit", "esg-commitment-audit"],
   );
   assert.deepEqual(
-    marketplace.plugins.map((plugin) => plugin.source.path).sort(),
+    marketplace.plugins.map((plugin) => plugin.source.path),
     [
       "./plugins/ai-alignment-revisability-audit",
       "./plugins/esg-commitment-audit",
@@ -26,7 +26,7 @@ test("marketplace exposes exactly two independent ICS plugins", async () => {
   );
 });
 
-test("both plugin bundles use the same 0.6.1 MCP core", async () => {
+test("both plugin bundles use the same 0.6.2 MCP core", async () => {
   const canonical = await readFile(
     path.join(root, "plugins", "core", "server.mjs"),
   );
@@ -52,12 +52,26 @@ test("plugin manifests and MCP permissions are product-specific", async () => {
   const aiManifest = await json(
     "plugins/ai-alignment-revisability-audit/.codex-plugin/plugin.json",
   );
-  assert.equal(esgManifest.version, "0.6.1");
-  assert.equal(aiManifest.version, "0.6.1");
+  assert.equal(esgManifest.version, "0.6.2");
+  assert.equal(aiManifest.version, "0.6.2");
   assert.equal(esgManifest.name, "esg-commitment-audit");
   assert.equal(aiManifest.name, "ai-alignment-revisability-audit");
+  assert.match(aiManifest.homepage, /\/ai-revisability-audit$/);
+  assert.match(esgManifest.homepage, /workers\.dev\/$/);
   assert.deepEqual(esgManifest.interface.capabilities, ["Read", "Write"]);
   assert.deepEqual(aiManifest.interface.capabilities, ["Read", "Write"]);
+  for (const [pluginRoot, manifest] of [
+    ["plugins/ai-alignment-revisability-audit", aiManifest],
+    ["plugins/esg-commitment-audit", esgManifest],
+  ]) {
+    assert.deepEqual(manifest.interface.screenshots, [
+      "./assets/cover.png",
+      "./assets/thumbnail.png",
+    ]);
+    for (const relativePath of manifest.interface.screenshots) {
+      await access(path.join(root, pluginRoot, relativePath));
+    }
+  }
 
   const esgMcp = await json("plugins/esg-commitment-audit/.mcp.json");
   const aiMcp = await json(
@@ -71,6 +85,41 @@ test("plugin manifests and MCP permissions are product-specific", async () => {
   assert.equal(aiServer.tools.audit_document.approval_mode, "prompt");
   assert.equal(aiServer.tools.audit_evidence_pack.approval_mode, "prompt");
   assert.equal(esgServer.tools.audit_evidence_pack, undefined);
+});
+
+test("each plugin ships its own cover and thumbnail", async () => {
+  const products = [
+    "ai-alignment-revisability-audit",
+    "esg-commitment-audit",
+  ];
+  const hashes = new Map();
+  for (const product of products) {
+    for (const asset of ["cover.png", "thumbnail.png"]) {
+      const bytes = await readFile(
+        path.join(root, "plugins", product, "assets", asset),
+      );
+      const rootAsset = `${product}-${asset === "cover.png" ? "cover" : "thumbnail"}.png`;
+      const rootBytes = await readFile(
+        path.join(root, "assets", rootAsset),
+      );
+      assert.equal(
+        createHash("sha256").update(bytes).digest("hex"),
+        createHash("sha256").update(rootBytes).digest("hex"),
+      );
+      hashes.set(
+        `${product}:${asset}`,
+        createHash("sha256").update(bytes).digest("hex"),
+      );
+    }
+  }
+  assert.notEqual(
+    hashes.get("ai-alignment-revisability-audit:cover.png"),
+    hashes.get("esg-commitment-audit:cover.png"),
+  );
+  assert.notEqual(
+    hashes.get("ai-alignment-revisability-audit:thumbnail.png"),
+    hashes.get("esg-commitment-audit:thumbnail.png"),
+  );
 });
 
 test("both skills are named after their plugin entries", async () => {

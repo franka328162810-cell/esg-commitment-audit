@@ -41,4 +41,4 @@ __all__ = [
     "audit_text",
     "seal_evidence_pack_manifest",
 ]
-__version__ = "0.6.1"
+__version__ = "0.6.2"

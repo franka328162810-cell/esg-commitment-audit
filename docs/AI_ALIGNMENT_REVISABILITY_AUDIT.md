@@ -1,9 +1,10 @@
 # AI Alignment Revisability Audit
 
-Local release: `0.6.1`
+Local release: `0.6.2`
 
-Hosted founding release: `0.6.1`. The container runtime remains
-`0.6.0-r2`; `0.6.1` changes the client, Worker and release metadata only.
+Hosted founding release: `0.6.2`. The container runtime remains
+`0.6.0-r2`; `0.6.2` changes product presentation, plugin metadata and the
+public catalog order only.
 
 The installable Python distribution is `esg-commitment-audit`. The user-facing
 command for this product is `ai-revisability-audit`.

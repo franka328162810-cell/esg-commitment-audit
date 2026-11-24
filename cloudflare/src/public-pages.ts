@@ -70,45 +70,45 @@ function page(title: string, body: string, lang = "zh-CN"): string {
 }
 
 export const landingPage = page(
-  "ESG Commitment Audit | Evidence workbench",
+  "ICS Audit Tools | AI and ESG Evidence Workbench",
   `<article>
     <p class="eyebrow">ICS-TEC / ICS STUDIES</p>
-    <h1>Audit the wording before you rely on the promise.</h1>
-    <p>ESG Commitment Audit turns long sustainability and climate reports into traceable commitment evidence. AI Alignment Revisability Audit applies the same evidence discipline to AI rules, constitutions, model cards, and revision paths.</p>
+    <h1>Audit the rules before they govern people and the promises before you rely on them.</h1>
+    <p>AI Alignment Revisability Audit reviews the written authority, revision routes, rollback controls, oversight and operating evidence around AI policies and governance frameworks. ESG Commitment Audit applies a separate evidence discipline to sustainability and climate commitments in long reports.</p>
     <div class="actions">
-      <a class="button" href="https://icsstudies.gumroad.com/l/esg-commitment-audit" rel="noopener">Subscribe to ESG Audit — US$29/month</a>
       <a class="button" href="https://icsstudies.gumroad.com/l/ai-alignment-revisability-audit" rel="noopener">Subscribe to AI Audit — US$99/month</a>
+      <a class="button" href="https://icsstudies.gumroad.com/l/esg-commitment-audit" rel="noopener">Subscribe to ESG Audit — US$29/month</a>
       <a class="button secondary" href="/workspace">Open the workbench</a>
     </div>
-    <p class="notice"><strong>Evidence, not certification.</strong> This service analyses document structure. It is not audit assurance, legal advice, compliance certification, investment advice, or proof of greenwashing.</p>
-    <h2>One workbench, two product families</h2>
+    <p class="notice"><strong>Evidence, not certification.</strong> These services analyse written governance and commitment structure. They are not audit assurance, legal advice, compliance certification, investment advice, or proof of greenwashing.</p>
+    <h2>Two independent product families</h2>
     <div class="grid">
-      <div class="card">
-        <h3>ESG / Climate commitments</h3>
-        <p>Extract commitments with page or paragraph evidence, then test observability, enforceability, and revisability.</p>
-      </div>
       <div class="card">
         <h3>AI Alignment Revisability Audit</h3>
         <p>Review 28 written controls for alignment targets, revision authority, version history, rollback, affected-party safeguards, oversight, and technical-control evidence.</p>
         <p><a href="/ai-revisability-audit">Read the product scope, price, and claim boundary</a></p>
       </div>
+      <div class="card">
+        <h3>ESG Commitment Audit</h3>
+        <p>Extract sustainability and climate commitments with page or paragraph evidence, then test observability, enforceability, and revisability.</p>
+      </div>
     </div>
     <h2>Separate founding plans</h2>
     <div class="grid">
       <div class="card">
-        <strong>ESG Commitment Audit</strong>
-        <p>US$29/month · 100 audited documents · first 20 customer organizations.</p>
-      </div>
-      <div class="card">
         <strong>AI Alignment Revisability Audit</strong>
         <p>US$99/month · 100 policy or evidence-pack jobs · first 20 customer organizations.</p>
+      </div>
+      <div class="card">
+        <strong>ESG Commitment Audit</strong>
+        <p>US$29/month · 100 audited documents · first 20 customer organizations.</p>
       </div>
     </div>
     <p>Each plan provides one organization and one shared API key. Policy documents may be up to 100 pages and 50 MB. Evidence-pack ZIPs may be up to 100 MB with at most 200 MB of uncompressed content. Raw uploads are deleted after success or final failure; hosted reports are retained for seven days. Both public offers include a 30-day no-questions-asked full refund.</p>
     <h2>How to start</h2>
     <ol>
-      <li>Choose the ESG or AI product on Gumroad and keep the license key from the receipt.</li>
-      <li><a href="/activate">Activate the ESG license</a> or <a href="/ai-revisability-audit/activate">activate the AI license</a> to receive a one-time API key.</li>
+      <li>Choose the AI or ESG product on Gumroad and keep the license key from the receipt.</li>
+      <li><a href="/ai-revisability-audit/activate">Activate the AI license</a> or <a href="/activate">activate the ESG license</a> to receive a one-time API key.</li>
       <li>Paste the API key into the <a href="/workspace">workbench</a>, choose a mode, and upload a document.</li>
     </ol>
     <p class="notice"><strong>Product boundary.</strong> The AI policy mode audits written governance structure and submitted evidence only. It does not assess the personality or rights of an individual and must not be used for employment, education, credit, immigration, insurance, political, or judicial decisions.</p>
@@ -124,7 +124,7 @@ export const landingPage = page(
       <a href="/terms">Terms draft</a>
       <a href="mailto:franka328162810@gmail.com">Support</a>
     </nav>
-    <p class="muted">Operator: Xue Zhi Xin (ICS-TEC). Last updated: 2026-11-23.</p>
+    <p class="muted">Operator: Xue Zhi Xin (ICS-TEC). Last updated: 2026-11-24.</p>
   </article>`,
   "en",
 );
@@ -396,7 +396,7 @@ export const aiRevisabilitySamplePage = page(
 );
 
 export const workspacePage = page(
-  "Evidence Workbench | ESG Commitment Audit",
+  "Evidence Workbench | ICS Audit Tools",
   `<article>
     <p class="eyebrow">ICS-TEC / EVIDENCE WORKBENCH</p>
     <h1>Run and review an audit</h1>
@@ -418,7 +418,7 @@ export const workspacePage = page(
           <input id="api-key" type="password" autocomplete="off" spellcheck="false" placeholder="esg_live_..." required>
           <button id="connect-button" class="button" type="submit">Connect</button>
         </div>
-        <p class="muted">Need a key? Activate an <a href="/activate">ESG Gumroad license</a> or an <a href="/ai-revisability-audit/activate">AI Gumroad license</a>.</p>
+        <p class="muted">Need a key? Activate an <a href="/ai-revisability-audit/activate">AI Gumroad license</a> or an <a href="/activate">ESG Gumroad license</a>.</p>
       </form>
       <p id="account-message" class="status" aria-live="polite"></p>
     </section>
@@ -427,12 +427,7 @@ export const workspacePage = page(
       <h2 id="mode-heading">2. Choose an evidence mode</h2>
       <div class="grid">
         <label class="mode-card">
-          <input type="radio" name="audit-mode" value="commitment" checked>
-          <strong>ESG / Climate Commitments</strong>
-          <span class="muted">Extraction, source evidence, and CRV structure checks.</span>
-        </label>
-        <label class="mode-card">
-          <input type="radio" name="audit-mode" value="ai-revisability">
+          <input type="radio" name="audit-mode" value="ai-revisability" checked>
           <strong>AI Alignment Revisability Audit</strong>
           <span class="muted">Twenty-eight written controls for authority, revision, rollback, affected people, evidence, and oversight.</span>
         </label>
@@ -440,6 +435,11 @@ export const workspacePage = page(
           <input type="radio" name="audit-mode" value="evidence-pack">
           <strong>AI Revisability Evidence Pack</strong>
           <span class="muted">Verify a sealed ZIP manifest and propose human-confirmed E2, E3, or E4 upgrades.</span>
+        </label>
+        <label class="mode-card">
+          <input type="radio" name="audit-mode" value="commitment">
+          <strong>ESG / Climate Commitments</strong>
+          <span class="muted">Extraction, source evidence, and CRV structure checks.</span>
         </label>
       </div>
       <p id="mode-note" class="muted"></p>
@@ -544,7 +544,7 @@ export const workspacePage = page(
 
     function selectedMode() {
       const checked = document.querySelector('input[name="audit-mode"]:checked');
-      return checked ? checked.value : "commitment";
+      return checked ? checked.value : "ai-revisability";
     }
 
     function sleep(milliseconds) {
@@ -1175,7 +1175,7 @@ export const workspacePage = page(
 );
 
 export const privacyPage = page(
-  "隐私政策草案 | ESG Commitment Audit",
+  "隐私政策草案 | ICS Audit Tools",
   `<article>
     <p class="eyebrow">隐私政策草案</p>
     <h1>我们如何处理数据</h1>
@@ -1214,13 +1214,13 @@ export const privacyPage = page(
 );
 
 export const termsPage = page(
-  "服务条款草案 | ESG Commitment Audit",
+  "服务条款草案 | ICS Audit Tools",
   `<article>
     <p class="eyebrow">服务条款草案</p>
     <h1>使用本服务前请阅读</h1>
     <p class="notice"><strong>草案提示：</strong>本页不构成法律意见，也尚未经过律师独立复核。当前付费服务由 Xue Zhi Xin (ICS-TEC) 运营，并通过 Gumroad 收款。</p>
     <h2>1. 服务范围</h2>
-    <p>ICS-TEC 提供 ESG Commitment Audit 与 AI Alignment Revisability Audit。前者对可持续与气候承诺文本做结构化抽取、评分和证据定位；后者审查 AI 政策、治理文件及用户提交的证据包。结果可能不完整或存在误判，必须由用户结合原文复核。</p>
+    <p>ICS-TEC 提供 AI Alignment Revisability Audit 与 ESG Commitment Audit。前者审查 AI 政策、治理文件及用户提交的证据包；后者对可持续与气候承诺文本做结构化抽取、评分和证据定位。结果可能不完整或存在误判，必须由用户结合原文复核。</p>
     <h2>2. 不提供专业鉴证</h2>
     <p>本服务不是审计、鉴证、法律、税务、投资或合规认证服务，不构成对“漂绿”、违法或重大性的事实认定。用户不得把结果作为唯一决策依据，也不得对外声称获得 ICS-TEC 或第三方的认证。</p>
     <h2>3. 账户与 API Key</h2>
@@ -1230,7 +1230,7 @@ export const termsPage = page(
     <h2>5. 可接受使用</h2>
     <p>不得攻击、绕过配额、探测其他租户、传播恶意文件、自动生成误导性审计结论、侵犯知识产权或违反适用法律。我们可暂停高风险账户并保留依法报告的权利。</p>
     <h2>6. 试用与付费</h2>
-    <p>当前价格为首发价：ESG Commitment Audit 为 US$29/月，AI Alignment Revisability Audit 为 US$99/月；各计划每月最多处理 100 个任务，并分别限前 20 个客户组织。订阅按月续费，交易与税费由 Gumroad 处理。两项公开报价均包含首次购买后 30 天无理由全额退款。取消续费后，已产生费用和依法应退款项按订单及适用消费者保护规则处理。</p>
+    <p>当前价格为首发价：AI Alignment Revisability Audit 为 US$99/月，ESG Commitment Audit 为 US$29/月；各计划每月最多处理 100 个任务，并分别限前 20 个客户组织。订阅按月续费，交易与税费由 Gumroad 处理。两项公开报价均包含首次购买后 30 天无理由全额退款。取消续费后，已产生费用和依法应退款项按订单及适用消费者保护规则处理。</p>
     <h2>7. 可用性与变更</h2>
     <p>除非另签书面 SLA，本服务按“现状”和“可用”基础提供。我们会采取合理措施维护安全与连续性，但不保证服务永不中断。可能为安全、法律、维护或产品改进限制或更新功能。</p>
     <h2>8. 知识产权</h2>

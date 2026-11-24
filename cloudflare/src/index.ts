@@ -13,7 +13,7 @@ import {
 const CONTAINER_PORT = 8080;
 const INACTIVITY_TIMEOUT_MS = 60 * 1000;
 const MAX_JSON_BODY_BYTES = 64 * 1024;
-const SERVICE_VERSION = "0.6.1";
+const SERVICE_VERSION = "0.6.2";
 const BILLING_SYNC_CRON = "*/15 * * * *";
 const RETENTION_CRON = "17 3 * * *";
 const NON_RETRYABLE_CONTAINER_STATUSES = new Set([400, 413, 415, 422]);
@@ -837,21 +837,6 @@ export default {
         support_email: "franka328162810@gmail.com",
         offers: [
           {
-            product: "esg",
-            name: "ESG Commitment Audit — Founding Small Team",
-            plan: "founding-team",
-            price_monthly: 29,
-            monthly_jobs: PLAN_LIMITS["founding-team"],
-            organization_limit: 20,
-            api_key_prefix: "esg_live_",
-            checkout_url:
-              "https://icsstudies.gumroad.com/l/esg-commitment-audit",
-            activation_url: `${publicUrl}/activate`,
-            product_url: publicUrl,
-            privacy_url: `${publicUrl}/privacy`,
-            terms_url: `${publicUrl}/terms`,
-          },
-          {
             product: "ai",
             name: "AI Alignment Revisability Audit — Founding Team",
             plan: "ai-founding-team",
@@ -863,6 +848,21 @@ export default {
               "https://icsstudies.gumroad.com/l/ai-alignment-revisability-audit",
             activation_url: `${publicUrl}/ai-revisability-audit/activate`,
             product_url: `${publicUrl}/ai-revisability-audit`,
+            privacy_url: `${publicUrl}/privacy`,
+            terms_url: `${publicUrl}/terms`,
+          },
+          {
+            product: "esg",
+            name: "ESG Commitment Audit — Founding Small Team",
+            plan: "founding-team",
+            price_monthly: 29,
+            monthly_jobs: PLAN_LIMITS["founding-team"],
+            organization_limit: 20,
+            api_key_prefix: "esg_live_",
+            checkout_url:
+              "https://icsstudies.gumroad.com/l/esg-commitment-audit",
+            activation_url: `${publicUrl}/activate`,
+            product_url: publicUrl,
             privacy_url: `${publicUrl}/privacy`,
             terms_url: `${publicUrl}/terms`,
           },

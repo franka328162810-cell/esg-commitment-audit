@@ -1,5 +1,7 @@
 # ESG and AI audit tools v0.6.1
 
+Historical record. Superseded by `docs/PLUGIN_RELEASE_NOTES_V062.md`.
+
 This patch corrects the public ESG image assets and repairs the release
 engineering checks. The audit rules and report formats are unchanged.
 

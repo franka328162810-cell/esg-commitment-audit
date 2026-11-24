@@ -24,7 +24,7 @@ jobs:
         run: |
           set -euo pipefail
           base_url="https://esg-commitment-audit-api.franka328162810.workers.dev"
-          user_agent="esg-commitment-audit-monitor/0.6.1"
+          user_agent="esg-commitment-audit-monitor/0.6.2"
           health_file="$RUNNER_TEMP/health.json"
           workspace_file="$RUNNER_TEMP/workspace.html"
           ai_revisability_file="$RUNNER_TEMP/ai-revisability.html"
@@ -40,7 +40,7 @@ jobs:
 
           test "$health_status" = "200"
           jq --exit-status \
-            '.status == "ok" and .service == "esg-commitment-audit" and .version == "0.6.1"' \
+            '.status == "ok" and .service == "esg-commitment-audit" and .version == "0.6.2"' \
             "$health_file"
 
           activation_status="$(curl --silent --show-error --retry 3 --retry-delay 2 \

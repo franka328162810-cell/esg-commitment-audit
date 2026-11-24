@@ -1,15 +1,5 @@
 {
   "mcpServers": {
-    "ics-esg-commitment-audit": {
-      "type": "stdio",
-      "command": "node",
-      "args": [
-        "plugins/esg-commitment-audit/server.mjs"
-      ],
-      "env": {
-        "ICS_PRODUCT": "esg"
-      }
-    },
     "ics-ai-alignment-revisability-audit": {
       "type": "stdio",
       "command": "node",
@@ -18,6 +8,16 @@
       ],
       "env": {
         "ICS_PRODUCT": "ai"
+      }
+    },
+    "ics-esg-commitment-audit": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "plugins/esg-commitment-audit/server.mjs"
+      ],
+      "env": {
+        "ICS_PRODUCT": "esg"
       }
     }
   }

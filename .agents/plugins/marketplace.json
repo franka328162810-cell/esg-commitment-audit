@@ -5,10 +5,10 @@
   },
   "plugins": [
     {
-      "name": "esg-commitment-audit",
+      "name": "ai-alignment-revisability-audit",
       "source": {
         "source": "local",
-        "path": "./plugins/esg-commitment-audit"
+        "path": "./plugins/ai-alignment-revisability-audit"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -17,10 +17,10 @@
       "category": "Productivity"
     },
     {
-      "name": "ai-alignment-revisability-audit",
+      "name": "esg-commitment-audit",
       "source": {
         "source": "local",
-        "path": "./plugins/ai-alignment-revisability-audit"
+        "path": "./plugins/esg-commitment-audit"
       },
       "policy": {
         "installation": "AVAILABLE",

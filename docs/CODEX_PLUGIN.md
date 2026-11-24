@@ -1,6 +1,6 @@
 # Codex plugin GA
 
-Plugin release: `0.6.1`
+Plugin release: `0.6.2`
 
 ## Product entries
 
@@ -8,8 +8,8 @@ The ICS marketplace publishes two independent plugin entries:
 
 | Plugin | Hosted plan | Monthly limit |
 |---|---|---:|
-| `esg-commitment-audit` | US$29 ESG plan | 100 jobs |
 | `ai-alignment-revisability-audit` | US$99 AI plan | 100 jobs |
+| `esg-commitment-audit` | US$29 ESG plan | 100 jobs |
 
 Both plugin packages are free. Only the hosted service requires a paid or
 administrative API key.
@@ -35,8 +35,8 @@ Product-specific behavior is selected by `ICS_PRODUCT=esg` or
 
 ```powershell
 codex plugin marketplace add franka328162810-cell/esg-commitment-audit --ref main
-codex plugin add esg-commitment-audit@ics-tec
 codex plugin add ai-alignment-revisability-audit@ics-tec
+codex plugin add esg-commitment-audit@ics-tec
 ```
 
 Other lifecycle commands:
@@ -129,8 +129,8 @@ upload response explicitly tells the user that the outcome is uncertain.
 
 ```powershell
 node --test plugins\core\server.test.mjs plugins\core\bundles.test.mjs
-.\.venv\Scripts\python.exe "C:\Users\Administrator\.codex\skills\.system\skill-creator\scripts\quick_validate.py" plugins\esg-commitment-audit\skills\esg-commitment-audit
 .\.venv\Scripts\python.exe "C:\Users\Administrator\.codex\skills\.system\skill-creator\scripts\quick_validate.py" plugins\ai-alignment-revisability-audit\skills\ai-alignment-revisability-audit
+.\.venv\Scripts\python.exe "C:\Users\Administrator\.codex\skills\.system\skill-creator\scripts\quick_validate.py" plugins\esg-commitment-audit\skills\esg-commitment-audit
 ```
 
 GA lifecycle verification must cover:
@@ -140,9 +140,9 @@ GA lifecycle verification must cover:
 3. upgrade from the previous plugin version;
 4. uninstall and reinstall;
 5. missing, wrong-product and valid API keys;
-6. ESG document review;
-7. AI general and insurance-profile review;
-8. AI evidence-pack review;
+6. AI general and insurance-profile review;
+7. AI evidence-pack review;
+8. ESG document review;
 9. upload and deletion approval policy;
 10. three to five scripted user-role trials.
 

@@ -1,16 +1,5 @@
 {
   "mcpServers": {
-    "ics-esg-commitment-audit": {
-      "transport": "stdio",
-      "command": "node",
-      "args": [
-        "plugins/esg-commitment-audit/server.mjs"
-      ],
-      "env": {
-        "ICS_PRODUCT": "esg",
-        "ICS_AUDIT_API_KEY": "${ICS_AUDIT_API_KEY}"
-      }
-    },
     "ics-ai-alignment-revisability-audit": {
       "transport": "stdio",
       "command": "node",
@@ -19,6 +8,17 @@
       ],
       "env": {
         "ICS_PRODUCT": "ai",
+        "ICS_AUDIT_API_KEY": "${ICS_AUDIT_API_KEY}"
+      }
+    },
+    "ics-esg-commitment-audit": {
+      "transport": "stdio",
+      "command": "node",
+      "args": [
+        "plugins/esg-commitment-audit/server.mjs"
+      ],
+      "env": {
+        "ICS_PRODUCT": "esg",
         "ICS_AUDIT_API_KEY": "${ICS_AUDIT_API_KEY}"
       }
     }

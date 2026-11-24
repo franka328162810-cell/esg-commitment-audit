@@ -1,5 +1,7 @@
 # v0.6.1 release check
 
+Historical record. Superseded by `docs/RELEASE_CHECK_V062.md`.
+
 Date: 2026-11-24 (Asia/Shanghai)
 
 Status: production deployed and validated. This patch corrects release

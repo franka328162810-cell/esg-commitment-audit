@@ -1,15 +1,15 @@
 {
   "mcpServers": {
-    "ics-esg-commitment-audit-remote": {
+    "ics-ai-alignment-revisability-audit-remote": {
       "type": "http",
-      "url": "https://esg-commitment-audit-mcp.franka328162810.workers.dev/mcp/esg",
+      "url": "https://esg-commitment-audit-mcp.franka328162810.workers.dev/mcp/ai",
       "headers": {
         "Authorization": "Bearer ${ICS_AUDIT_API_KEY}"
       }
     },
-    "ics-ai-alignment-revisability-audit-remote": {
+    "ics-esg-commitment-audit-remote": {
       "type": "http",
-      "url": "https://esg-commitment-audit-mcp.franka328162810.workers.dev/mcp/ai",
+      "url": "https://esg-commitment-audit-mcp.franka328162810.workers.dev/mcp/esg",
       "headers": {
         "Authorization": "Bearer ${ICS_AUDIT_API_KEY}"
       }

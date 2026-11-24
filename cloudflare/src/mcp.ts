@@ -1,7 +1,7 @@
 type McpProduct = "esg" | "ai";
 
 const PROTOCOL_VERSION = "2025-06-18";
-const REMOTE_VERSION = "0.6.1";
+const REMOTE_VERSION = "0.6.2";
 const MAX_DOCUMENT_BYTES = 50 * 1024 * 1024;
 const MAX_REMOTE_EVIDENCE_BYTES = 70 * 1024 * 1024;
 const PROFILE_VALUES = [

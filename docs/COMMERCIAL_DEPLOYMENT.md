@@ -15,7 +15,7 @@ The renamed ESG Commitment Audit service is deployed on Cloudflare:
 - Private R2 bucket: `esg-commitment-audit-reports`
 - Container application: `esg-commitment-audit-api-auditcontainer`
 - Runtime image: `0.6.0-r2`
-- Worker and remote MCP release: `0.6.1`
+- Worker and remote MCP release: `0.6.2`
 
 The previous Worker name remains as a 308 redirect to the new Worker. Previous
 D1, R2 and queue resources are retained temporarily as a rollback path and are
@@ -330,6 +330,11 @@ not rule accuracy or scientific validation.
 Version `0.6.1` is a release-engineering and marketing-asset correction. It
 corrects the ESG Gumroad cover and thumbnail, repairs GitHub CI, and updates
 release metadata without changing the audit rules or container runtime.
+
+Version `0.6.2` separates the public presentation of the AI and ESG products.
+The AI Alignment Revisability Audit is listed first, both plugin packages carry
+their own cover and thumbnail, and the public catalog, offers API and workbench
+default to the AI-first order. Audit rules and report formats are unchanged.
 
 ## Legacy Recursive Freedom validation
 

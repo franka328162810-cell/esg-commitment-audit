@@ -1,12 +1,12 @@
 {
   "name": "esg-commitment-audit",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Audit ESG and climate commitments with source-linked evidence through the ICS hosted API.",
   "author": {
     "name": "Xue Zhi Xin (ICS-TEC)",
     "url": "https://github.com/franka328162810-cell"
   },
-  "homepage": "https://github.com/franka328162810-cell/esg-commitment-audit",
+  "homepage": "https://esg-commitment-audit-api.franka328162810.workers.dev/",
   "repository": "https://github.com/franka328162810-cell/esg-commitment-audit",
   "license": "Apache-2.0",
   "keywords": [
@@ -21,8 +21,8 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "ESG Commitment Audit",
-    "shortDescription": "Audit ESG commitments with traceable policy evidence",
-    "longDescription": "Find written ESG and climate commitments, trace each finding to page or paragraph evidence, and test observability, enforceability, and revisability. The plugin is free; hosted audits require a matching ESG API key.",
+    "shortDescription": "Audit ESG and climate commitments with source evidence",
+    "longDescription": "A dedicated sustainability plugin for written ESG and climate commitments. It extracts targets and management details, traces findings to page or paragraph evidence, and tests observability, enforceability, and revisability under the ICS CRV structure. The plugin is free; hosted audits require a matching ESG API key.",
     "developerName": "Xue Zhi Xin (ICS-TEC)",
     "category": "Productivity",
     "capabilities": [
@@ -37,7 +37,10 @@
     ],
     "composerIcon": "./assets/icon.svg",
     "logo": "./assets/icon.svg",
-    "screenshots": [],
+    "screenshots": [
+      "./assets/cover.png",
+      "./assets/thumbnail.png"
+    ],
     "brandColor": "#0F766E"
   }
 }

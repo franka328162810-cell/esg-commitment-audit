@@ -3,7 +3,7 @@ import path from "node:path";
 import readline from "node:readline";
 import { pathToFileURL } from "node:url";
 
-const SERVER_VERSION = "0.6.1";
+const SERVER_VERSION = "0.6.2";
 const PROTOCOL_VERSION = "2025-06-18";
 const MAX_DOCUMENT_BYTES = 50 * 1024 * 1024;
 const MAX_EVIDENCE_PACK_BYTES = 100 * 1024 * 1024;

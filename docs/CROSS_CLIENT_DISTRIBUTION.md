@@ -1,6 +1,6 @@
 # Cross-client distribution
 
-Version: `0.6.1`
+Version: `0.6.2`
 
 Public description: **ICS Audit Tools for MCP-compatible AI agents**
 
@@ -9,26 +9,26 @@ Public description: **ICS Audit Tools for MCP-compatible AI agents**
 ```text
 ICS hosted API
   ├─ local stdio MCP core
-  │   ├─ Codex ESG plugin
   │   ├─ Codex AI plugin
+  │   ├─ Codex ESG plugin
   │   ├─ Claude Code adapters
   │   ├─ Hermes template
   │   ├─ WorkBuddy template
   │   └─ generic MCP template
   └─ remote Streamable HTTP MCP
-      ├─ /mcp/esg
-      └─ /mcp/ai
+      ├─ /mcp/ai
+      └─ /mcp/esg
 ```
 
 The product names remain host-neutral:
 
-- `ESG Commitment Audit`
 - `AI Alignment Revisability Audit`
+- `ESG Commitment Audit`
 
 The technical package identifiers remain stable:
 
-- `esg-commitment-audit`
 - `ai-alignment-revisability-audit`
+- `esg-commitment-audit`
 
 ## Support matrix
 

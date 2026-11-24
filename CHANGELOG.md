@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.6.2 — independent product presentation
+
+- Put the AI Alignment Revisability Audit first in the Codex marketplace,
+  landing page, offers API, README and product catalog.
+- Gave each plugin its own cover, thumbnail, homepage and product description.
+- Added product-specific plugin README files so the two products are installed,
+  explained and sold independently.
+- Replaced the ESG-first repository introduction with a two-product catalog
+  that describes only the shared MCP infrastructure as common.
+- Kept the same hosted API core, audit rules and `0.6.0` report schema.
+
 ## 0.6.1 — release and asset correction
 
 - Replaced the remaining `ICS` product labels in the Gumroad ESG cover and
